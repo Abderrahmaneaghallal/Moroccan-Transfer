@@ -34,6 +34,14 @@ body{background:#f5f0eb;font-family:'DM Sans',sans-serif;color:#111;}
 .res-price-val{font-family:'DM Serif Display',Georgia,serif;font-size:28px;color:#C9A84C;font-weight:700;}
 .res-price-per{font-size:12px;color:#aaa;display:block;text-align:right;}
 
+/* ── INCLUS / EXCLUS ── */
+.res-inc-title{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:700;color:#22c55e;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;}
+.res-inc-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;}
+.res-inc-list li{display:flex;align-items:center;gap:10px;padding:9px 14px;border-radius:10px;font-size:13px;color:#333;background:#fff;border:1.5px solid #e8e2da;border-left-width:4px;}
+.res-inc-list li.inc{border-left-color:#22c55e;}
+.res-inc-list li.exc{border-left-color:#ef4444;}
+.res-inc-list li svg{flex-shrink:0;}
+
 /* ── RIGHT: FORM ── */
 .res-form-card{background:#fff;border-radius:18px;padding:32px 28px;box-shadow:0 4px 30px rgba(0,0,0,0.08);position:sticky;top:100px;}
 .res-form-title{font-family:'DM Serif Display',Georgia,serif;font-size:22px;color:#111;margin-bottom:24px;text-align:center;padding-bottom:16px;border-bottom:2px solid #f0ece6;}
@@ -242,6 +250,24 @@ body{background:#f5f0eb;font-family:'DM Sans',sans-serif;color:#111;}
             <span class="res-price-per">à partir de</span>
           </div>
         </div>
+
+        <!-- INCLUS / EXCLUS -->
+        <div id="resIncExc" style="display:none;margin-top:24px;">
+          <div class="res-inc-block">
+            <div class="res-inc-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              CE QUI EST INCLUS
+            </div>
+            <ul class="res-inc-list" id="resIncluded"></ul>
+          </div>
+          <div class="res-inc-block" style="margin-top:16px;">
+            <div class="res-inc-title" style="color:#ef4444;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              CE QUI N'EST PAS INCLUS
+            </div>
+            <ul class="res-inc-list" id="resExcluded"></ul>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -385,6 +411,7 @@ body{background:#f5f0eb;font-family:'DM Sans',sans-serif;color:#111;}
 </a>
 
 <script src="assets/js/main.js"></script>
+<script src="assets/js/toursData.js"></script>
 <script>
 // ── READ FROM sessionStorage ──
 const raw = sessionStorage.getItem('mtResData');
@@ -407,6 +434,58 @@ document.getElementById('resDesc').textContent = desc;
 document.getElementById('resMeta1').textContent = category;
 document.getElementById('resPriceDisplay').textContent = '€' + price;
 document.title = 'Réserver — ' + name + ' — MoroccanTransfer';
+
+// ── INCLUS / EXCLUS ──
+(function populateIncExc() {
+  if (typeof toursData === 'undefined') return;
+  var nameMap = {
+    'Balade à Cheval en Palmeraie':           'cheval-palmeraie',
+    'Balade à Cheval — Palmeraie':            'cheval-palmeraie',
+    'Balade en Dromadaire – Palmeraie':       'dromadaire-palmeraie',
+    'Balade en Dromadaire — Palmeraie':       'dromadaire-palmeraie',
+    'Buggy à la Palmeraie':                   'buggy-palmeraie',
+    "Désert d'Agafay":                        'agafay-desert',
+    "Vallée de l'Ourika & Atlas":             'ourika-atlas',
+    "Cascades d'Ouzoud":                      'ouzoud-cascades',
+    'Oasiria — Parc Aquatique':               'oasiria',
+    'Wake Board – Waky':                      'wakeboard',
+    'Wake Board – Waky Marrakech':            'wakeboard',
+    'Atelier de Poterie':                     'poterie',
+    'Atelier de Poterie Traditionnelle':      'poterie',
+    'Shooting Romantique à la Poterie':       'shooting-poterie',
+    'Ferme Pédagogique Bled Ouladi':          'bled-ouladi',
+    "O'Atlas – Journée Piscine":              'oatlas-piscine',
+    'Hammam & Massage à Marrakech':           'hammam-spa',
+    'Montgolfière à Marrakech':               'montgolfiere',
+    "Parapente sur l'Atlas":                  'parapente',
+    'Tyrolienne & Parcours Aérien':           'tyrolienne',
+    'Dîner in the Sky':                       'dinner-sky',
+    "Balade en Quad au Désert d'Agafay":      'quad-agafay',
+    "Quad dans le Désert d'Agafay":           'quad-agafay',
+    'Quad dans la Palmeraie':                 'quad-palmeraie',
+    'Balade en Buggy à Agafay':               'buggy-agafay',
+    'Balade à Cheval – Les Écuries':          'cheval-ecuries',
+    'Balade en Dromadaire à Agafay':          'dromadaire-agafay',
+    'Jump Park – Parc de Trampolines':        'jump-park',
+    'Atelier de Peinture':                    'atelier-peinture',
+    'Atelier de Broderie':                    'atelier-broderie',
+    'Atelier Création de Parfum':             'atelier-parfum',
+  };
+  var key = nameMap[name] || data.tourId;
+  if (!key) return;
+  var tour = toursData[key];
+  var incEl = document.getElementById('resIncluded');
+  var excEl = document.getElementById('resExcluded');
+  var checkSvg = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>';
+  var crossSvg = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+  (tour.included || []).forEach(function(item) {
+    incEl.innerHTML += '<li class="inc">' + checkSvg + item + '</li>';
+  });
+  (tour.excluded || []).forEach(function(item) {
+    excEl.innerHTML += '<li class="exc">' + crossSvg + item + '</li>';
+  });
+  document.getElementById('resIncExc').style.display = 'block';
+})();
 
 // Set min date to today
 const today = new Date();
