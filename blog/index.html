@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Moroccan Transfer Blog — Guides de voyage, conseils, activités et bons plans pour visiter le Maroc.">
+<title>Blog Voyage Maroc — Moroccan Transfer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+/* ── BLOG PAGE SPECIFIC ── */
+.blog-hero{position:relative;background:var(--black);padding:140px 0 100px;text-align:center;border-bottom:1px solid rgba(201,168,76,0.15);overflow:hidden;min-height:380px;}
+.blog-hero::before{content:'';position:absolute;inset:0;background-image:url('../breadcrumb/blog.png');background-size:cover;background-position:center 40%;opacity:0.38;z-index:0}
+.blog-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.4) 100%);z-index:0}
+.blog-hero>*{position:relative;z-index:2}
+.blog-hero .container{position:relative;z-index:2}
+.blog-hero-label{display:inline-block;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.blog-hero-title{font-family:var(--font-display);font-size:clamp(30px,5vw,50px);color:var(--white);margin-bottom:14px;line-height:1.15}
+.blog-hero-sub{font-size:16px;color:rgba(255,255,255,0.5);max-width:540px;margin:0 auto}
+
+.blog-filters{background:#fff;border-bottom:1px solid var(--grey-6);padding:0}
+.blog-filters-inner{display:flex;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.blog-filter-btn{flex-shrink:0;padding:16px 22px;font-size:13px;font-weight:600;color:var(--grey-2);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;transition:all var(--transition);white-space:nowrap}
+.blog-filter-btn:hover{color:var(--gold)}
+.blog-filter-btn.active{color:var(--gold);border-bottom-color:var(--gold)}
+
+.blog-page-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;padding:56px 0}
+.blog-page-card{background:#fff;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow);transition:transform var(--transition),box-shadow var(--transition);display:flex;flex-direction:column}
+.blog-page-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.blog-page-card-img{position:relative;height:220px;overflow:hidden;background:var(--grey-6)}
+.blog-page-card-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease}
+.blog-page-card:hover .blog-page-card-img img{transform:scale(1.05)}
+.blog-page-card-cat{position:absolute;top:14px;left:14px;background:var(--gold);color:var(--black);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:20px}
+.blog-page-card-body{padding:22px 24px 24px;flex:1;display:flex;flex-direction:column}
+.blog-page-card-title{font-family:var(--font-display);font-size:19px;font-weight:700;color:var(--black);margin-bottom:10px;line-height:1.35}
+.blog-page-card-title a{color:inherit;transition:color var(--transition)}
+.blog-page-card-title a:hover{color:var(--gold)}
+.blog-page-card-excerpt{font-size:14px;color:var(--grey-2);line-height:1.65;margin-bottom:18px;flex:1}
+.blog-page-card-meta{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--grey-3);margin-top:auto;padding-top:16px;border-top:1px solid var(--grey-6)}
+.blog-page-card-meta .dot{width:3px;height:3px;border-radius:50%;background:var(--grey-4);flex-shrink:0}
+.blog-read-more{display:inline-flex;align-items:center;gap:5px;font-size:13px;font-weight:600;color:var(--gold);margin-top:12px;transition:gap var(--transition)}
+.blog-read-more:hover{gap:9px}
+
+.blog-featured{background:#fff;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-md);display:grid;grid-template-columns:1.2fr 1fr;gap:0;margin-bottom:40px;transition:box-shadow var(--transition)}
+.blog-featured:hover{box-shadow:var(--shadow-lg)}
+.blog-featured-img{height:380px;overflow:hidden;background:var(--grey-6)}
+.blog-featured-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease}
+.blog-featured:hover .blog-featured-img img{transform:scale(1.04)}
+.blog-featured-body{padding:42px 40px;display:flex;flex-direction:column;justify-content:center}
+.blog-featured-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.blog-featured-title{font-family:var(--font-display);font-size:clamp(22px,2.5vw,30px);color:var(--black);margin-bottom:14px;line-height:1.25}
+.blog-featured-title a{color:inherit;transition:color var(--transition)}
+.blog-featured-title a:hover{color:var(--gold)}
+.blog-featured-excerpt{font-size:15px;color:var(--grey-2);line-height:1.7;margin-bottom:22px}
+.blog-featured-meta{font-size:12px;color:var(--grey-3);display:flex;gap:8px;align-items:center;margin-bottom:20px}
+
+@media(max-width:900px){
+  .blog-page-grid{grid-template-columns:repeat(2,1fr);gap:22px;padding:36px 0}
+  .blog-featured{grid-template-columns:1fr}
+  .blog-featured-img{height:240px}
+}
+@media(max-width:600px){
+  .blog-page-grid{grid-template-columns:1fr;gap:18px;padding:28px 0}
+  .blog-featured-body{padding:24px 20px}
+}
+
+@media(max-width:768px){
+  .blog-featured{grid-template-columns:1fr!important}
+  .blog-featured-img{height:220px!important}
+  .blog-hero-inner{text-align:center}
+  .blog-page-grid{grid-template-columns:1fr!important;gap:18px}
+  .blog-sidebar{display:none}
+}
+@media(max-width:480px){
+  .blog-featured-img{height:180px!important}
+  .blog-featured-body{padding:20px 16px}
+  .blog-card-img{height:160px}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ TOP BAR ══════════════ -->
+<div class="topbar">
+  <div class="container">
+    <div class="topbar-inner">
+      <div class="topbar-left">
+        <a href="tel:+212707473742" class="topbar-item">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.81 19.79 19.79 0 01.04 2.27 2 2 0 012 .09h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+          +212 707-473742
+        </a>
+        <a href="mailto:Contact@moroccantransfer.com" class="topbar-item">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Contact@moroccantransfer.com
+        </a>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-social">
+          <a href="#" aria-label="Facebook"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ HEADER ══════════════ -->
+<header class="site-header">
+  <nav class="nav-bar">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="../index.html" class="nav-logo">
+          <img src="../Moroccan Transfer.png" alt="Moroccan Transfer">
+        </a>
+        <ul class="nav-menu">
+          <li class="nav-item"><a href="../index.html" class="nav-link">Accueil</a></li>
+          <li class="nav-item nav-dropdown">
+            <a href="../excursions/index.html" class="nav-link">Excursions <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></a>
+            <ul class="nav-dropdown-menu">
+              <li><a href="../excursions/index.html" class="nav-dropdown-item">Toutes les excursions</a></li>
+              <li><a href="../excursions/index.html" class="nav-dropdown-item">Désert Merzouga (3j)</a></li>
+              <li><a href="../excursions/index.html" class="nav-dropdown-item">Marrakech (1j)</a></li>
+              <li><a href="../excursions/index.html" class="nav-dropdown-item">Essaouira (1j)</a></li>
+            </ul>
+          </li>
+          <li class="nav-item nav-dropdown">
+            <a href="../transferts/index.html" class="nav-link">Transferts <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></a>
+            <ul class="nav-dropdown-menu">
+              <li><a href="../transferts/index.html" class="nav-dropdown-item">Aéroport Agadir (AGA)</a></li>
+              <li><a href="../transferts/index.html" class="nav-dropdown-item">Aéroport Marrakech (RAK)</a></li>
+              <li><a href="../transferts/index.html" class="nav-dropdown-item">Aéroport Casablanca (CMN)</a></li>
+              <li><a href="../transferts/index.html" class="nav-dropdown-item">Aéroport Fès (FEZ)</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a href="../activites/index.html" class="nav-link">Activités</a></li>
+          <li class="nav-item"><a href="index.html" class="nav-link active">Blog</a></li>
+          <li class="nav-item"><a href="../apropos/index.html" class="nav-link">À propos</a></li>
+          <li class="nav-item"><a href="../contact.html" class="nav-link">Contact</a></li>
+        </ul>
+        <div class="nav-cta">
+          <div class="nav-phone">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.81 19.79 19.79 0 01.04 2.27 2 2 0 012 .09h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+            <div><small>Appelez-nous</small>+212 707-473742</div>
+          </div>
+        </div>
+        <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- Mobile nav -->
+<div class="mobile-nav-overlay"></div>
+<div class="mobile-nav">
+  <div class="mobile-nav-close">
+    <span class="mobile-nav-logo">Moroccan<span>Transfer</span></span>
+    <button style="font-size:22px;color:rgba(255,255,255,0.6);background:none;border:none;cursor:pointer;">✕</button>
+  </div>
+  <a href="../index.html" class="mobile-nav-link">Accueil</a>
+  <a href="../excursions/index.html" class="mobile-nav-link">Excursions</a>
+  <a href="../transferts/index.html" class="mobile-nav-link">Transferts</a>
+  <a href="../activites/index.html" class="mobile-nav-link">Activités</a>
+  <a href="index.html" class="mobile-nav-link">Blog</a>
+  <a href="../apropos/index.html" class="mobile-nav-link">À propos</a>
+  <a href="../contact.html" class="mobile-nav-link">Contact</a>
+</div>
+
+<!-- ══════════════ BLOG HERO ══════════════ -->
+<div class="blog-hero">
+  <div class="container">
+    <div class="blog-hero-label">Moroccan Transfer — Guides & Conseils</div>
+    <h1 class="blog-hero-title">Blog Voyage Maroc</h1>
+    <p class="blog-hero-sub">Activités, bons plans, conseils pratiques et incontournables pour découvrir le Maroc avec Moroccan Transfer.</p>
+  </div>
+</div>
+
+<!-- ══════════════ FILTERS ══════════════ -->
+<div class="blog-filters">
+  <div class="container">
+    <div class="blog-filters-inner">
+      <button class="blog-filter-btn active" data-filter="all">Tous</button>
+      <button class="blog-filter-btn" data-filter="activites">Activités</button>
+      <button class="blog-filter-btn" data-filter="restaurants">Restaurants</button>
+      <button class="blog-filter-btn" data-filter="excursions">Excursions</button>
+      <button class="blog-filter-btn" data-filter="conseils">Conseils pratiques</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ BLOG CONTENT ══════════════ -->
+<div style="background:var(--light);padding-bottom:60px;">
+  <div class="container">
+
+    <!-- Featured article -->
+    <div style="padding-top:48px;">
+      <div class="blog-featured reveal">
+        <div class="blog-featured-img">
+          <img src="https://marrakechbestof.com/wp-content/uploads/2022/12/091BD408-1A02-448F-B6BD-6C2DD44A7EB3-1024x683.jpeg" alt="Désert d'Agafay" loading="lazy">
+        </div>
+        <div class="blog-featured-body">
+          <div class="blog-featured-label">À la une — Excursions</div>
+          <h2 class="blog-featured-title"><a href="#">Que faire au désert d'Agafay ? Le guide complet de Moroccan Transfer</a></h2>
+          <p class="blog-featured-excerpt">Le désert d'Agafay se situe à environ 1h de route de Marrakech et s'étend sur plusieurs centaines d'hectares. Ces dernières années, il est devenu une destination incontournable pour les visiteurs de la ville. Paysages de roche époustouflants, vues sur l'Atlas en hiver… une expérience unique.</p>
+          <div class="blog-featured-meta">
+            <span>8 décembre 2022</span>
+            <span class="dot" style="width:3px;height:3px;border-radius:50%;background:var(--grey-4);display:inline-block;"></span>
+            <span>Excursions</span>
+            <span class="dot" style="width:3px;height:3px;border-radius:50%;background:var(--grey-4);display:inline-block;"></span>
+            <span>5 min de lecture</span>
+          </div>
+          <a href="#" class="btn btn-primary">Lire l'article →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid -->
+    <div class="blog-page-grid">
+
+      <div class="blog-page-card reveal" data-cat="activites">
+        <div class="blog-page-card-img">
+          <img src="https://marrakechbestof.com/wp-content/uploads/2022/08/4D339089-D43F-4684-A4DA-3BE05556CA1D-1024x683.webp" alt="Météo Marrakech" loading="lazy">
+          <span class="blog-page-card-cat">Conseils</span>
+        </div>
+        <div class="blog-page-card-body">
+          <h3 class="blog-page-card-title"><a href="#">Quelle météo à Marrakech selon les mois ? Le guide Moroccan Transfer</a></h3>
+          <p class="blog-page-card-excerpt">Le temps est généralement beau toute l'année et le climat est sec. Il pleut très rarement. Toutes les activités restent accessibles quelle que soit la saison.</p>
+          <div class="blog-page-card-meta">
+            <span>21 août 2022</span><span class="dot"></span><span>Conseils pratiques</span><span class="dot"></span><span>4 min</span>
+          </div>
+          <a href="#" class="blog-read-more">Lire la suite <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></a>
+        </div>
+      </div>
+
+      <div class="blog-page-card reveal delay-1" data-cat="activites">
+        <div class="blog-page-card-img">
+          <img src="https://marrakechbestof.com/wp-content/uploads/2020/12/jardin-majorelle-marrakech-1024x640.jpg" alt="Que voir à Marrakech" loading="lazy">
+          <span class="blog-page-card-cat">Activités</span>
+        </div>
+        <div class="blog-page-card-body">
+          <h3 class="blog-page-card-title"><a href="#">Que voir à Marrakech ? 10 endroits à ne pas rater avec Moroccan Transfer</a></h3>
+          <p class="blog-page-card-excerpt">Dédiez une journée entière à la découverte de la Médina et ses souks. Flânez sur la place Jemaa el-Fna, sirotez un jus d'orange frais et laissez-vous envoûter par l'atmosphère unique.</p>
+          <div class="blog-page-card-meta">
+            <span>22 juillet 2021</span><span class="dot"></span><span>Activités</span><span class="dot"></span><span>6 min</span>
+          </div>
+          <a href="#" class="blog-read-more">Lire la suite <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></a>
+        </div>
+      </div>
+
+      <div class="blog-page-card reveal delay-2" data-cat="activites">
+        <div class="blog-page-card-img">
+          <img src="https://marrakechbestof.com/wp-content/uploads/2020/12/unnamed-6-834x1024.jpg" alt="Spots instagrammables Marrakech" loading="lazy">
+          <span class="blog-page-card-cat">Activités</span>
+        </div>
+        <div class="blog-page-card-body">
+          <h3 class="blog-page-card-title"><a href="#">10 spots instagrammables à Marrakech sélectionnés par Moroccan Transfer</a></h3>
+          <p class="blog-page-card-excerpt">Pour nos amoureux d'Instagram, voici 10 spots ultra photographiques à Marrakech. La place aux Épices, à 10 min de Jemaa el-Fna, ouvre le bal avec ses échoppes typiquement marocaines.</p>
+          <div class="blog-page-card-meta">
+            <span>22 juillet 2021</span><span class="dot"></span><span>Activités</span><span class="dot"></span><span>5 min</span>
+          </div>
+          <a href="#" class="blog-read-more">Lire la suite <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></a>
+        </div>
+      </div>
+
+      <div class="blog-page-card reveal" data-cat="activites">
+        <div class="blog-page-card-img">
+          <img src="https://marrakechbestof.com/wp-content/uploads/2023/01/8F6F8FED-F524-432C-8171-EF59D1D95121-1024x576.jpeg" alt="Ramadan Marrakech" loading="lazy">
+          <span class="blog-page-card-cat">Conseils</span>
+        </div>
+        <div class="blog-page-card-body">
+          <h3 class="blog-page-card-title"><a href="#">Venir durant le Ramadan à Marrakech : bonne ou mauvaise idée ?</a></h3>
+          <p class="blog-page-card-excerpt">Il fait environ 20°C durant cette période, soleil au rendez-vous. Les prix des hôtels et des billets d'avion sont moins élevés et il y a beaucoup moins de monde. Pas d'attente pour les musées et jardins… le rêve !</p>
+          <div class="blog-page-card-meta">
+            <span>14 janvier 2023</span><span class="dot"></span><span>Conseils</span><span class="dot"></span><span>4 min</span>
+          </div>
+          <a href="#" class="blog-read-more">Lire la suite <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></a>
+        </div>
+      </div>
+
+      <div class="blog-page-card reveal delay-1" data-cat="conseils">
+        <div class="blog-page-card-img">
+          <img src="https://marrakechbestof.com/wp-content/uploads/2022/08/08B55E43-BC48-4A02-9A24-2854D864E0AE.jpeg" alt="Choses à savoir Marrakech" loading="lazy">
+          <span class="blog-page-card-cat">Conseils</span>
+        </div>
+        <div class="blog-page-card-body">
+          <h3 class="blog-page-card-title"><a href="#">Les choses à savoir avant de venir à Marrakech — conseils Moroccan Transfer</a></h3>
+          <p class="blog-page-card-excerpt">Quelques conseils de Moroccan Transfer pour visiter Marrakech en toute tranquillité. Marrakech est la destination la plus visitée du Maroc, découvrez nos incontournables.</p>
+          <div class="blog-page-card-meta">
+            <span>16 août 2022</span><span class="dot"></span><span>Conseils pratiques</span><span class="dot"></span><span>5 min</span>
+          </div>
+          <a href="#" class="blog-read-more">Lire la suite <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></a>
+        </div>
+      </div>
+
+      <div class="blog-page-card reveal delay-2" data-cat="restaurants">
+        <div class="blog-page-card-img">
+          <img src="https://marrakechbestof.com/wp-content/uploads/2025/11/IMG_8433-837x1024.jpg" alt="Réveillon Marrakech" loading="lazy">
+          <span class="blog-page-card-cat">Restaurants</span>
+        </div>
+        <div class="blog-page-card-body">
+          <h3 class="blog-page-card-title"><a href="#">Où passer le Réveillon du Nouvel An à Marrakech ? Notre sélection</a></h3>
+          <p class="blog-page-card-excerpt">À l'occasion du Nouvel An, retrouvez notre sélection de restaurants qui vous embarqueront vers une expérience festive pour commencer la nouvelle année dans la magie de Marrakech.</p>
+          <div class="blog-page-card-meta">
+            <span>4 décembre 2024</span><span class="dot"></span><span>Restaurants</span><span class="dot"></span><span>4 min</span>
+          </div>
+          <a href="#" class="blog-read-more">Lire la suite <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></a>
+        </div>
+      </div>
+
+      <div class="blog-page-card reveal" data-cat="activites">
+        <div class="blog-page-card-img">
+          <img src="https://marrakechbestof.com/wp-content/uploads/2022/12/091BD408-1A02-448F-B6BD-6C2DD44A7EB3-1024x683.jpeg" alt="Meilleures activités Marrakech" loading="lazy">
+          <span class="blog-page-card-cat">Activités</span>
+        </div>
+        <div class="blog-page-card-body">
+          <h3 class="blog-page-card-title"><a href="#">Les 10 meilleures activités à faire à Marrakech selon Moroccan Transfer</a></h3>
+          <p class="blog-page-card-excerpt">Activités tout terrain, insolites, nautiques ou culturelles — quad, montgolfière, spa, excursion dans le désert… il y en a pour tous les goûts et tous les budgets.</p>
+          <div class="blog-page-card-meta">
+            <span>8 décembre 2022</span><span class="dot"></span><span>Activités</span><span class="dot"></span><span>6 min</span>
+          </div>
+          <a href="#" class="blog-read-more">Lire la suite <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></a>
+        </div>
+      </div>
+
+      <div class="blog-page-card reveal delay-1" data-cat="activites">
+        <div class="blog-page-card-img">
+          <img src="https://marrakechbestof.com/wp-content/uploads/2020/12/jardin-majorelle-marrakech-1024x640.jpg" alt="Choses absolument à faire" loading="lazy">
+          <span class="blog-page-card-cat">Activités</span>
+        </div>
+        <div class="blog-page-card-body">
+          <h3 class="blog-page-card-title"><a href="#">Quelles sont les choses absolument à faire à Marrakech ?</a></h3>
+          <p class="blog-page-card-excerpt">Sites incontournables, visites culturelles, marchés animés… notre guide Moroccan Transfer des expériences à vivre absolument lors de votre séjour à Marrakech.</p>
+          <div class="blog-page-card-meta">
+            <span>8 décembre 2022</span><span class="dot"></span><span>Activités</span><span class="dot"></span><span>5 min</span>
+          </div>
+          <a href="#" class="blog-read-more">Lire la suite <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></a>
+        </div>
+      </div>
+
+      <div class="blog-page-card reveal delay-2" data-cat="activites">
+        <div class="blog-page-card-img">
+          <img src="https://marrakechbestof.com/wp-content/uploads/2022/08/4D339089-D43F-4684-A4DA-3BE05556CA1D-1024x683.webp" alt="Que faire mauvais temps" loading="lazy">
+          <span class="blog-page-card-cat">Activités</span>
+        </div>
+        <div class="blog-page-card-body">
+          <h3 class="blog-page-card-title"><a href="#">Que faire à Marrakech lorsqu'il ne fait pas beau ?</a></h3>
+          <p class="blog-page-card-excerpt">Activités intérieures, musées, hammams et bonnes adresses pour profiter de Marrakech même par temps couvert. Moroccan Transfer vous guide.</p>
+          <div class="blog-page-card-meta">
+            <span>26 septembre 2022</span><span class="dot"></span><span>Activités</span><span class="dot"></span><span>4 min</span>
+          </div>
+          <a href="#" class="blog-read-more">Lire la suite <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ NEWSLETTER ══════════════ -->
+<section class="newsletter-section">
+  <div class="container">
+    <div class="newsletter-inner">
+      <div>
+        <h3 class="newsletter-title">Restez inspiré</h3>
+        <p class="newsletter-sub">Nos meilleures idées voyage au Maroc, directement dans votre boîte mail.</p>
+      </div>
+      <form class="newsletter-form" onsubmit="event.preventDefault();window.showToast&&window.showToast('Merci pour votre inscription !','success')">
+        <input type="email" class="newsletter-input" placeholder="Votre adresse email" required>
+        <button type="submit" class="newsletter-btn btn btn-primary">S'inscrire</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col footer-col-brand">
+        <div class="footer-logo-row">
+          <img src="../Moroccan Transfer.png" alt="Moroccan Transfer" style="height:96px;width:auto;mix-blend-mode:screen">
+        </div>
+        <p class="footer-tagline">Votre partenaire de confiance pour les transferts privés et excursions au Maroc depuis 2012.</p>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-title">Services</h4>
+        <ul class="footer-links">
+          <li><a href="../excursions/index.html" class="footer-link">Excursions à la journée</a></li>
+          <li><a href="../transferts/index.html" class="footer-link">Transferts aéroport</a></li>
+          <li><a href="../activites/index.html" class="footer-link">Activités & Loisirs</a></li>
+          <li><a href="index.html" class="footer-link">Blog Voyage</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-title">Informations</h4>
+        <ul class="footer-links">
+          <li><a href="../apropos/index.html" class="footer-link">À propos de nous</a></li>
+          <li><a href="#" class="footer-link">FAQ</a></li>
+          <li><a href="#" class="footer-link">Mentions légales</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-title">Coordonnées</h4>
+        <ul class="footer-contact-list">
+          <li class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.81 19.79 19.79 0 01.04 2.27 2 2 0 012 .09h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg><a href="tel:+212707473742">+212 707-473742</a></li>
+          <li class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><a href="mailto:Contact@moroccantransfer.com">Contact@moroccantransfer.com</a></li>
+          <li class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Marrakech, Maroc</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">2012 – 2026 © MoroccanTransfer.com — <a href="#">Mentions légales</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script>
+// Blog filter
+document.querySelectorAll('.blog-filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.blog-filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter=btn.dataset.filter;
+    document.querySelectorAll('.blog-page-card').forEach(card=>{
+      if(filter==='all'||card.dataset.cat===filter){
+        card.style.display='flex';
+      } else {
+        card.style.display='none';
+      }
+    });
+  });
+});
+</script>
+<script src="../assets/js/lang-switcher.js"></script>
+</body>
+</html>

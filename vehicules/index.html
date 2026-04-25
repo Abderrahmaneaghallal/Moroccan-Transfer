@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Nos véhicules — Moroccan Transfer met à votre disposition une flotte de véhicules confortables avec chauffeur : berline, 4x4, minivan et minibus pour tous vos transferts et excursions au Maroc.">
+<title>Nos Véhicules — Moroccan Transfer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+.veh-hero{
+  position:relative;background:var(--black);padding:80px 0 64px;overflow:hidden;
+}
+.veh-hero::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,#111 0%,#1a1a1a 50%,#0d0d0d 100%);
+  opacity:1;
+}
+.veh-hero::after{
+  content:'';position:absolute;inset:0;
+  background:url('../saadian-pavilion-menara-gardens-and-atlas-in-marra.jpg') center/cover no-repeat;
+  opacity:0.15;
+}
+.veh-hero-inner{position:relative;z-index:1;max-width:700px}
+.veh-hero-label{display:inline-block;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.veh-hero-title{font-family:var(--font-display);font-size:clamp(30px,5vw,52px);color:var(--white);line-height:1.12;margin-bottom:18px}
+.veh-hero-title span{color:var(--gold)}
+.veh-hero-sub{font-size:17px;color:rgba(255,255,255,0.55);line-height:1.75;max-width:580px}
+
+/* Stats strip */
+.veh-stats{background:var(--black);padding:40px 0;border-top:1px solid rgba(201,168,76,0.2);border-bottom:1px solid rgba(201,168,76,0.08)}
+.veh-stats-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:0;text-align:center}
+.veh-stat{padding:0 20px;border-right:1px solid rgba(255,255,255,0.08)}
+.veh-stat:last-child{border-right:none}
+.veh-stat-num{font-family:var(--font-display);font-size:clamp(26px,3vw,38px);font-weight:700;color:var(--gold);display:block;margin-bottom:6px}
+.veh-stat-label{font-size:12px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px}
+
+/* Why choose us strip */
+.veh-why{background:var(--light);padding:48px 0}
+.veh-why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:32px}
+.veh-why-card{background:#fff;border-radius:var(--radius-lg);padding:24px 20px;text-align:center;border-bottom:3px solid transparent;transition:border-color var(--transition),box-shadow var(--transition)}
+.veh-why-card:hover{border-bottom-color:var(--gold);box-shadow:var(--shadow-md)}
+.veh-why-icon{width:52px;height:52px;background:var(--gold-pale);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;color:var(--gold);margin:0 auto 14px}
+.veh-why-title{font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--black);margin-bottom:8px}
+.veh-why-text{font-size:13px;color:var(--grey-2);line-height:1.65}
+
+/* Fleet grid */
+.veh-fleet{background:#fff;padding:72px 0}
+.veh-fleet-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:32px;margin-top:48px}
+.veh-card{border:1px solid var(--grey-6);border-radius:var(--radius-lg);overflow:hidden;display:flex;flex-direction:column;transition:all var(--transition)}
+.veh-card:hover{box-shadow:0 12px 40px rgba(0,0,0,.1);border-color:var(--gold-pale);transform:translateY(-4px)}
+.veh-card-gallery{position:relative;height:280px;overflow:hidden;background:#f0f0f0}
+.veh-card-gallery img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.veh-card:hover .veh-card-gallery img{transform:scale(1.04)}
+.veh-card-badge{position:absolute;top:16px;left:16px;background:var(--gold);color:#fff;font-size:12px;font-weight:700;padding:5px 14px;border-radius:20px}
+.veh-card-type{position:absolute;top:16px;right:16px;background:rgba(0,0,0,.65);color:#fff;font-size:11px;font-weight:600;padding:4px 10px;border-radius:4px;backdrop-filter:blur(4px)}
+.veh-card-body{padding:28px;flex:1;display:flex;flex-direction:column;gap:12px}
+.veh-card-name{font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--black)}
+.veh-card-tagline{font-size:13px;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.veh-card-desc{font-size:14px;color:var(--grey-2);line-height:1.75}
+.veh-card-specs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+.veh-card-spec{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--grey-2);background:var(--light);padding:8px 12px;border-radius:6px}
+.veh-card-spec svg{color:var(--gold);flex-shrink:0}
+.veh-card-features{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.veh-feature-tag{font-size:11px;font-weight:600;padding:4px 10px;background:var(--gold-pale);color:var(--gold-dark);border-radius:20px}
+.veh-card-footer{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--grey-6);padding-top:20px;margin-top:auto}
+.veh-card-ideal{font-size:12px;color:var(--grey-4)}
+.veh-card-ideal strong{color:var(--grey-2);display:block;font-size:13px}
+.veh-card-btn{padding:12px 28px;background:var(--black);color:#fff;border-radius:6px;font-size:13px;font-weight:700;text-decoration:none;transition:background var(--transition)}
+.veh-card-btn:hover{background:var(--gold)}
+
+/* CTA */
+.veh-cta{background:var(--black);padding:72px 0;text-align:center}
+.veh-cta-title{font-family:var(--font-display);font-size:clamp(24px,3.5vw,42px);color:#fff;margin-bottom:16px}
+.veh-cta-title span{color:var(--gold)}
+.veh-cta-sub{font-size:16px;color:rgba(255,255,255,.5);margin-bottom:36px}
+.veh-cta-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+
+/* Responsive */
+@media(max-width:900px){
+  .veh-fleet-grid{grid-template-columns:1fr}
+  .veh-why-grid{grid-template-columns:repeat(2,1fr)}
+  .veh-stats-inner{grid-template-columns:repeat(2,1fr);gap:24px}
+  .veh-stat{border-right:none}
+}
+@media(max-width:600px){
+  .veh-why-grid{grid-template-columns:1fr}
+  .veh-card-specs{grid-template-columns:1fr}
+}
+
+@media(max-width:768px){
+  .veh-fleet-grid{grid-template-columns:1fr!important}
+  .veh-why-grid{grid-template-columns:repeat(2,1fr)!important}
+  .veh-stats-inner{grid-template-columns:repeat(2,1fr)!important}
+  .veh-hero-actions{flex-direction:column;align-items:flex-start;gap:12px}
+}
+@media(max-width:480px){
+  .veh-why-grid{grid-template-columns:1fr!important}
+  .veh-stats-inner{grid-template-columns:1fr 1fr!important}
+  .veh-card{padding:16px}
+  .veh-card-specs{grid-template-columns:1fr!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ TOP BAR ══════════════ -->
+<div class="topbar">
+  <div class="container">
+    <div class="topbar-inner">
+      <div class="topbar-left">
+        <a href="tel:+212707473742" class="topbar-item">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.81 19.79 19.79 0 01.04 2.27 2 2 0 012 .09h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+          +212 707-473742
+        </a>
+        <a href="mailto:Contact@moroccantransfer.com" class="topbar-item">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Contact@moroccantransfer.com
+        </a>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-social">
+          <a href="#" aria-label="Facebook"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://www.tripadvisor.com/Attraction_Review-g293734-d17333913-Reviews-Morocco_Transfer-Marrakech_Marrakech_Safi.html" target="_blank" rel="noopener" aria-label="TripAdvisor"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12.006 4.295c-2.29 0-4.408.738-6.13 1.984L3 6.28l2.569.017A9.928 9.928 0 002 13.994C2 19.52 6.479 24 12.006 24S22 19.52 22 13.994c0-3.33-1.636-6.28-4.157-8.11l2.43-.006-2.85-.004A9.926 9.926 0 0012.006 4.3zM7.22 14.12c-.924 0-1.673-.75-1.673-1.673s.75-1.673 1.673-1.673 1.673.75 1.673 1.673-.75 1.673-1.673 1.673zm4.786 3.87c-2.184 0-3.953-1.77-3.953-3.954s1.77-3.953 3.953-3.953 3.953 1.77 3.953 3.953-1.77 3.954-3.953 3.954zm0-6.252a2.3 2.3 0 00-2.298 2.298 2.3 2.3 0 002.298 2.298 2.3 2.3 0 002.298-2.298 2.3 2.3 0 00-2.298-2.298zm4.794 2.382c-.924 0-1.673-.75-1.673-1.673s.75-1.673 1.673-1.673 1.673.75 1.673 1.673-.75 1.673-1.673 1.673z"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ HEADER ══════════════ -->
+<header class="site-header">
+  <nav class="nav-bar">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="../index.html" class="nav-logo">
+          <img src="../Moroccan Transfer.png" alt="Moroccan Transfer">
+        </a>
+        <ul class="nav-menu">
+          <li class="nav-item"><a href="../index.html" class="nav-link">Accueil</a></li>
+          <li class="nav-item nav-dropdown">
+            <a href="../excursions/index.html" class="nav-link">Excursions <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></a>
+            <ul class="nav-dropdown-menu">
+              <li><a href="../excursions/index.html" class="nav-dropdown-item">Toutes les excursions</a></li>
+              <li><a href="../excursions/index.html" class="nav-dropdown-item">Désert Merzouga (3j)</a></li>
+              <li><a href="../excursions/index.html" class="nav-dropdown-item">Marrakech (1j)</a></li>
+              <li><a href="../excursions/index.html" class="nav-dropdown-item">Essaouira (1j)</a></li>
+              <li><a href="../excursions/index.html" class="nav-dropdown-item">Vallée du Dadès</a></li>
+            </ul>
+          </li>
+          <li class="nav-item nav-dropdown">
+            <a href="../transferts/index.html" class="nav-link">Transferts <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></a>
+            <ul class="nav-dropdown-menu">
+              <li><a href="../transferts/index.html" class="nav-dropdown-item">Aéroport Agadir (AGA)</a></li>
+              <li><a href="../transferts/index.html" class="nav-dropdown-item">Aéroport Marrakech (RAK)</a></li>
+              <li><a href="../transferts/index.html" class="nav-dropdown-item">Aéroport Casablanca (CMN)</a></li>
+              <li><a href="../transferts/index.html" class="nav-dropdown-item">Aéroport Fès (FEZ)</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a href="../activites/index.html" class="nav-link">Activités</a></li>
+          <li class="nav-item"><a href="../blog/index.html" class="nav-link">Blog</a></li>
+          <li class="nav-item"><a href="../apropos/index.html" class="nav-link">À propos</a></li>
+          <li class="nav-item"><a href="../contact.html" class="nav-link">Contact</a></li>
+        </ul>
+        <div class="nav-cta">
+          <div class="nav-phone">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.81 19.79 19.79 0 01.04 2.27 2 2 0 012 .09h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+            <div><small>Appelez-nous</small>+212 707-473742</div>
+          </div>
+        </div>
+        <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="mobile-nav-overlay"></div>
+<div class="mobile-nav">
+  <div class="mobile-nav-close">
+    <span class="mobile-nav-logo">Moroccan<span>Transfer</span></span>
+    <button style="font-size:22px;color:rgba(255,255,255,0.6);background:none;border:none;cursor:pointer;">✕</button>
+  </div>
+  <a href="../index.html" class="mobile-nav-link">Accueil</a>
+  <a href="../excursions/index.html" class="mobile-nav-link">Excursions</a>
+  <a href="../transferts/index.html" class="mobile-nav-link">Transferts</a>
+  <a href="../activites/index.html" class="mobile-nav-link">Activités</a>
+  <a href="../blog/index.html" class="mobile-nav-link">Blog</a>
+  <a href="../apropos/index.html" class="mobile-nav-link">À propos</a>
+  <a href="../contact.html" class="mobile-nav-link">Contact</a>
+</div>
+
+<!-- ══════════════ HERO ══════════════ -->
+<div class="veh-hero">
+  <div class="container">
+    <div class="veh-hero-inner">
+      <div class="veh-hero-label">Transport Touristique</div>
+      <h1 class="veh-hero-title">Notre flotte de<br><span>véhicules avec chauffeur</span></h1>
+      <p class="veh-hero-sub">Des véhicules climatisés, récents et parfaitement entretenus — avec chauffeur professionnel inclus pour tous vos transferts aéroport, excursions privées et circuits au Maroc.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ STATS ══════════════ -->
+<div class="veh-stats">
+  <div class="container">
+    <div class="veh-stats-inner">
+      <div class="veh-stat">
+        <span class="veh-stat-num">4</span>
+        <span class="veh-stat-label">Types de véhicules</span>
+      </div>
+      <div class="veh-stat">
+        <span class="veh-stat-num">1–18</span>
+        <span class="veh-stat-label">Passagers</span>
+      </div>
+      <div class="veh-stat">
+        <span class="veh-stat-num">100%</span>
+        <span class="veh-stat-label">Climatisés</span>
+      </div>
+      <div class="veh-stat">
+        <span class="veh-stat-num">24/7</span>
+        <span class="veh-stat-label">Disponibles</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ POURQUOI NOUS ══════════════ -->
+<section class="veh-why">
+  <div class="container">
+    <div class="section-head center">
+      <span class="section-label">Nos engagements</span>
+      <h2 class="section-title">Pourquoi choisir notre flotte ?</h2>
+    </div>
+    <div class="veh-why-grid">
+      <div class="veh-why-card reveal">
+        <div class="veh-why-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="veh-why-title">Sécurité maximale</div>
+        <p class="veh-why-text">Véhicules régulièrement contrôlés, chauffeurs diplômés et assurés. Votre sécurité est notre priorité absolue.</p>
+      </div>
+      <div class="veh-why-card reveal delay-1">
+        <div class="veh-why-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="veh-why-title">Ponctualité garantie</div>
+        <p class="veh-why-text">Nos chauffeurs suivent vos vols en temps réel. Aucun retard ne vous sera facturé, même en cas de décalage.</p>
+      </div>
+      <div class="veh-why-card reveal delay-2">
+        <div class="veh-why-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </div>
+        <div class="veh-why-title">Confort premium</div>
+        <p class="veh-why-text">Climatisation, eau offerte, WiFi à bord. Chaque trajet est pensé pour votre confort total dès la montée.</p>
+      </div>
+      <div class="veh-why-card reveal delay-3">
+        <div class="veh-why-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        </div>
+        <div class="veh-why-title">Prix transparents</div>
+        <p class="veh-why-text">Tarif tout inclus, aucun supplément caché. Le prix convenu est le prix final, chauffeur, carburant et taxes inclus.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ FLOTTE ══════════════ -->
+<section class="veh-fleet">
+  <div class="container">
+    <div class="section-head center">
+      <span class="section-label">Notre flotte</span>
+      <h2 class="section-title">Choisissez votre véhicule</h2>
+      <p class="section-sub">Du transfert pour 1 personne au groupe de 18 voyageurs — nous avons le véhicule qu'il vous faut.</p>
+    </div>
+    <div class="veh-fleet-grid">
+
+      <!-- Skoda Kodiaq -->
+      <div class="veh-card reveal">
+        <div class="veh-card-gallery">
+          <img src="../Véhicule/Skoda Kodiaq.png" alt="Skoda Kodiaq">
+          <span class="veh-card-badge">4 passagers</span>
+          <span class="veh-card-type">Berline Premium</span>
+        </div>
+        <div class="veh-card-body">
+          <div>
+            <div class="veh-card-tagline">Berline · Confort privé</div>
+            <h3 class="veh-card-name">Skoda Kodiaq</h3>
+          </div>
+          <p class="veh-card-desc">Idéal pour les couples, familles et petits groupes. La Skoda Kodiaq allie espace, confort et modernité pour vos transferts aéroport et excursions privées au Maroc.</p>
+          <div class="veh-card-specs">
+            <div class="veh-card-spec"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>4 passagers max</div>
+            <div class="veh-card-spec"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>3 valises</div>
+            <div class="veh-card-spec"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 9.5V14a1 1 0 001 1h18a1 1 0 001-1V9.5"/><path d="M12 14V4"/><path d="M8 8l4-4 4 4"/></svg>Coffre spacieux</div>
+            <div class="veh-card-spec"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/><path d="M12 8v4l3 3"/></svg>Climatisation A/C</div>
+          </div>
+          <div class="veh-card-features">
+            <span class="veh-feature-tag">WiFi</span>
+            <span class="veh-feature-tag">Eau offerte</span>
+            <span class="veh-feature-tag">Chauffeur privé</span>
+            <span class="veh-feature-tag">Siège enfant dispo.</span>
+          </div>
+          <div class="veh-card-footer">
+            <div class="veh-card-ideal">
+              <span class="veh-card-ideal">Idéal pour</span>
+              <strong>Couples · Familles · Business</strong>
+            </div>
+            <a onclick="sessionStorage.setItem('mtVehicle','kodiaq');sessionStorage.setItem('mtVehicleName','Skoda Kodiaq')" href="../transferts/index.html" class="veh-card-btn">Réserver</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Toyota Land Cruiser Prado -->
+      <div class="veh-card reveal delay-1">
+        <div class="veh-card-gallery">
+          <img src="../Véhicule/Toyota Land Cruiser Prado TX.webp" alt="Toyota Land Cruiser Prado TX">
+          <span class="veh-card-badge">6 passagers</span>
+          <span class="veh-card-type">4×4 Tout-terrain</span>
+        </div>
+        <div class="veh-card-body">
+          <div>
+            <div class="veh-card-tagline">4×4 · Désert & Atlas</div>
+            <h3 class="veh-card-name">Toyota Land Cruiser Prado TX</h3>
+          </div>
+          <p class="veh-card-desc">Le 4×4 incontournable pour explorer les pistes de l'Atlas, le désert de Merzouga et les gorges du Dadès. Puissant, fiable et confortable même sur les chemins les plus escarpés.</p>
+          <div class="veh-card-specs">
+            <div class="veh-card-spec"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>6 passagers max</div>
+            <div class="veh-card-spec"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>4 valises</div>
+            <div class="veh-card-spec"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>Tout-terrain 4×4</div>
+            <div class="veh-card-spec"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/></svg>Climatisation A/C</div>
+          </div>
+          <div class="veh-card-features">
+            <span class="veh-feature-tag">Pistes désert</span>
+            <span class="veh-feature-tag">Atlas & gorges</span>
+            <span class="veh-feature-tag">Chauffeur privé</span>
+            <span class="veh-feature-tag">Grand coffre</span>
+          </div>
+          <div class="veh-card-footer">
+            <div class="veh-card-ideal">
+              <span class="veh-card-ideal">Idéal pour</span>
+              <strong>Désert · Atlas · Aventure</strong>
+            </div>
+            <a onclick="sessionStorage.setItem('mtVehicle','prado');sessionStorage.setItem('mtVehicleName','Toyota Land Cruiser Prado TX')" href="../transferts/index.html" class="veh-card-btn">Réserver</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mercedes Vito -->
+      <div class="veh-card reveal delay-2">
+        <div class="veh-card-gallery">
+          <img src="../Véhicule/Mercedes Vito.png" alt="Mercedes Vito">
+          <span class="veh-card-badge">7 passagers</span>
+          <span class="veh-card-type">Minivan Premium</span>
+        </div>
+        <div class="veh-card-body">
+          <div>
+            <div class="veh-card-tagline">Minivan · Familles & groupes</div>
+            <h3 class="veh-card-name">Mercedes Vito</h3>
+          </div>
+          <p class="veh-card-desc">Le minivan haut de gamme pour les familles et groupes jusqu'à 7 personnes. Sièges capitaine confortables, grande hauteur intérieure et espace bagages généreux pour vos excursions.</p>
+          <div class="veh-card-specs">
+            <div class="veh-card-spec"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>7 passagers max</div>
+            <div class="veh-card-spec"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>6 valises</div>
+            <div class="veh-card-spec"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Sièges capitaine</div>
+            <div class="veh-card-spec"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/></svg>Climatisation A/C</div>
+          </div>
+          <div class="veh-card-features">
+            <span class="veh-feature-tag">WiFi</span>
+            <span class="veh-feature-tag">Eau offerte</span>
+            <span class="veh-feature-tag">Chauffeur privé</span>
+            <span class="veh-feature-tag">Grande hauteur</span>
+          </div>
+          <div class="veh-card-footer">
+            <div class="veh-card-ideal">
+              <span class="veh-card-ideal">Idéal pour</span>
+              <strong>Familles · Groupes · Excursions</strong>
+            </div>
+            <a onclick="sessionStorage.setItem('mtVehicle','vito');sessionStorage.setItem('mtVehicleName','Mercedes Vito')" href="../transferts/index.html" class="veh-card-btn">Réserver</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mercedes Sprinter -->
+      <div class="veh-card reveal delay-3">
+        <div class="veh-card-gallery">
+          <img src="../Véhicule/Mercedes Sprinter.png" alt="Mercedes Sprinter">
+          <span class="veh-card-badge">18 passagers</span>
+          <span class="veh-card-type">Minibus Grande Capacité</span>
+        </div>
+        <div class="veh-card-body">
+          <div>
+            <div class="veh-card-tagline">Minibus · Grands groupes</div>
+            <h3 class="veh-card-name">Mercedes Sprinter</h3>
+          </div>
+          <p class="veh-card-desc">Le minibus grand confort pour les groupes jusqu'à 18 personnes. Parfait pour les séminaires d'entreprise, groupes touristiques, pélerinages et transferts aéroport collectifs.</p>
+          <div class="veh-card-specs">
+            <div class="veh-card-spec"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>18 passagers max</div>
+            <div class="veh-card-spec"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>Grand espace bagages</div>
+            <div class="veh-card-spec"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Groupes & séminaires</div>
+            <div class="veh-card-spec"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/></svg>Climatisation A/C</div>
+          </div>
+          <div class="veh-card-features">
+            <span class="veh-feature-tag">Microphone</span>
+            <span class="veh-feature-tag">Grand groupe</span>
+            <span class="veh-feature-tag">Chauffeur pro.</span>
+            <span class="veh-feature-tag">Entreprises</span>
+          </div>
+          <div class="veh-card-footer">
+            <div class="veh-card-ideal">
+              <span class="veh-card-ideal">Idéal pour</span>
+              <strong>Groupes · Séminaires · Circuits</strong>
+            </div>
+            <a onclick="sessionStorage.setItem('mtVehicle','sprinter');sessionStorage.setItem('mtVehicleName','Mercedes Sprinter')" href="../transferts/index.html" class="veh-card-btn">Réserver</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ CTA ══════════════ -->
+<section class="veh-cta">
+  <div class="container">
+    <h2 class="veh-cta-title">Prêt à réserver votre<br><span>véhicule avec chauffeur ?</span></h2>
+    <p class="veh-cta-sub">Contactez-nous pour un devis gratuit et personnalisé. Réponse garantie sous 2 heures.</p>
+    <div class="veh-cta-btns">
+      <a href="../contact.html" class="btn btn-gold">Demander un devis</a>
+      <a href="https://wa.me/212707473742" target="_blank" rel="noopener" class="btn btn-outline" style="border-color:rgba(255,255,255,.3);color:#fff;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="margin-right:6px;vertical-align:-3px"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo-row">
+          <img src="../Moroccan Transfer.png" alt="Moroccan Transfer Logo">
+          <span class="footer-brand">Moroccan<span>Transfer</span></span>
+        </div>
+        <p class="footer-desc">Votre agence de transferts et excursions privées au Maroc depuis 2012. Professionnels, ponctuels et passionnés du Maroc authentique.</p>
+        <div class="footer-social">
+          <a href="#" class="social-btn" aria-label="Facebook"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+          <a href="#" class="social-btn" aria-label="Instagram"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://www.tripadvisor.com/Attraction_Review-g293734-d17333913-Reviews-Morocco_Transfer-Marrakech_Marrakech_Safi.html" target="_blank" rel="noopener" class="social-btn" aria-label="TripAdvisor"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12.006 4.295c-2.29 0-4.408.738-6.13 1.984L3 6.28l2.569.017A9.928 9.928 0 002 13.994C2 19.52 6.479 24 12.006 24S22 19.52 22 13.994c0-3.33-1.636-6.28-4.157-8.11l2.43-.006-2.85-.004A9.926 9.926 0 0012.006 4.3zM7.22 14.12c-.924 0-1.673-.75-1.673-1.673s.75-1.673 1.673-1.673 1.673.75 1.673 1.673-.75 1.673-1.673 1.673zm4.786 3.87c-2.184 0-3.953-1.77-3.953-3.954s1.77-3.953 3.953-3.953 3.953 1.77 3.953 3.953-1.77 3.954-3.953 3.954zm0-6.252a2.3 2.3 0 00-2.298 2.298 2.3 2.3 0 002.298 2.298 2.3 2.3 0 002.298-2.298 2.3 2.3 0 00-2.298-2.298zm4.794 2.382c-.924 0-1.673-.75-1.673-1.673s.75-1.673 1.673-1.673 1.673.75 1.673 1.673-.75 1.673-1.673 1.673z"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <h4 class="footer-col-title">Parcourir</h4>
+        <ul class="footer-links">
+          <li><a href="../excursions/index.html" class="footer-link">Excursions depuis Agadir</a></li>
+          <li><a href="../excursions/index.html" class="footer-link">Excursion Marrakech</a></li>
+          <li><a href="../excursions/index.html" class="footer-link">Excursion Essaouira</a></li>
+          <li><a href="../transferts/index.html" class="footer-link">Transferts aéroport</a></li>
+          <li><a href="../activites/index.html" class="footer-link">Activités & Loisirs</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-col-title">Informations</h4>
+        <ul class="footer-links">
+          <li><a href="../apropos/index.html" class="footer-link">À propos de nous</a></li>
+          <li><a href="#" class="footer-link">FAQ</a></li>
+          <li><a href="index.html" class="footer-link">Nos véhicules</a></li>
+          <li><a href="#" class="footer-link">Avis clients</a></li>
+          <li><a href="#" class="footer-link">Mentions légales</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-col-title">Coordonnées</h4>
+        <ul class="footer-contact-list">
+          <li class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.81 19.79 19.79 0 01.04 2.27 2 2 0 012 .09h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg><a href="tel:+212707473742">+212 707-473742</a></li>
+          <li class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><a href="mailto:Contact@moroccantransfer.com">Contact@moroccantransfer.com</a></li>
+          <li class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Marrakech, Maroc</li>
+          <li class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Lun–Dim : 06h00 – 23h00</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">2012 – 2026 © MoroccanTransfer.com — <a href="#">Mentions légales</a> · <a href="#">Confidentialité</a></div>
+      <div class="footer-payment-icons">
+        <span class="payment-icon">VISA</span><span class="payment-icon">MC</span><span class="payment-icon">AMEX</span><span class="payment-icon">PAYPAL</span><span class="payment-icon">STRIPE</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/212707473742" class="whatsapp-float" target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script src="../assets/js/main.js"></script>
+<script src="../assets/js/lang-switcher.js"></script>
+</body>
+</html>

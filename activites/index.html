@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Activités à Agadir & Marrakech — Montgolfière, quad, buggy, balade à cheval, hammam, sortie en mer et bien plus. Réservez avec Moroccan Transfer.">
+<title>Activités au Maroc — Moroccan Transfer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/style.css">
+<style>
+/* ── ACTIVITIES PAGE HERO ── */
+.act-hero{
+  position:relative;background:var(--black);
+  padding:70px 0 54px;text-align:center;
+  border-bottom:1px solid rgba(201,168,76,0.15);
+  overflow:hidden;
+}
+.act-hero::before{
+  content:'';position:absolute;inset:0;
+  background-image:url('../jemaa-el-fnaa-square.jpg');
+  background-size:cover;background-position:center;
+  opacity:0.18;
+}
+.act-hero-inner{position:relative;z-index:1}
+.act-hero-label{display:inline-block;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.act-hero-title{font-family:var(--font-display);font-size:clamp(28px,5vw,48px);color:var(--white);margin-bottom:14px;line-height:1.15}
+.act-hero-sub{font-size:16px;color:rgba(255,255,255,0.5);max-width:580px;margin:0 auto 28px}
+.act-hero-stats{display:flex;justify-content:center;gap:40px;flex-wrap:wrap;margin-top:32px;padding-top:28px;border-top:1px solid rgba(201,168,76,0.2)}
+.act-hero-stat-num{font-family:var(--font-display);font-size:26px;font-weight:700;color:var(--gold);display:block;line-height:1}
+.act-hero-stat-label{font-size:11px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1px;margin-top:4px;display:block}
+
+/* ── FILTERS BAR ── */
+.act-filters{background:#fff;border-bottom:1px solid var(--grey-6);position:sticky;top:var(--header-h);z-index:50}
+.act-filters-inner{display:flex;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.act-filters-inner::-webkit-scrollbar{display:none}
+.act-filter-btn{
+  flex-shrink:0;display:flex;align-items:center;gap:6px;
+  padding:14px 20px;font-size:13px;font-weight:600;
+  color:var(--grey-2);background:none;border:none;
+  border-bottom:3px solid transparent;cursor:pointer;
+  transition:all var(--transition);white-space:nowrap;
+}
+.act-filter-btn:hover{color:var(--gold)}
+.act-filter-btn.active{color:var(--gold);border-bottom-color:var(--gold)}
+.act-filter-count{
+  background:var(--grey-6);color:var(--grey-3);
+  font-size:10px;font-weight:700;border-radius:20px;
+  padding:2px 7px;transition:all var(--transition);
+}
+.act-filter-btn.active .act-filter-count{background:var(--gold-pale);color:var(--gold-dark)}
+
+/* ── RESULT COUNT ── */
+.act-result-bar{padding:18px 0 4px;font-size:13px;color:var(--grey-3)}
+.act-result-bar strong{color:var(--black)}
+
+/* ── GRID ── */
+.act-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;padding:16px 0 60px}
+
+/* ── CTA STRIP ── */
+.act-cta{
+  background:var(--black-2);
+  padding:52px 40px;border-radius:var(--radius-lg);
+  display:flex;align-items:center;justify-content:space-between;gap:24px;
+  margin-bottom:60px;
+  border:1px solid rgba(201,168,76,0.15);
+}
+.act-cta-text h3{font-family:var(--font-display);font-size:22px;color:var(--white);margin-bottom:6px}
+.act-cta-text p{font-size:14px;color:rgba(255,255,255,0.45)}
+.act-cta-btns{display:flex;gap:12px;flex-shrink:0;flex-wrap:wrap}
+
+@media(max-width:960px){.act-grid{grid-template-columns:repeat(2,1fr);gap:20px}}
+@media(max-width:600px){
+  .act-grid{grid-template-columns:1fr;gap:16px;padding-bottom:40px}
+  .act-hero-stats{gap:24px}
+  .act-cta{flex-direction:column;text-align:center;padding:30px 20px}
+  .act-cta-btns{justify-content:center}
+}
+
+@media(max-width:768px){
+  .act-hero{padding:50px 0 36px}
+  .act-hero-stats{gap:18px;flex-wrap:wrap;justify-content:center}
+  .act-hero h1{font-size:clamp(24px,5vw,38px)}
+  .act-filters-inner{padding-bottom:6px}
+  .act-grid{grid-template-columns:repeat(2,1fr)}
+  .act-cta{flex-direction:column;text-align:center;padding:36px 20px}
+  .act-cta-btns{justify-content:center}
+}
+@media(max-width:480px){
+  .act-hero{padding:36px 0 24px}
+  .act-hero-stats{flex-direction:column;align-items:center;gap:12px}
+  .act-stat-num{font-size:28px}
+  .act-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ TOP BAR ══════════════ -->
+<div class="topbar">
+  <div class="container">
+    <div class="topbar-inner">
+      <div class="topbar-left">
+        <a href="tel:+212707473742" class="topbar-item">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.81 19.79 19.79 0 01.04 2.27 2 2 0 012 .09h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+          +212 707-473742
+        </a>
+        <a href="mailto:Contact@moroccantransfer.com" class="topbar-item">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Contact@moroccantransfer.com
+        </a>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-social">
+          <a href="#" aria-label="Facebook"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://www.tripadvisor.com/Attraction_Review-g293734-d17333913-Reviews-Morocco_Transfer-Marrakech_Marrakech_Safi.html" target="_blank" rel="noopener" aria-label="TripAdvisor"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12.006 4.295c-2.29 0-4.408.738-6.13 1.984L3 6.28l2.569.017A9.928 9.928 0 002 13.994C2 19.52 6.479 24 12.006 24S22 19.52 22 13.994c0-3.33-1.636-6.28-4.157-8.11l2.43-.006-2.85-.004A9.926 9.926 0 0012.006 4.3zM7.22 14.12c-.924 0-1.673-.75-1.673-1.673s.75-1.673 1.673-1.673 1.673.75 1.673 1.673-.75 1.673-1.673 1.673zm4.786 3.87c-2.184 0-3.953-1.77-3.953-3.954s1.77-3.953 3.953-3.953 3.953 1.77 3.953 3.953-1.77 3.954-3.953 3.954zm0-6.252a2.3 2.3 0 00-2.298 2.298 2.3 2.3 0 002.298 2.298 2.3 2.3 0 002.298-2.298 2.3 2.3 0 00-2.298-2.298zm4.794 2.382c-.924 0-1.673-.75-1.673-1.673s.75-1.673 1.673-1.673 1.673.75 1.673 1.673-.75 1.673-1.673 1.673z"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ HEADER ══════════════ -->
+<header class="site-header">
+  <nav class="nav-bar">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="../index.html" class="nav-logo">
+          <img src="../Moroccan Transfer.png" alt="Moroccan Transfer">
+        </a>
+        <ul class="nav-menu">
+          <li class="nav-item"><a href="../index.html" class="nav-link">Accueil</a></li>
+          <li class="nav-item nav-dropdown">
+            <a href="../excursions/index.html" class="nav-link">Excursions <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></a>
+            <ul class="nav-dropdown-menu">
+              <li><a href="../excursions/index.html" class="nav-dropdown-item">Toutes les excursions</a></li>
+              <li><a href="../excursions/index.html" class="nav-dropdown-item">Désert Merzouga (3j)</a></li>
+              <li><a href="../excursions/index.html" class="nav-dropdown-item">Marrakech (1j)</a></li>
+              <li><a href="../excursions/index.html" class="nav-dropdown-item">Essaouira (1j)</a></li>
+              <li><a href="../excursions/index.html" class="nav-dropdown-item">Vallée du Dadès</a></li>
+            </ul>
+          </li>
+          <li class="nav-item nav-dropdown">
+            <a href="../transferts/index.html" class="nav-link">Transferts <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></a>
+            <ul class="nav-dropdown-menu">
+              <li><a href="../transferts/index.html" class="nav-dropdown-item">Aéroport Agadir (AGA)</a></li>
+              <li><a href="../transferts/index.html" class="nav-dropdown-item">Aéroport Marrakech (RAK)</a></li>
+              <li><a href="../transferts/index.html" class="nav-dropdown-item">Aéroport Casablanca (CMN)</a></li>
+              <li><a href="../transferts/index.html" class="nav-dropdown-item">Aéroport Fès (FEZ)</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a href="index.html" class="nav-link active">Activités</a></li>
+          <li class="nav-item"><a href="../blog/index.html" class="nav-link">Blog</a></li>
+          <li class="nav-item"><a href="../apropos/index.html" class="nav-link">À propos</a></li>
+          <li class="nav-item"><a href="../contact.html" class="nav-link">Contact</a></li>
+        </ul>
+        <div class="nav-cta">
+          <div class="nav-phone">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.81 19.79 19.79 0 01.04 2.27 2 2 0 012 .09h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+            <div><small>Appelez-nous</small>+212 707-473742</div>
+          </div>
+        </div>
+        <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- Mobile nav -->
+<div class="mobile-nav-overlay"></div>
+<div class="mobile-nav">
+  <div class="mobile-nav-close">
+    <span class="mobile-nav-logo">Moroccan<span>Transfer</span></span>
+    <button style="font-size:22px;color:rgba(255,255,255,0.6);background:none;border:none;cursor:pointer;">✕</button>
+  </div>
+  <a href="../index.html" class="mobile-nav-link">Accueil</a>
+  <a href="../excursions/index.html" class="mobile-nav-link">Excursions</a>
+  <a href="../transferts/index.html" class="mobile-nav-link">Transferts</a>
+  <a href="index.html" class="mobile-nav-link">Activités</a>
+  <a href="../blog/index.html" class="mobile-nav-link">Blog</a>
+  <a href="../apropos/index.html" class="mobile-nav-link">À propos</a>
+  <a href="../contact.html" class="mobile-nav-link">Contact</a>
+</div>
+
+<!-- ══════════════ HERO ══════════════ -->
+<div class="act-hero">
+  <div class="container">
+    <div class="act-hero-inner">
+      <div class="act-hero-label">Moroccan Transfer — Loisirs & Sensations</div>
+      <h1 class="act-hero-title">Activités à Marrakech</h1>
+      <p class="act-hero-sub">Balade à cheval, dromadaire, parc aquatique, wakeboard, poterie, calèche… Des expériences uniques pour des souvenirs inoubliables.</p>
+      <div class="act-hero-stats">
+        <div>
+          <span class="act-hero-stat-num">23</span>
+          <span class="act-hero-stat-label">Activités disponibles</span>
+        </div>
+        <div>
+          <span class="act-hero-stat-num">4.9★</span>
+          <span class="act-hero-stat-label">Note moyenne</span>
+        </div>
+        <div>
+          <span class="act-hero-stat-num">600+</span>
+          <span class="act-hero-stat-label">Avis vérifiés</span>
+        </div>
+        <div>
+          <span class="act-hero-stat-num">2</span>
+          <span class="act-hero-stat-label">Villes</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ FILTERS ══════════════ -->
+<div class="act-filters">
+  <div class="container">
+    <div class="act-filters-inner">
+      <button class="act-filter-btn active" data-filter="all">
+        Toutes <span class="act-filter-count">23</span>
+      </button>
+      <button class="act-filter-btn" data-filter="dans-les-airs">
+        Dans les airs <span class="act-filter-count">4</span>
+      </button>
+      <button class="act-filter-btn" data-filter="terrestre">
+        Terrestre <span class="act-filter-count">8</span>
+      </button>
+      <button class="act-filter-btn" data-filter="nautique">
+        Nautique <span class="act-filter-count">3</span>
+      </button>
+      <button class="act-filter-btn" data-filter="decouverte">
+        Découverte <span class="act-filter-count">7</span>
+      </button>
+      <button class="act-filter-btn" data-filter="bien-etre">
+        Bien-être <span class="act-filter-count">1</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ ACTIVITIES GRID ══════════════ -->
+<div style="background:#f8f8f6;padding-bottom:20px;">
+  <div class="container">
+    <div class="act-result-bar"><strong id="actCount">23</strong> activités trouvées</div>
+    <div class="act-grid" id="actGrid">
+
+      <!-- 1 — Balade à Cheval en Palmeraie -->
+      <div class="tour-card reveal" data-cat="terrestre">
+        <div class="tour-gallery" data-gallery>
+          <div class="tour-gallery-track">
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2018/09/CA-Maroc-chevauchee-desert-cheval-aventure-20-300x209.jpg" alt="Balade à cheval Palmeraie Marrakech" loading="lazy"></div>
+          </div>
+          <button class="gallery-prev">&#8249;</button><button class="gallery-next">&#8250;</button>
+          <div class="gallery-dots"><button class="gallery-dot active"></button></div>
+          <span class="card-badge-cat">Terrestre</span>
+          <button class="card-wishlist" data-tour-id="cheval-palmeraie"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+          <span class="card-badge-duration"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>2 heures</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta"><span class="card-meta-item"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Marrakech</span></div>
+          <h3 class="card-title"><a href="../contact.html">Balade à Cheval en Palmeraie</a></h3>
+          <p class="card-excerpt">Promenade équestre dans la verdoyante palmeraie de Marrakech, guidée par des cavaliers expérimentés. Une escapade nature idéale pour toute la famille.</p>
+          <div class="card-price">à partir de <strong data-price-eur="30">€30</strong></div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-num">4.9</span><span class="rating-count">(74)</span></div>
+          <div class="card-actions"><a onclick="sessionStorage.setItem('mtResData', '{&quot;name&quot;: &quot;Balade à Cheval en Palmeraie&quot;, &quot;price&quot;: 30, &quot;category&quot;: &quot;Terrestre&quot;, &quot;duration&quot;: &quot;2 heures&quot;, &quot;image&quot;: &quot;https://marrakechbestof.com/wp-content/uploads/2018/09/CA-Maroc-chevauchee-desert-cheval-aventure-20-300x209.jpg&quot;, &quot;desc&quot;: &quot;Promenade équestre dans la verdoyante palmeraie de Marrakech.&quot;}')" href="../reservation.html" class="btn-commander">Réserver</a><a href="../contact.html" class="btn-details">Détails →</a></div>
+        </div>
+      </div>
+
+      <!-- 2 — Balade en Dromadaire Palmeraie -->
+      <div class="tour-card reveal delay-1" data-cat="terrestre">
+        <div class="tour-gallery" data-gallery>
+          <div class="tour-gallery-track">
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2018/09/La_Palmeraie_de_Marrakech_709-1024x468-1024x468.jpg" alt="Balade dromadaire Palmeraie Marrakech" loading="lazy"></div>
+          </div>
+          <button class="gallery-prev">&#8249;</button><button class="gallery-next">&#8250;</button>
+          <div class="gallery-dots"><button class="gallery-dot active"></button></div>
+          <span class="card-badge-cat">Terrestre</span>
+          <button class="card-wishlist" data-tour-id="dromadaire-palmeraie"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+          <span class="card-badge-duration"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>1 h 30</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta"><span class="card-meta-item"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Marrakech</span></div>
+          <h3 class="card-title"><a href="../contact.html">Balade en Dromadaire – Palmeraie</a></h3>
+          <p class="card-excerpt">Traversez la magnifique palmeraie de Marrakech à dos de dromadaire, une expérience authentique et dépaysante au cœur de la nature.</p>
+          <div class="card-price">à partir de <strong data-price-eur="20">€20</strong></div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-num">4.8</span><span class="rating-count">(109)</span></div>
+          <div class="card-actions"><a onclick="sessionStorage.setItem('mtResData', '{&quot;name&quot;: &quot;Balade en Dromadaire – Palmeraie&quot;, &quot;price&quot;: 20, &quot;category&quot;: &quot;Terrestre&quot;, &quot;duration&quot;: &quot;1h30&quot;, &quot;image&quot;: &quot;https://marrakechbestof.com/wp-content/uploads/2018/09/La_Palmeraie_de_Marrakech_709-1024x468-1024x468.jpg&quot;, &quot;desc&quot;: &quot;Traversez la palmeraie de Marrakech à dos de dromadaire.&quot;}')" href="../reservation.html" class="btn-commander">Réserver</a><a href="../contact.html" class="btn-details">Détails →</a></div>
+        </div>
+      </div>
+
+      <!-- 3 — Oasiria Parc Aquatique -->
+      <div class="tour-card reveal delay-2" data-cat="nautique">
+        <div class="tour-gallery" data-gallery>
+          <div class="tour-gallery-track">
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2018/10/images-5.jpeg" alt="Oasiria parc aquatique Marrakech" loading="lazy"></div>
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2018/10/83c01244121e035eebafaef46edb6253.jpg" alt="Oasiria toboggan piscine" loading="lazy"></div>
+          </div>
+          <button class="gallery-prev">&#8249;</button><button class="gallery-next">&#8250;</button>
+          <div class="gallery-dots"><button class="gallery-dot active"></button><button class="gallery-dot"></button></div>
+          <span class="card-badge-cat">Nautique</span>
+          <button class="card-wishlist" data-tour-id="oasiria"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+          <span class="card-badge-duration"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Journée</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta"><span class="card-meta-item"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Marrakech</span></div>
+          <h3 class="card-title"><a href="../contact.html">Oasiria — Parc Aquatique</a></h3>
+          <p class="card-excerpt">Le plus grand parc aquatique du Maroc avec toboggans géants, vagues artificielles, rivière paresseuse et espaces verts. Idéal pour toute la famille.</p>
+          <div class="card-price">à partir de <strong data-price-eur="25">€25</strong></div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-num">4.7</span><span class="rating-count">(188)</span></div>
+          <div class="card-actions"><a onclick="sessionStorage.setItem('mtResData', '{&quot;name&quot;: &quot;Oasiria — Parc Aquatique&quot;, &quot;price&quot;: 25, &quot;category&quot;: &quot;Nautique&quot;, &quot;duration&quot;: &quot;Journée&quot;, &quot;image&quot;: &quot;https://marrakechbestof.com/wp-content/uploads/2018/10/images-5.jpeg&quot;, &quot;desc&quot;: &quot;Le plus grand parc aquatique du Maroc avec toboggans géants et vagues.&quot;}')" href="../reservation.html" class="btn-commander">Réserver</a><a href="../contact.html" class="btn-details">Détails →</a></div>
+        </div>
+      </div>
+
+      <!-- 4 — Wake Board Waky -->
+      <div class="tour-card reveal" data-cat="nautique">
+        <div class="tour-gallery" data-gallery>
+          <div class="tour-gallery-track">
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2018/09/waky-marrakech.jpg" alt="Wake board Waky Marrakech" loading="lazy"></div>
+          </div>
+          <button class="gallery-prev">&#8249;</button><button class="gallery-next">&#8250;</button>
+          <div class="gallery-dots"><button class="gallery-dot active"></button></div>
+          <span class="card-badge-cat">Nautique</span>
+          <button class="card-wishlist" data-tour-id="waky-wakeboard"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+          <span class="card-badge-duration"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>2 heures</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta"><span class="card-meta-item"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Marrakech</span></div>
+          <h3 class="card-title"><a href="../contact.html">Wake Board – Waky</a></h3>
+          <p class="card-excerpt">Sensations fortes garanties sur le lac de Waky ! Initiation et sessions de wakeboard encadrées par des moniteurs diplômés dans un cadre magnifique.</p>
+          <div class="card-price">à partir de <strong data-price-eur="35">€35</strong></div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-num">4.8</span><span class="rating-count">(61)</span></div>
+          <div class="card-actions"><a onclick="sessionStorage.setItem('mtResData', '{&quot;name&quot;: &quot;Wake Board – Waky&quot;, &quot;price&quot;: 35, &quot;category&quot;: &quot;Nautique&quot;, &quot;duration&quot;: &quot;2 heures&quot;, &quot;image&quot;: &quot;https://marrakechbestof.com/wp-content/uploads/2018/09/waky-marrakech.jpg&quot;, &quot;desc&quot;: &quot;Sensations fortes sur le lac de Waky, encadré par des moniteurs diplômés.&quot;}')" href="../reservation.html" class="btn-commander">Réserver</a><a href="../contact.html" class="btn-details">Détails →</a></div>
+        </div>
+      </div>
+
+      <!-- 5 — Atelier de Poterie -->
+      <div class="tour-card reveal delay-1" data-cat="decouverte">
+        <div class="tour-gallery" data-gallery>
+          <div class="tour-gallery-track">
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2018/09/atelier-de-poterie-du.jpg" alt="Atelier poterie Marrakech" loading="lazy"></div>
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2018/09/ccccccccccccccccc.jpg" alt="Poterie artisanat Marrakech" loading="lazy"></div>
+          </div>
+          <button class="gallery-prev">&#8249;</button><button class="gallery-next">&#8250;</button>
+          <div class="gallery-dots"><button class="gallery-dot active"></button><button class="gallery-dot"></button></div>
+          <span class="card-badge-cat">Découverte</span>
+          <button class="card-wishlist" data-tour-id="atelier-poterie"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+          <span class="card-badge-duration"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>2 heures</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta"><span class="card-meta-item"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Marrakech</span></div>
+          <h3 class="card-title"><a href="../contact.html">Atelier de Poterie</a></h3>
+          <p class="card-excerpt">Découvrez l'art de la poterie marocaine avec un artisan local. Modelez votre propre pièce sur le tour, une expérience créative et authentique à emporter.</p>
+          <div class="card-price">à partir de <strong data-price-eur="20">€20</strong></div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-num">4.9</span><span class="rating-count">(93)</span></div>
+          <div class="card-actions"><a onclick="sessionStorage.setItem('mtResData', '{&quot;name&quot;: &quot;Atelier de Poterie&quot;, &quot;price&quot;: 20, &quot;category&quot;: &quot;Découverte&quot;, &quot;duration&quot;: &quot;2 heures&quot;, &quot;image&quot;: &quot;https://marrakechbestof.com/wp-content/uploads/2018/09/atelier-de-poterie-du.jpg&quot;, &quot;desc&quot;: &quot;Découvrez l\\'art de la poterie marocaine avec un artisan local.&quot;}')" href="../reservation.html" class="btn-commander">Réserver</a><a href="../contact.html" class="btn-details">Détails →</a></div>
+        </div>
+      </div>
+
+
+      <!-- 7 — Ferme Pédagogique Bled Ouladi -->
+      <div class="tour-card reveal" data-cat="decouverte">
+        <div class="tour-gallery" data-gallery>
+          <div class="tour-gallery-track">
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2022/02/E42BAA80-09E4-420A-9EF3-1C8F2657C464-1024x640.jpeg" alt="Ferme pédagogique Bled Ouladi Marrakech" loading="lazy"></div>
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2022/02/3D8C7DBF-862C-4181-8954-E68821E7A812-1024x650.jpeg" alt="Animaux ferme pédagogique Marrakech" loading="lazy"></div>
+          </div>
+          <button class="gallery-prev">&#8249;</button><button class="gallery-next">&#8250;</button>
+          <div class="gallery-dots"><button class="gallery-dot active"></button><button class="gallery-dot"></button></div>
+          <span class="card-badge-cat">Découverte</span>
+          <button class="card-wishlist" data-tour-id="bled-ouladi"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+          <span class="card-badge-duration"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>3 heures</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta"><span class="card-meta-item"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Marrakech</span></div>
+          <h3 class="card-title"><a href="../contact.html">Ferme Pédagogique Bled Ouladi</a></h3>
+          <p class="card-excerpt">Une sortie familiale unique dans une ferme pédagogique aux portes de Marrakech. Rencontres avec les animaux, jardins bio et découverte de la vie rurale marocaine.</p>
+          <div class="card-price">à partir de <strong data-price-eur="18">€18</strong></div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-num">4.9</span><span class="rating-count">(82)</span></div>
+          <div class="card-actions"><a onclick="sessionStorage.setItem('mtResData', '{&quot;name&quot;: &quot;Ferme Pédagogique Bled Ouladi&quot;, &quot;price&quot;: 18, &quot;category&quot;: &quot;Découverte&quot;, &quot;duration&quot;: &quot;3 heures&quot;, &quot;image&quot;: &quot;https://marrakechbestof.com/wp-content/uploads/2022/02/E42BAA80-09E4-420A-9EF3-1C8F2657C464-1024x640.jpeg&quot;, &quot;desc&quot;: &quot;Sortie familiale unique dans une ferme pédagogique aux portes de Marrakech.&quot;}')" href="../reservation.html" class="btn-commander">Réserver</a><a href="../contact.html" class="btn-details">Détails →</a></div>
+        </div>
+      </div>
+
+      <!-- 8 — O'Atlas Piscine -->
+      <div class="tour-card reveal delay-1" data-cat="nautique">
+        <div class="tour-gallery" data-gallery>
+          <div class="tour-gallery-track">
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2023/05/immense-piscine-bordee-palmiers-1024x682.webp" alt="O'Atlas piscine Marrakech" loading="lazy"></div>
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2023/05/animation-piscine-oatlas-1024x768.webp" alt="O'Atlas animation DJ piscine" loading="lazy"></div>
+          </div>
+          <button class="gallery-prev">&#8249;</button><button class="gallery-next">&#8250;</button>
+          <div class="gallery-dots"><button class="gallery-dot active"></button><button class="gallery-dot"></button></div>
+          <span class="card-badge-cat">Nautique</span>
+          <button class="card-wishlist" data-tour-id="oatlas-piscine"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+          <span class="card-badge-duration"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Journée</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta"><span class="card-meta-item"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Marrakech</span></div>
+          <h3 class="card-title"><a href="../contact.html">O'Atlas – Journée Piscine</a></h3>
+          <p class="card-excerpt">Profitez d'une journée de détente au bord d'une superbe piscine bordée de palmiers à 25 min de Marrakech. Restauration, animations DJ le week-end et navette optionnelle.</p>
+          <div class="card-price">à partir de <strong data-price-eur="20">€20</strong></div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-num">4.7</span><span class="rating-count">(143)</span></div>
+          <div class="card-actions"><a onclick="sessionStorage.setItem('mtResData', '{&quot;name&quot;: &quot;O\\'Atlas – Journée Piscine&quot;, &quot;price&quot;: 20, &quot;category&quot;: &quot;Nautique&quot;, &quot;duration&quot;: &quot;Journée&quot;, &quot;image&quot;: &quot;https://marrakechbestof.com/wp-content/uploads/2023/05/immense-piscine-bordee-palmiers-1024x682.webp&quot;, &quot;desc&quot;: &quot;Journée de détente au bord d\\'une superbe piscine bordée de palmiers.&quot;}')" href="../reservation.html" class="btn-commander">Réserver</a><a href="../contact.html" class="btn-details">Détails →</a></div>
+        </div>
+      </div>
+
+      <!-- 9 — Hammam & Spa -->
+      <div class="tour-card reveal delay-2" data-cat="bien-etre">
+        <div class="tour-gallery" data-gallery>
+          <div class="tour-gallery-track">
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2018/10/Les-Bains-de-Marrakech-e1440053875666.jpg" alt="Hammam Les Bains de Marrakech" loading="lazy"></div>
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2018/10/250.jpg" alt="Soin hammam Marrakech" loading="lazy"></div>
+          </div>
+          <button class="gallery-prev">&#8249;</button><button class="gallery-next">&#8250;</button>
+          <div class="gallery-dots"><button class="gallery-dot active"></button><button class="gallery-dot"></button></div>
+          <span class="card-badge-cat">Bien-être</span>
+          <button class="card-wishlist" data-tour-id="hammam-spa"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+          <span class="card-badge-duration"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>2 heures</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta"><span class="card-meta-item"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Marrakech</span></div>
+          <h3 class="card-title"><a href="../contact.html">Hammam & Massage à Marrakech</a></h3>
+          <p class="card-excerpt">Ressourcez-vous dans un hammam traditionnel de Marrakech. Gommage au savon beldi, soin au ghassoul et massage relaxant à l'huile d'argan pour un moment de pure détente.</p>
+          <div class="card-price">à partir de <strong data-price-eur="40">€40</strong></div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-num">4.9</span><span class="rating-count">(117)</span></div>
+          <div class="card-actions"><a onclick="sessionStorage.setItem('mtResData', '{&quot;name&quot;: &quot;Hammam & Massage à Marrakech&quot;, &quot;price&quot;: 40, &quot;category&quot;: &quot;Bien-être&quot;, &quot;duration&quot;: &quot;2 heures&quot;, &quot;image&quot;: &quot;https://marrakechbestof.com/wp-content/uploads/2018/10/Les-Bains-de-Marrakech-e1440053875666.jpg&quot;, &quot;desc&quot;: &quot;Hammam traditionnel avec gommage, soin au ghassoul et massage relaxant.&quot;}')" href="../reservation.html" class="btn-commander">Réserver</a><a href="../contact.html" class="btn-details">Détails →</a></div>
+        </div>
+      </div>
+
+      <!-- 10 — Montgolfière -->
+      <div class="tour-card reveal" data-cat="dans-les-airs">
+        <div class="tour-gallery" data-gallery>
+          <div class="tour-gallery-track">
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2018/10/DSC09175-1024x683.jpg" alt="Montgolfière Marrakech" loading="lazy"></div>
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2018/10/DSC09239-1024x683.jpg" alt="Vol en montgolfière au lever du soleil" loading="lazy"></div>
+          </div>
+          <button class="gallery-prev">&#8249;</button><button class="gallery-next">&#8250;</button>
+          <div class="gallery-dots"><button class="gallery-dot active"></button><button class="gallery-dot"></button></div>
+          <span class="card-badge-cat">Dans les airs</span>
+          <button class="card-wishlist" data-tour-id="montgolfiere"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+          <span class="card-badge-duration"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>3 heures</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta"><span class="card-meta-item"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Marrakech</span></div>
+          <h3 class="card-title"><a href="../contact.html">Montgolfière à Marrakech</a></h3>
+          <p class="card-excerpt">Envolez-vous au lever du soleil au-dessus des palmeraies et des montagnes de l'Atlas. Un survol magique suivi d'un thé berbère traditionnel — une expérience inoubliable.</p>
+          <div class="card-price">à partir de <strong data-price-eur="210">€210</strong></div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-num">5.0</span><span class="rating-count">(36)</span></div>
+          <div class="card-actions"><a onclick="sessionStorage.setItem('mtResData', '{&quot;name&quot;: &quot;Montgolfière à Marrakech&quot;, &quot;price&quot;: 210, &quot;category&quot;: &quot;Dans les airs&quot;, &quot;duration&quot;: &quot;3 heures&quot;, &quot;image&quot;: &quot;https://marrakechbestof.com/wp-content/uploads/2018/10/DSC09175-1024x683.jpg&quot;, &quot;desc&quot;: &quot;Envolez-vous au lever du soleil au-dessus des palmeraies et de l\\'Atlas.&quot;}')" href="../reservation.html" class="btn-commander">Réserver</a><a href="../contact.html" class="btn-details">Détails →</a></div>
+        </div>
+      </div>
+
+      <!-- 11 — Parapente -->
+      <div class="tour-card reveal delay-1" data-cat="dans-les-airs">
+        <div class="tour-gallery" data-gallery>
+          <div class="tour-gallery-track">
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2024/02/WhatsApp-Image-2024-02-02-at-11.13.37-1024x683.jpeg" alt="Parapente Marrakech Atlas" loading="lazy"></div>
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2024/02/WhatsApp-Image-2024-02-02-at-11.13.43-1-1024x768.jpeg" alt="Vol parapente vue panoramique" loading="lazy"></div>
+          </div>
+          <button class="gallery-prev">&#8249;</button><button class="gallery-next">&#8250;</button>
+          <div class="gallery-dots"><button class="gallery-dot active"></button><button class="gallery-dot"></button></div>
+          <span class="card-badge-cat">Dans les airs</span>
+          <button class="card-wishlist" data-tour-id="parapente"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+          <span class="card-badge-duration"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>2 heures</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta"><span class="card-meta-item"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Marrakech</span></div>
+          <h3 class="card-title"><a href="../contact.html">Parapente sur l'Atlas</a></h3>
+          <p class="card-excerpt">Volez en tandem au-dessus des sommets de l'Atlas avec un moniteur diplômé. Vue panoramique exceptionnelle sur Marrakech et les paysages berbères.</p>
+          <div class="card-price">à partir de <strong data-price-eur="80">€80</strong></div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-num">4.9</span><span class="rating-count">(48)</span></div>
+          <div class="card-actions"><a onclick="sessionStorage.setItem('mtResData', '{&quot;name&quot;: &quot;Parapente sur l\\'Atlas&quot;, &quot;price&quot;: 80, &quot;category&quot;: &quot;Dans les airs&quot;, &quot;duration&quot;: &quot;2 heures&quot;, &quot;image&quot;: &quot;https://marrakechbestof.com/wp-content/uploads/2024/02/WhatsApp-Image-2024-02-02-at-11.13.37-1024x683.jpeg&quot;, &quot;desc&quot;: &quot;Volez en tandem au-dessus des sommets de l\\'Atlas avec un moniteur diplômé.&quot;}')" href="../reservation.html" class="btn-commander">Réserver</a><a href="../contact.html" class="btn-details">Détails →</a></div>
+        </div>
+      </div>
+
+      <!-- 12 — Tyrolienne et Parcours Aérien -->
+      <div class="tour-card reveal delay-2" data-cat="dans-les-airs">
+        <div class="tour-gallery" data-gallery>
+          <div class="tour-gallery-track">
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2021/09/A1D71166-C734-48EA-B14F-670EFA151FBE-1024x621.jpeg" alt="Tyrolienne Marrakech" loading="lazy"></div>
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2021/09/2DF2C6F7-7516-4A7E-ADA8-35DF1C405B2E-1024x768.jpeg" alt="Parcours aérien ponts suspendus" loading="lazy"></div>
+          </div>
+          <button class="gallery-prev">&#8249;</button><button class="gallery-next">&#8250;</button>
+          <div class="gallery-dots"><button class="gallery-dot active"></button><button class="gallery-dot"></button></div>
+          <span class="card-badge-cat">Dans les airs</span>
+          <button class="card-wishlist" data-tour-id="tyrolienne"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+          <span class="card-badge-duration"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>1 heure</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta"><span class="card-meta-item"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Marrakech</span></div>
+          <h3 class="card-title"><a href="../contact.html">Tyrolienne & Parcours Aérien</a></h3>
+          <p class="card-excerpt">4 tyroliennes et 2 ponts suspendus dans un cadre naturel époustouflant à 50 min de Marrakech. Adrénaline et sécurité garanties avec équipements professionnels.</p>
+          <div class="card-price">à partir de <strong data-price-eur="40">€40</strong></div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-num">4.8</span><span class="rating-count">(67)</span></div>
+          <div class="card-actions"><a onclick="sessionStorage.setItem('mtResData', '{&quot;name&quot;: &quot;Tyrolienne & Parcours Aérien&quot;, &quot;price&quot;: 40, &quot;category&quot;: &quot;Dans les airs&quot;, &quot;duration&quot;: &quot;1 heure&quot;, &quot;image&quot;: &quot;https://marrakechbestof.com/wp-content/uploads/2021/09/A1D71166-C734-48EA-B14F-670EFA151FBE-1024x621.jpeg&quot;, &quot;desc&quot;: &quot;4 tyroliennes et 2 ponts suspendus dans un cadre naturel époustouflant.&quot;}')" href="../reservation.html" class="btn-commander">Réserver</a><a href="../contact.html" class="btn-details">Détails →</a></div>
+        </div>
+      </div>
+
+      <!-- 13 — Dîner in the Sky -->
+      <div class="tour-card reveal" data-cat="dans-les-airs">
+        <div class="tour-gallery" data-gallery>
+          <div class="tour-gallery-track">
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2024/12/WhatsApp-Image-2024-12-03-at-18.14.53-1-1024x565.jpeg" alt="Dîner in the Sky Marrakech" loading="lazy"></div>
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2024/12/WhatsApp-Image-2024-12-03-at-18.14.53-1024x554.jpeg" alt="Table suspendue dans les airs" loading="lazy"></div>
+          </div>
+          <button class="gallery-prev">&#8249;</button><button class="gallery-next">&#8250;</button>
+          <div class="gallery-dots"><button class="gallery-dot active"></button><button class="gallery-dot"></button></div>
+          <span class="card-badge-cat">Dans les airs</span>
+          <button class="card-wishlist" data-tour-id="dinner-sky"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+          <span class="card-badge-duration"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>2 heures</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta"><span class="card-meta-item"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Marrakech</span></div>
+          <h3 class="card-title"><a href="../contact.html">Dîner in the Sky</a></h3>
+          <p class="card-excerpt">Vivez un dîner gastronomique suspendu à 50 mètres de hauteur avec une vue à 360° sur Marrakech. Une expérience culinaire unique et spectaculaire à vivre absolument.</p>
+          <div class="card-price">à partir de <strong data-price-eur="150">€150</strong></div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-num">4.9</span><span class="rating-count">(29)</span></div>
+          <div class="card-actions"><a onclick="sessionStorage.setItem('mtResData', '{&quot;name&quot;: &quot;Dîner in the Sky&quot;, &quot;price&quot;: 150, &quot;category&quot;: &quot;Dans les airs&quot;, &quot;duration&quot;: &quot;2 heures&quot;, &quot;image&quot;: &quot;https://marrakechbestof.com/wp-content/uploads/2024/12/WhatsApp-Image-2024-12-03-at-18.14.53-1-1024x565.jpeg&quot;, &quot;desc&quot;: &quot;Dîner gastronomique suspendu à 50 mètres avec vue 360° sur Marrakech.&quot;}')" href="../reservation.html" class="btn-commander">Réserver</a><a href="../contact.html" class="btn-details">Détails →</a></div>
+        </div>
+      </div>
+
+      <!-- 14 — Balade en Quad Agafay -->
+      <div class="tour-card reveal delay-1" data-cat="terrestre">
+        <div class="tour-gallery" data-gallery>
+          <div class="tour-gallery-track">
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2021/07/3B971CCF-6321-4DFB-90FA-112BDFE959FD.jpeg" alt="Quad désert Agafay Marrakech" loading="lazy"></div>
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2021/07/76E966A2-12E2-44C5-970D-2233ADF3F540.jpeg" alt="Balade quad piste Agafay" loading="lazy"></div>
+          </div>
+          <button class="gallery-prev">&#8249;</button><button class="gallery-next">&#8250;</button>
+          <div class="gallery-dots"><button class="gallery-dot active"></button><button class="gallery-dot"></button></div>
+          <span class="card-badge-cat">Terrestre</span>
+          <button class="card-wishlist" data-tour-id="quad-agafay"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+          <span class="card-badge-duration"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>2 heures</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta"><span class="card-meta-item"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Marrakech</span></div>
+          <h3 class="card-title"><a href="../contact.html">Balade en Quad au Désert d'Agafay</a></h3>
+          <p class="card-excerpt">Foncez à travers les pistes rocailleuses du désert d'Agafay à bord d'un quad. Sensations fortes garanties dans un paysage lunaire à couper le souffle.</p>
+          <div class="card-price">à partir de <strong data-price-eur="45">€45</strong></div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-num">4.8</span><span class="rating-count">(88)</span></div>
+          <div class="card-actions"><a onclick="sessionStorage.setItem('mtResData', '{&quot;name&quot;: &quot;Balade en Quad au Désert d\\'Agafay&quot;, &quot;price&quot;: 45, &quot;category&quot;: &quot;Terrestre&quot;, &quot;duration&quot;: &quot;2 heures&quot;, &quot;image&quot;: &quot;https://marrakechbestof.com/wp-content/uploads/2021/07/3B971CCF-6321-4DFB-90FA-112BDFE959FD.jpeg&quot;, &quot;desc&quot;: &quot;Foncez à travers les pistes rocailleuses du désert d\\'Agafay en quad.&quot;}')" href="../reservation.html" class="btn-commander">Réserver</a><a href="../contact.html" class="btn-details">Détails →</a></div>
+        </div>
+      </div>
+
+      <!-- 15 — Quad Palmeraie -->
+      <div class="tour-card reveal delay-2" data-cat="terrestre">
+        <div class="tour-gallery" data-gallery>
+          <div class="tour-gallery-track">
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2018/09/tour_img-442450-148-1024x538.jpg" alt="Quad palmeraie Marrakech" loading="lazy"></div>
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2018/09/photo-1024x683.jpg" alt="Quad palmiers piste" loading="lazy"></div>
+          </div>
+          <button class="gallery-prev">&#8249;</button><button class="gallery-next">&#8250;</button>
+          <div class="gallery-dots"><button class="gallery-dot active"></button><button class="gallery-dot"></button></div>
+          <span class="card-badge-cat">Terrestre</span>
+          <button class="card-wishlist" data-tour-id="quad-palmeraie"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+          <span class="card-badge-duration"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>1 h 30</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta"><span class="card-meta-item"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Marrakech</span></div>
+          <h3 class="card-title"><a href="../contact.html">Quad dans la Palmeraie</a></h3>
+          <p class="card-excerpt">Parcourez les pistes de la palmeraie de Marrakech à bord d'un quad tout-terrain. Une aventure accessible à tous niveaux dans un cadre verdoyant et dépaysant.</p>
+          <div class="card-price">à partir de <strong data-price-eur="35">€35</strong></div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-num">4.7</span><span class="rating-count">(72)</span></div>
+          <div class="card-actions"><a onclick="sessionStorage.setItem('mtResData', '{&quot;name&quot;: &quot;Quad dans la Palmeraie&quot;, &quot;price&quot;: 35, &quot;category&quot;: &quot;Terrestre&quot;, &quot;duration&quot;: &quot;1h30&quot;, &quot;image&quot;: &quot;https://marrakechbestof.com/wp-content/uploads/2018/09/tour_img-442450-148-1024x538.jpg&quot;, &quot;desc&quot;: &quot;Parcourez les pistes de la palmeraie de Marrakech à bord d\\'un quad.&quot;}')" href="../reservation.html" class="btn-commander">Réserver</a><a href="../contact.html" class="btn-details">Détails →</a></div>
+        </div>
+      </div>
+
+      <!-- 16 — Balade en Buggy -->
+      <div class="tour-card reveal" data-cat="terrestre">
+        <div class="tour-gallery" data-gallery>
+          <div class="tour-gallery-track">
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2021/07/687C39C6-8AC8-4E9E-8DA7-B47DFCD19AFF.jpeg" alt="Buggy désert Agafay" loading="lazy"></div>
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2021/07/WhatsApp-Image-2023-03-16-at-17.15.40-1024x678.jpeg" alt="Balade buggy piste Marrakech" loading="lazy"></div>
+          </div>
+          <button class="gallery-prev">&#8249;</button><button class="gallery-next">&#8250;</button>
+          <div class="gallery-dots"><button class="gallery-dot active"></button><button class="gallery-dot"></button></div>
+          <span class="card-badge-cat">Terrestre</span>
+          <button class="card-wishlist" data-tour-id="buggy-agafay"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+          <span class="card-badge-duration"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>2 heures</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta"><span class="card-meta-item"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Marrakech</span></div>
+          <h3 class="card-title"><a href="../contact.html">Balade en Buggy à Agafay</a></h3>
+          <p class="card-excerpt">Adrénaline à fond dans le désert d'Agafay à bord d'un buggy tout-terrain. Paysages sauvages, vitesse et liberté pour une expérience hors du commun.</p>
+          <div class="card-price">à partir de <strong data-price-eur="70">€70</strong></div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-num">4.8</span><span class="rating-count">(61)</span></div>
+          <div class="card-actions"><a onclick="sessionStorage.setItem('mtResData', '{&quot;name&quot;: &quot;Balade en Buggy à Agafay&quot;, &quot;price&quot;: 70, &quot;category&quot;: &quot;Terrestre&quot;, &quot;duration&quot;: &quot;2 heures&quot;, &quot;image&quot;: &quot;https://marrakechbestof.com/wp-content/uploads/2021/07/687C39C6-8AC8-4E9E-8DA7-B47DFCD19AFF.jpeg&quot;, &quot;desc&quot;: &quot;Adrénaline à fond dans le désert d\\'Agafay à bord d\\'un buggy tout-terrain.&quot;}')" href="../reservation.html" class="btn-commander">Réserver</a><a href="../contact.html" class="btn-details">Détails →</a></div>
+        </div>
+      </div>
+
+      <!-- 17 — Balade à Cheval Ecuries -->
+      <div class="tour-card reveal delay-1" data-cat="terrestre">
+        <div class="tour-gallery" data-gallery>
+          <div class="tour-gallery-track">
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2018/09/Installations_3-1024x768.jpg" alt="Ecuries de Marrakech balade cheval" loading="lazy"></div>
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2018/09/d0dd25e804ad57272e1c2f5cba440314_les-ecuries-de-marrakech_ecuries-de-marrakech.jpg" alt="Cheval randonnée Marrakech" loading="lazy"></div>
+          </div>
+          <button class="gallery-prev">&#8249;</button><button class="gallery-next">&#8250;</button>
+          <div class="gallery-dots"><button class="gallery-dot active"></button><button class="gallery-dot"></button></div>
+          <span class="card-badge-cat">Terrestre</span>
+          <button class="card-wishlist" data-tour-id="cheval-ecuries"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+          <span class="card-badge-duration"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>2 heures</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta"><span class="card-meta-item"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Marrakech</span></div>
+          <h3 class="card-title"><a href="../contact.html">Balade à Cheval – Les Écuries</a></h3>
+          <p class="card-excerpt">Randonnée équestre au départ des Écuries de Marrakech. Chevaux bien dressés, cadre naturel splendide et guides expérimentés pour débutants et confirmés.</p>
+          <div class="card-price">à partir de <strong data-price-eur="35">€35</strong></div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-num">4.9</span><span class="rating-count">(74)</span></div>
+          <div class="card-actions"><a onclick="sessionStorage.setItem('mtResData', '{&quot;name&quot;: &quot;Balade à Cheval – Les Écuries&quot;, &quot;price&quot;: 35, &quot;category&quot;: &quot;Terrestre&quot;, &quot;duration&quot;: &quot;2 heures&quot;, &quot;image&quot;: &quot;https://marrakechbestof.com/wp-content/uploads/2018/09/Installations_3-1024x768.jpg&quot;, &quot;desc&quot;: &quot;Randonnée équestre au départ des Écuries de Marrakech.&quot;}')" href="../reservation.html" class="btn-commander">Réserver</a><a href="../contact.html" class="btn-details">Détails →</a></div>
+        </div>
+      </div>
+
+      <!-- 18 — Dromadaire Agafay -->
+      <div class="tour-card reveal delay-2" data-cat="terrestre">
+        <div class="tour-gallery" data-gallery>
+          <div class="tour-gallery-track">
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2022/11/inara-camp-13.jpeg" alt="Dromadaire désert Agafay" loading="lazy"></div>
+          </div>
+          <button class="gallery-prev">&#8249;</button><button class="gallery-next">&#8250;</button>
+          <div class="gallery-dots"><button class="gallery-dot active"></button></div>
+          <span class="card-badge-cat">Terrestre</span>
+          <button class="card-wishlist" data-tour-id="dromadaire-agafay"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+          <span class="card-badge-duration"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>1 h 30</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta"><span class="card-meta-item"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Marrakech</span></div>
+          <h3 class="card-title"><a href="../contact.html">Balade en Dromadaire à Agafay</a></h3>
+          <p class="card-excerpt">Traversée du désert d'Agafay à dos de dromadaire dans un paysage aride et grandiose. Un moment de dépaysement total aux portes de Marrakech.</p>
+          <div class="card-price">à partir de <strong data-price-eur="25">€25</strong></div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-num">4.7</span><span class="rating-count">(109)</span></div>
+          <div class="card-actions"><a onclick="sessionStorage.setItem('mtResData', '{&quot;name&quot;: &quot;Balade en Dromadaire à Agafay&quot;, &quot;price&quot;: 25, &quot;category&quot;: &quot;Terrestre&quot;, &quot;duration&quot;: &quot;1h30&quot;, &quot;image&quot;: &quot;https://marrakechbestof.com/wp-content/uploads/2022/11/inara-camp-13.jpeg&quot;, &quot;desc&quot;: &quot;Traversée du désert d\\'Agafay à dos de dromadaire dans un paysage grandiose.&quot;}')" href="../reservation.html" class="btn-commander">Réserver</a><a href="../contact.html" class="btn-details">Détails →</a></div>
+        </div>
+      </div>
+
+      <!-- 19 — Jump Park -->
+      <div class="tour-card reveal" data-cat="terrestre">
+        <div class="tour-gallery" data-gallery>
+          <div class="tour-gallery-track">
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2025/07/WhatsApp-Image-2025-06-28-at-19.42.58-2-1024x577.jpeg" alt="Jump Park trampoline Marrakech" loading="lazy"></div>
+          </div>
+          <button class="gallery-prev">&#8249;</button><button class="gallery-next">&#8250;</button>
+          <div class="gallery-dots"><button class="gallery-dot active"></button></div>
+          <span class="card-badge-cat">Terrestre</span>
+          <button class="card-wishlist" data-tour-id="jump-park"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+          <span class="card-badge-duration"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>1-2 heures</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta"><span class="card-meta-item"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Marrakech</span></div>
+          <h3 class="card-title"><a href="../contact.html">Jump Park – Parc de Trampolines</a></h3>
+          <p class="card-excerpt">Parc de trampolines dynamique où les enfants peuvent sauter, rebondir et s'amuser librement dans un espace sécurisé et stimulant. Idéal pour dépenser de l'énergie !</p>
+          <div class="card-price">à partir de <strong data-price-eur="9">€9</strong></div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-num">4.7</span><span class="rating-count">(55)</span></div>
+          <div class="card-actions"><a onclick="sessionStorage.setItem('mtResData', '{&quot;name&quot;: &quot;Jump Park – Parc de Trampolines&quot;, &quot;price&quot;: 9, &quot;category&quot;: &quot;Terrestre&quot;, &quot;duration&quot;: &quot;1-2 heures&quot;, &quot;image&quot;: &quot;https://marrakechbestof.com/wp-content/uploads/2025/07/WhatsApp-Image-2025-06-28-at-19.42.58-2-1024x577.jpeg&quot;, &quot;desc&quot;: &quot;Parc de trampolines dynamique pour enfants dans un espace sécurisé.&quot;}')" href="../reservation.html" class="btn-commander">Réserver</a><a href="../contact.html" class="btn-details">Détails →</a></div>
+        </div>
+      </div>
+
+      <!-- 20 — Atelier de Peinture -->
+      <div class="tour-card reveal delay-1" data-cat="decouverte">
+        <div class="tour-gallery" data-gallery>
+          <div class="tour-gallery-track">
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2026/01/PHOTO-2026-01-09-13-53-07-1024x637.jpg" alt="Atelier peinture Marrakech" loading="lazy"></div>
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2026/01/WhatsApp-Image-2026-01-04-at-13.41.00-1-687x1024.jpeg" alt="Cours de peinture artistique" loading="lazy"></div>
+          </div>
+          <button class="gallery-prev">&#8249;</button><button class="gallery-next">&#8250;</button>
+          <div class="gallery-dots"><button class="gallery-dot active"></button><button class="gallery-dot"></button></div>
+          <span class="card-badge-cat">Découverte</span>
+          <button class="card-wishlist" data-tour-id="atelier-peinture"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+          <span class="card-badge-duration"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>2 heures</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta"><span class="card-meta-item"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Marrakech</span></div>
+          <h3 class="card-title"><a href="../contact.html">Atelier de Peinture</a></h3>
+          <p class="card-excerpt">Exprimez votre créativité dans un atelier de peinture guidé par un artiste local. Inspirés par les couleurs et les motifs de Marrakech, repartez avec votre propre œuvre.</p>
+          <div class="card-price">à partir de <strong data-price-eur="30">€30</strong></div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-num">4.9</span><span class="rating-count">(43)</span></div>
+          <div class="card-actions"><a onclick="sessionStorage.setItem('mtResData', '{&quot;name&quot;: &quot;Atelier de Peinture&quot;, &quot;price&quot;: 30, &quot;category&quot;: &quot;Découverte&quot;, &quot;duration&quot;: &quot;2 heures&quot;, &quot;image&quot;: &quot;https://marrakechbestof.com/wp-content/uploads/2026/01/PHOTO-2026-01-09-13-53-07-1024x637.jpg&quot;, &quot;desc&quot;: &quot;Exprimez votre créativité guidé par un artiste local inspiré de Marrakech.&quot;}')" href="../reservation.html" class="btn-commander">Réserver</a><a href="../contact.html" class="btn-details">Détails →</a></div>
+        </div>
+      </div>
+
+      <!-- 21 — Atelier de Broderie -->
+      <div class="tour-card reveal delay-2" data-cat="decouverte">
+        <div class="tour-gallery" data-gallery>
+          <div class="tour-gallery-track">
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2023/11/BB12183E-3E30-4A33-AE7E-605166CD6B0D-1024x576.jpeg" alt="Atelier broderie Marrakech médina" loading="lazy"></div>
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2023/11/954326E6-5CFC-4808-874D-3755C237522A-1024x576.jpeg" alt="Broderie panier personnalisé" loading="lazy"></div>
+          </div>
+          <button class="gallery-prev">&#8249;</button><button class="gallery-next">&#8250;</button>
+          <div class="gallery-dots"><button class="gallery-dot active"></button><button class="gallery-dot"></button></div>
+          <span class="card-badge-cat">Découverte</span>
+          <button class="card-wishlist" data-tour-id="atelier-broderie"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+          <span class="card-badge-duration"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>2 heures</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta"><span class="card-meta-item"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Marrakech</span></div>
+          <h3 class="card-title"><a href="../contact.html">Atelier de Broderie</a></h3>
+          <p class="card-excerpt">Apprenez l'art de la broderie marocaine avec des artisanes passionnées dans la médina. Personnalisez un panier en paille et repartez avec un souvenir unique fait main.</p>
+          <div class="card-price">à partir de <strong data-price-eur="38">€38</strong></div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-num">4.9</span><span class="rating-count">(57)</span></div>
+          <div class="card-actions"><a onclick="sessionStorage.setItem('mtResData', '{&quot;name&quot;: &quot;Atelier de Broderie&quot;, &quot;price&quot;: 38, &quot;category&quot;: &quot;Découverte&quot;, &quot;duration&quot;: &quot;2 heures&quot;, &quot;image&quot;: &quot;https://marrakechbestof.com/wp-content/uploads/2023/11/BB12183E-3E30-4A33-AE7E-605166CD6B0D-1024x576.jpeg&quot;, &quot;desc&quot;: &quot;Apprenez l\\'art de la broderie marocaine avec des artisanes passionnées.&quot;}')" href="../reservation.html" class="btn-commander">Réserver</a><a href="../contact.html" class="btn-details">Détails →</a></div>
+        </div>
+      </div>
+
+      <!-- 22 — Atelier Création de Parfum -->
+      <div class="tour-card reveal" data-cat="decouverte">
+        <div class="tour-gallery" data-gallery>
+          <div class="tour-gallery-track">
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2026/01/CWB06126-1024x683.jpeg" alt="Atelier création parfum Marrakech" loading="lazy"></div>
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2026/01/CWB06129-1024x683.jpeg" alt="Composition parfum arômes orientaux" loading="lazy"></div>
+          </div>
+          <button class="gallery-prev">&#8249;</button><button class="gallery-next">&#8250;</button>
+          <div class="gallery-dots"><button class="gallery-dot active"></button><button class="gallery-dot"></button></div>
+          <span class="card-badge-cat">Découverte</span>
+          <button class="card-wishlist" data-tour-id="atelier-parfum"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+          <span class="card-badge-duration"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>1 h 30</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta"><span class="card-meta-item"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Marrakech</span></div>
+          <h3 class="card-title"><a href="../contact.html">Atelier Création de Parfum</a></h3>
+          <p class="card-excerpt">Composez votre propre parfum sur mesure guidé par un expert en arômes orientaux. Découvrez les essences du Maroc et repartez avec votre création unique en flacon.</p>
+          <div class="card-price">à partir de <strong data-price-eur="45">€45</strong></div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-num">4.8</span><span class="rating-count">(39)</span></div>
+          <div class="card-actions"><a onclick="sessionStorage.setItem('mtResData', '{&quot;name&quot;: &quot;Atelier Création de Parfum&quot;, &quot;price&quot;: 45, &quot;category&quot;: &quot;Découverte&quot;, &quot;duration&quot;: &quot;1h30&quot;, &quot;image&quot;: &quot;https://marrakechbestof.com/wp-content/uploads/2026/01/CWB06126-1024x683.jpeg&quot;, &quot;desc&quot;: &quot;Composez votre propre parfum sur mesure guidé par un expert en arômes.&quot;}')" href="../reservation.html" class="btn-commander">Réserver</a><a href="../contact.html" class="btn-details">Détails →</a></div>
+        </div>
+      </div>
+
+      <!-- 23 — Shooting Romantique à la Poterie -->
+      <div class="tour-card reveal delay-1" data-cat="decouverte">
+        <div class="tour-gallery" data-gallery>
+          <div class="tour-gallery-track">
+            <div class="tour-gallery-slide"><img src="https://marrakechbestof.com/wp-content/uploads/2024/02/WhatsApp-Image-2024-02-12-at-15.03.42-1-819x1024.jpeg" alt="Shooting romantique poterie Marrakech" loading="lazy"></div>
+          </div>
+          <button class="gallery-prev">&#8249;</button><button class="gallery-next">&#8250;</button>
+          <div class="gallery-dots"><button class="gallery-dot active"></button></div>
+          <span class="card-badge-cat">Découverte</span>
+          <button class="card-wishlist" data-tour-id="shooting-poterie"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+          <span class="card-badge-duration"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>2 heures</span>
+        </div>
+        <div class="card-body">
+          <div class="card-meta"><span class="card-meta-item"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Marrakech</span></div>
+          <h3 class="card-title"><a href="../contact.html">Shooting Romantique à la Poterie</a></h3>
+          <p class="card-excerpt">Séance photo professionnelle en couple à l'atelier de poterie de Sidi Ghanem. Créez votre pièce céramique ensemble pendant que le photographe immortalise ces instants uniques.</p>
+          <div class="card-price">à partir de <strong data-price-eur="550">€550</strong></div>
+          <div class="card-rating"><span class="stars">★★★★★</span><span class="rating-num">5.0</span><span class="rating-count">(18)</span></div>
+          <div class="card-actions"><a onclick="sessionStorage.setItem('mtResData', '{&quot;name&quot;: &quot;Shooting Romantique à la Poterie&quot;, &quot;price&quot;: 550, &quot;category&quot;: &quot;Découverte&quot;, &quot;duration&quot;: &quot;2 heures&quot;, &quot;image&quot;: &quot;https://marrakechbestof.com/wp-content/uploads/2024/02/WhatsApp-Image-2024-02-12-at-15.03.42-1-819x1024.jpeg&quot;, &quot;desc&quot;: &quot;Séance photo professionnelle en couple à l\\'atelier de poterie de Sidi Ghanem.&quot;}')" href="../reservation.html" class="btn-commander">Réserver</a><a href="../contact.html" class="btn-details">Détails →</a></div>
+        </div>
+      </div>
+
+    </div><!-- /act-grid -->
+
+    <!-- CTA strip -->
+    <div class="act-cta reveal">
+      <div class="act-cta-text">
+        <h3>Une activité sur mesure ?</h3>
+        <p>Notre équipe crée des expériences personnalisées selon vos envies et votre budget.</p>
+      </div>
+      <div class="act-cta-btns">
+        <a href="../contact.html" class="btn btn-primary">Demander un devis</a>
+        <a href="https://wa.me/212707473742" class="btn btn-outline" target="_blank" rel="noopener">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════ NEWSLETTER ══════════════ -->
+<section class="newsletter-section">
+  <div class="container">
+    <div class="newsletter-inner">
+      <div>
+        <h2 class="newsletter-title">Recevez nos offres exclusives</h2>
+        <p class="newsletter-desc">Promotions, nouveautés et conseils voyage au Maroc directement dans votre boîte mail.</p>
+      </div>
+      <form class="newsletter-form" onsubmit="return false;">
+        <input type="email" class="newsletter-input" placeholder="Votre adresse e-mail">
+        <button type="submit" class="newsletter-btn">S'inscrire</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo-row">
+          <img src="../Moroccan Transfer.png" alt="Moroccan Transfer Logo">
+          <span class="footer-brand">Moroccan<span>Transfer</span></span>
+        </div>
+        <p class="footer-desc">Votre agence de transferts et excursions privées au Maroc depuis 2012. Professionnels, ponctuels et passionnés du Maroc authentique.</p>
+        <div class="footer-social">
+          <a href="#" class="social-btn" aria-label="Facebook"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+          <a href="#" class="social-btn" aria-label="Instagram"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://www.tripadvisor.com/Attraction_Review-g293734-d17333913-Reviews-Morocco_Transfer-Marrakech_Marrakech_Safi.html" target="_blank" rel="noopener" class="social-btn" aria-label="TripAdvisor"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12.006 4.295c-2.29 0-4.408.738-6.13 1.984L3 6.28l2.569.017A9.928 9.928 0 002 13.994C2 19.52 6.479 24 12.006 24S22 19.52 22 13.994c0-3.33-1.636-6.28-4.157-8.11l2.43-.006-2.85-.004A9.926 9.926 0 0012.006 4.3zM7.22 14.12c-.924 0-1.673-.75-1.673-1.673s.75-1.673 1.673-1.673 1.673.75 1.673 1.673-.75 1.673-1.673 1.673zm4.786 3.87c-2.184 0-3.953-1.77-3.953-3.954s1.77-3.953 3.953-3.953 3.953 1.77 3.953 3.953-1.77 3.954-3.953 3.954zm0-6.252a2.3 2.3 0 00-2.298 2.298 2.3 2.3 0 002.298 2.298 2.3 2.3 0 002.298-2.298 2.3 2.3 0 00-2.298-2.298zm4.794 2.382c-.924 0-1.673-.75-1.673-1.673s.75-1.673 1.673-1.673 1.673.75 1.673 1.673-.75 1.673-1.673 1.673z"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <h4 class="footer-col-title">Parcourir</h4>
+        <ul class="footer-links">
+          <li><a href="../excursions/index.html" class="footer-link">Excursions depuis Agadir</a></li>
+          <li><a href="../transferts/index.html" class="footer-link">Transferts aéroport</a></li>
+          <li><a href="index.html" class="footer-link">Activités & Loisirs</a></li>
+          <li><a href="../blog/index.html" class="footer-link">Blog Voyage</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-col-title">Informations</h4>
+        <ul class="footer-links">
+          <li><a href="../apropos/index.html" class="footer-link">À propos de nous</a></li>
+          <li><a href="#" class="footer-link">FAQ</a></li>
+          <li><a href="#" class="footer-link">Nos véhicules</a></li>
+          <li><a href="#" class="footer-link">Avis clients</a></li>
+          <li><a href="#" class="footer-link">Mentions légales</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-col-title">Coordonnées</h4>
+        <ul class="footer-contact-list">
+          <li class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.81 19.79 19.79 0 01.04 2.27 2 2 0 012 .09h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg><a href="tel:+212707473742">+212 707-473742</a></li>
+          <li class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><a href="mailto:Contact@moroccantransfer.com">Contact@moroccantransfer.com</a></li>
+          <li class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Marrakech, Maroc</li>
+          <li class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Lun–Dim : 06h00 – 23h00</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">2012 – 2026 © MoroccanTransfer.com — <a href="#">Mentions légales</a> · <a href="#">Confidentialité</a></div>
+      <div class="footer-payment-icons">
+        <span class="payment-icon">VISA</span><span class="payment-icon">MC</span><span class="payment-icon">AMEX</span><span class="payment-icon">PAYPAL</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+<script>
+// Category filter with count update
+(function(){
+  const btns = document.querySelectorAll('.act-filter-btn');
+  const cards = document.querySelectorAll('#actGrid .tour-card');
+  const countEl = document.getElementById('actCount');
+
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      let visible = 0;
+      cards.forEach(card => {
+        const show = filter === 'all' || card.dataset.cat === filter;
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      countEl.textContent = visible;
+    });
+  });
+})();
+</script>
+<script src="../assets/js/lang-switcher.js"></script>
+</body>
+</html>

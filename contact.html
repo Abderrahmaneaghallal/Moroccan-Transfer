@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Contactez MoroccanTransfer — Réservez votre transfert, excursion ou circuit au Maroc. Réponse garantie sous 2 heures. WhatsApp, email ou téléphone.">
+<title>Contact & Réservation — MoroccanTransfer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+.breadcrumb{display:flex;align-items:center;gap:8px;font-size:12px;background:none!important;border-bottom:none!important;padding:0!important;}
+.breadcrumb-link{color:#C9A84C;text-decoration:none}
+.breadcrumb-link:hover{text-decoration:underline}
+.breadcrumb-sep{color:rgba(255,255,255,0.4)}
+.breadcrumb-cur{color:rgba(255,255,255,0.6)}
+
+/* Contact layout */
+.contact-grid{display:grid;grid-template-columns:1fr 420px;gap:48px;align-items:start}
+@media(max-width:900px){.contact-grid{grid-template-columns:1fr}}
+
+/* Contact cards */
+.contact-card{background:#fff;border-radius:10px;padding:28px;box-shadow:0 2px 12px rgba(0,0,0,0.07);display:flex;align-items:flex-start;gap:16px;margin-bottom:18px;transition:transform .2s,box-shadow .2s}
+.contact-card:hover{transform:translateY(-2px);box-shadow:0 6px 22px rgba(0,0,0,0.11)}
+.contact-card-icon{width:46px;height:46px;border-radius:10px;background:#111;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.contact-card-label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#999;margin-bottom:4px}
+.contact-card-value{font-size:16px;font-weight:700;color:#111;margin-bottom:2px}
+.contact-card-sub{font-size:12px;color:#888}
+.contact-card a{color:#111;text-decoration:none}
+.contact-card a:hover{color:#C9A84C}
+
+/* Form */
+.contact-form-panel{background:#fff;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,0.10);overflow:hidden}
+.cfp-head{background:#111;padding:26px 28px}
+.cfp-head h2{font-family:'DM Serif Display',Georgia,serif;font-size:20px;color:#fff;margin-bottom:4px}
+.cfp-head p{font-size:13px;color:rgba(255,255,255,0.55)}
+.cfp-body{padding:28px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.form-row.single{grid-template-columns:1fr}
+@media(max-width:520px){.form-row{grid-template-columns:1fr}}
+.form-group{display:flex;flex-direction:column;gap:5px}
+.form-group label{font-size:12px;font-weight:700;letter-spacing:.5px;color:#444;text-transform:uppercase}
+.form-group input,.form-group select,.form-group textarea{padding:10px 14px;border:1px solid #ddd;border-radius:6px;font-size:14px;font-family:inherit;color:#111;background:#fafafa;transition:border .2s}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:#C9A84C;background:#fff}
+.form-group textarea{resize:vertical;min-height:100px}
+.form-submit-btn{width:100%;padding:14px;background:#C9A84C;color:#111;font-weight:800;font-size:15px;letter-spacing:.5px;border:none;border-radius:8px;cursor:pointer;transition:background .2s;font-family:inherit}
+.form-submit-btn:hover{background:#A8892A}
+
+/* FAQ */
+.faq-item{border:1px solid #eee;border-radius:8px;margin-bottom:10px;overflow:hidden}
+.faq-question{width:100%;padding:16px 20px;background:#fff;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600;color:#111;text-align:left;font-family:inherit}
+.faq-question:hover{background:#fafafa}
+.faq-icon{font-size:20px;color:#C9A84C;transition:transform .3s;flex-shrink:0}
+.faq-item.open .faq-icon{transform:rotate(45deg)}
+.faq-answer{max-height:0;overflow:hidden;transition:max-height .35s ease;padding:0 20px}
+.faq-item.open .faq-answer{padding:0 20px 16px}
+.faq-answer p{font-size:13px;color:#555;line-height:1.7;margin:0}
+
+@media(max-width:768px){
+  .contact-grid{grid-template-columns:1fr!important}
+  .contact-form-panel{position:static!important;top:auto!important}
+  .contact-cards-grid{grid-template-columns:repeat(2,1fr)!important}
+  .map-wrap{height:220px!important}
+}
+@media(max-width:480px){
+  .contact-cards-grid{grid-template-columns:1fr!important}
+  .contact-card{padding:20px 16px}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ TOP BAR ══════════════ -->
+<div class="topbar">
+  <div class="container">
+    <div class="topbar-inner">
+      <div class="topbar-left">
+        <a href="tel:+212707473742" class="topbar-item">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.81 19.79 19.79 0 01.04 2.27 2 2 0 012 .09h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+          +212 707-473742
+        </a>
+        <a href="mailto:Contact@moroccantransfer.com" class="topbar-item">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Contact@moroccantransfer.com
+        </a>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-social">
+          <a href="#" aria-label="Facebook"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ HEADER ══════════════ -->
+<header class="site-header">
+  <nav class="nav-bar">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo">
+          <img src="Moroccan Transfer.png" alt="Moroccan Transfer">
+          <div>
+            <span class="nav-logo-text">Moroccan<span>Transfer</span></span>
+            <span class="nav-logo-tagline">Votre agence locale au Maroc</span>
+          </div>
+        </a>
+        <ul class="nav-menu">
+          <li class="nav-item"><a href="index.html" class="nav-link">Accueil</a></li>
+          <li class="nav-item nav-dropdown">
+            <a href="excursions/index.html" class="nav-link">Excursions <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></a>
+            <ul class="nav-dropdown-menu">
+              <li><a href="excursions/index.html" class="nav-dropdown-item">Toutes les excursions</a></li>
+              <li><a href="excursions/index.html" class="nav-dropdown-item">Désert Merzouga (3j)</a></li>
+              <li><a href="excursions/index.html" class="nav-dropdown-item">Marrakech (1j)</a></li>
+            </ul>
+          </li>
+          <li class="nav-item nav-dropdown">
+            <a href="transferts/index.html" class="nav-link">Transferts <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></a>
+            <ul class="nav-dropdown-menu">
+              <li><a href="transferts/index.html" class="nav-dropdown-item">Aéroport Agadir (AGA)</a></li>
+              <li><a href="transferts/index.html" class="nav-dropdown-item">Aéroport Marrakech (RAK)</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a href="activites/index.html" class="nav-link">Activités</a></li>
+          <li class="nav-item"><a href="blog/index.html" class="nav-link">Blog</a></li>
+          <li class="nav-item"><a href="apropos/index.html" class="nav-link">À propos</a></li>
+          <li class="nav-item"><a href="contact.html" class="nav-link active">Contact</a></li>
+        </ul>
+        <div class="nav-cta">
+          <div class="nav-phone">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.81 19.79 19.79 0 01.04 2.27 2 2 0 012 .09h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+            <div><small>Appelez-nous</small>+212 707-473742</div>
+          </div>
+        </div>
+        <button class="nav-hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="mobile-nav-overlay"></div>
+<div class="mobile-nav">
+  <div class="mobile-nav-close">
+    <span class="mobile-nav-logo">Moroccan<span>Transfer</span></span>
+    <button style="font-size:22px;color:rgba(255,255,255,0.6);background:none;border:none;cursor:pointer;">✕</button>
+  </div>
+  <a href="index.html" class="mobile-nav-link">Accueil</a>
+  <a href="excursions/index.html" class="mobile-nav-link">Excursions</a>
+  <a href="transferts/index.html" class="mobile-nav-link">Transferts</a>
+  <a href="activites/index.html" class="mobile-nav-link">Activités</a>
+  <a href="blog/index.html" class="mobile-nav-link">Blog</a>
+  <a href="apropos/index.html" class="mobile-nav-link">À propos</a>
+  <a href="contact.html" class="mobile-nav-link">Contact</a>
+</div>
+
+<!-- ══════════════ PAGE HERO ══════════════ -->
+<section style="position:relative;background:#111;padding:140px 0 100px;overflow:hidden;min-height:380px;">
+  <div style="position:absolute;inset:0;background-image:url('breadcrumb/Contact.png');background-size:cover;background-position:center 30%;opacity:0.38;z-index:0;"></div>
+  <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.4) 100%);z-index:1;"></div>
+  <div class="container" style="text-align:center;position:relative;z-index:2;">
+    <nav class="breadcrumb reveal" style="justify-content:center;margin-bottom:16px;background:none;">
+      <a href="index.html" class="breadcrumb-link">Accueil</a>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-cur">Contact</span>
+    </nav>
+    <h1 class="reveal delay-1" style="font-family:'DM Serif Display',Georgia,serif;font-size:clamp(28px,5vw,48px);color:#fff;margin-bottom:12px;font-weight:700;">Contactez-Nous</h1>
+    <p class="reveal delay-2" style="color:rgba(255,255,255,0.7);max-width:540px;margin:0 auto;font-size:15px;line-height:1.7;">Devis gratuit, réponse garantie sous 2 heures. Par email, téléphone ou WhatsApp — nous sommes disponibles 24h/7j.</p>
+  </div>
+</section>
+
+<!-- ══════════════ CONTACT SECTION ══════════════ -->
+<section class="section-pad" style="background:#F8F7F5;">
+  <div class="container">
+    <div class="contact-grid">
+
+      <!-- LEFT — Contact Info -->
+      <div>
+        <div style="margin-bottom:32px;">
+          <span class="section-label">Nous joindre</span>
+          <h2 class="section-title reveal">Plusieurs façons de nous contacter</h2>
+          <p class="section-subtitle reveal delay-1">Notre équipe francophone est disponible tous les jours, même les jours fériés.</p>
+        </div>
+
+        <!-- WhatsApp -->
+        <div class="contact-card reveal">
+          <div class="contact-card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="#C9A84C"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </div>
+          <div>
+            <div class="contact-card-label">WhatsApp</div>
+            <div class="contact-card-value"><a href="https://wa.me/212707473742" target="_blank" rel="noopener">+212 707-473742</a></div>
+            <div class="contact-card-sub">Réponse instantanée · 7j/7 · 24h/24</div>
+          </div>
+        </div>
+
+        <!-- Téléphone -->
+        <div class="contact-card reveal delay-1">
+          <div class="contact-card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.81 19.79 19.79 0 01.04 2.27 2 2 0 012 .09h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+          </div>
+          <div>
+            <div class="contact-card-label">Téléphone</div>
+            <div class="contact-card-value"><a href="tel:+212707473742">+212 707-473742</a></div>
+            <div class="contact-card-sub">Lun – Dim · 7h00 – 22h00</div>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="contact-card reveal delay-2">
+          <div class="contact-card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <div class="contact-card-label">Email</div>
+            <div class="contact-card-value"><a href="mailto:Contact@moroccantransfer.com">Contact@moroccantransfer.com</a></div>
+            <div class="contact-card-sub">Réponse garantie sous 2 heures</div>
+          </div>
+        </div>
+
+        <!-- Adresse -->
+        <div class="contact-card reveal">
+          <div class="contact-card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <div class="contact-card-label">Adresse</div>
+            <div class="contact-card-value">Marrakech, Maroc</div>
+            <div class="contact-card-sub">Opérons dans toutes les grandes villes marocaines</div>
+          </div>
+        </div>
+
+        <!-- Horaires -->
+        <div style="background:#fff;border-radius:10px;padding:24px 28px;box-shadow:0 2px 10px rgba(0,0,0,0.06);margin-bottom:28px;" class="reveal">
+          <h3 style="font-family:'DM Serif Display',Georgia,serif;font-size:16px;color:#111;margin-bottom:16px;">Horaires d'ouverture</h3>
+          <div style="display:grid;gap:8px;">
+            <div style="display:flex;justify-content:space-between;font-size:13px;padding-bottom:8px;border-bottom:1px solid #f5f5f5"><span style="color:#666">Lundi – Vendredi</span><strong style="color:#111">7h00 – 22h00</strong></div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;padding-bottom:8px;border-bottom:1px solid #f5f5f5"><span style="color:#666">Samedi – Dimanche</span><strong style="color:#111">7h00 – 22h00</strong></div>
+            <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:#666">Jours fériés</span><strong style="color:#C9A84C">Ouvert</strong></div>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="reveal">
+          <h3 style="font-family:'DM Serif Display',Georgia,serif;font-size:18px;color:#111;margin-bottom:16px;">Questions fréquentes</h3>
+
+          <div class="faq-item">
+            <button class="faq-question">Comment confirmer ma réservation ? <span class="faq-icon">+</span></button>
+            <div class="faq-answer"><p>Envoyez-nous un message WhatsApp ou remplissez le formulaire. Vous recevrez une confirmation par email et WhatsApp avec tous les détails dans un délai de 2 heures maximum.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">Puis-je annuler ou modifier ma réservation ? <span class="faq-icon">+</span></button>
+            <div class="faq-answer"><p>Oui, l'annulation est gratuite jusqu'à 48h avant le départ. Pour les modifications de date ou d'heure, contactez-nous dès que possible par WhatsApp.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">Quels modes de paiement acceptez-vous ? <span class="faq-icon">+</span></button>
+            <div class="faq-answer"><p>Nous acceptons le paiement en espèces (EUR, MAD), par virement bancaire ou PayPal. Le paiement s'effectue directement au chauffeur ou en ligne lors de la confirmation.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">Le chauffeur vient-il me chercher à l'hôtel ? <span class="faq-icon">+</span></button>
+            <div class="faq-answer"><p>Oui, pour tous nos services (transferts, excursions, circuits), votre chauffeur vient vous chercher à votre hôtel ou adresse au Maroc. Aucun déplacement nécessaire de votre part.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">Organisez-vous des groupes ? <span class="faq-icon">+</span></button>
+            <div class="faq-answer"><p>Absolument. Nous disposons de minivans (5–8 pers.) et minibus (9–16 pers.) pour les groupes. Des tarifs spéciaux sont disponibles pour les groupes de plus de 8 personnes.</p></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT — Booking Form -->
+      <div style="position:sticky;top:90px;">
+        <div class="contact-form-panel reveal">
+          <div class="cfp-head">
+            <h2>Demande de réservation</h2>
+            <p>Devis gratuit · Réponse sous 2h · Sans engagement</p>
+          </div>
+          <div class="cfp-body">
+            <form id="contactForm" action="#" method="post">
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Prénom *</label>
+                  <input type="text" name="firstname" placeholder="Jean" required>
+                </div>
+                <div class="form-group">
+                  <label>Nom *</label>
+                  <input type="text" name="lastname" placeholder="Martin" required>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Email *</label>
+                  <input type="email" name="email" placeholder="votre@email.com" required>
+                </div>
+                <div class="form-group">
+                  <label>Téléphone / WhatsApp *</label>
+                  <input type="tel" name="phone" placeholder="+33 6 00 00 00 00" required>
+                </div>
+              </div>
+
+              <div class="form-row single" style="margin-bottom:16px;">
+                <div class="form-group">
+                  <label>Type de prestation *</label>
+                  <select name="service_type" required>
+                    <option value="">Choisir…</option>
+                    <option value="transfert">Transfert aéroport</option>
+                    <option value="excursion">Excursion à la journée</option>
+                    <option value="circuit">Circuit multi-jours</option>
+                    <option value="activite">Activité touristique</option>
+                    <option value="autre">Autre / Sur mesure</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Date souhaitée *</label>
+                  <input type="date" name="travel_date" required>
+                </div>
+                <div class="form-group">
+                  <label>Nombre de personnes</label>
+                  <select name="passengers">
+                    <option>1</option><option>2</option><option selected>3</option>
+                    <option>4</option><option>5</option><option>6</option>
+                    <option>7</option><option>8</option><option>9+</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row single" style="margin-bottom:16px;">
+                <div class="form-group">
+                  <label>Votre message / précisions</label>
+                  <textarea name="message" placeholder="Lieu de départ, destination, heure souhaitée, questions particulières…"></textarea>
+                </div>
+              </div>
+
+              <div id="formErrors" style="display:none;background:#fff0f0;border:1px solid #ffcccc;border-radius:6px;padding:12px 16px;margin-bottom:16px;">
+                <ul style="margin:0;padding-left:18px;font-size:13px;color:#c00;"></ul>
+              </div>
+
+              <button type="submit" class="form-submit-btn">Envoyer ma demande →</button>
+              <p style="font-size:11px;color:#999;text-align:center;margin-top:10px;">Confirmation par email et WhatsApp sous 2 heures</p>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ MAP ══════════════ -->
+<div style="height:320px;line-height:0;overflow:hidden;">
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d108756.54832625587!2d-8.072241!3d31.628673!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xdafee8d96179e51%3A0x5950b6534f87adb8!2sMarrakech%2C%20Morocco!5e0!3m2!1sfr!2sma!4v1700000000000"
+    width="100%" height="320" style="border:0;display:block;" allowfullscreen="" loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade" title="Marrakech, Maroc">
+  </iframe>
+</div>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo-row">
+          <img src="Moroccan Transfer.png" alt="Moroccan Transfer Logo">
+          <span class="footer-brand">Moroccan<span>Transfer</span></span>
+        </div>
+        <p class="footer-desc">Votre agence de transferts et excursions privées au Maroc depuis 2012. Professionnels, ponctuels et passionnés du Maroc authentique.</p>
+        <div class="footer-social">
+          <a href="#" class="social-btn" aria-label="Facebook"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+          <a href="#" class="social-btn" aria-label="Instagram"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://www.tripadvisor.com/Attraction_Review-g293734-d17333913-Reviews-Morocco_Transfer-Marrakech_Marrakech_Safi.html" target="_blank" rel="noopener" class="social-btn" aria-label="TripAdvisor"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12.006 4.295c-2.29 0-4.408.738-6.13 1.984L3 6.28l2.569.017A9.928 9.928 0 002 13.994C2 19.52 6.479 24 12.006 24S22 19.52 22 13.994c0-3.33-1.636-6.28-4.157-8.11l2.43-.006-2.85-.004A9.926 9.926 0 0012.006 4.3zM7.22 14.12c-.924 0-1.673-.75-1.673-1.673s.75-1.673 1.673-1.673 1.673.75 1.673 1.673-.75 1.673-1.673 1.673zm4.786 3.87c-2.184 0-3.953-1.77-3.953-3.954s1.77-3.953 3.953-3.953 3.953 1.77 3.953 3.953-1.77 3.954-3.953 3.954zm0-6.252a2.3 2.3 0 00-2.298 2.298 2.3 2.3 0 002.298 2.298 2.3 2.3 0 002.298-2.298 2.3 2.3 0 00-2.298-2.298zm4.794 2.382c-.924 0-1.673-.75-1.673-1.673s.75-1.673 1.673-1.673 1.673.75 1.673 1.673-.75 1.673-1.673 1.673z"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <h4 class="footer-col-title">Parcourir</h4>
+        <ul class="footer-links">
+          <li><a href="excursions/index.html" class="footer-link">Excursions depuis Agadir</a></li>
+          <li><a href="excursions/index.html" class="footer-link">Excursion Marrakech</a></li>
+          <li><a href="excursions/index.html" class="footer-link">Excursion Essaouira</a></li>
+          <li><a href="transferts/index.html" class="footer-link">Transferts aéroport</a></li>
+          <li><a href="activites/index.html" class="footer-link">Activités &amp; Loisirs</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-col-title">Informations</h4>
+        <ul class="footer-links">
+          <li><a href="apropos/index.html" class="footer-link">À propos de nous</a></li>
+          <li><a href="#" class="footer-link">FAQ</a></li>
+          <li><a href="#" class="footer-link">Nos véhicules</a></li>
+          <li><a href="#" class="footer-link">Avis clients</a></li>
+          <li><a href="#" class="footer-link">Mentions légales</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-col-title">Coordonnées</h4>
+        <ul class="footer-contact-list">
+          <li class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.81 19.79 19.79 0 01.04 2.27 2 2 0 012 .09h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg><a href="tel:+212707473742">+212 707-473742</a></li>
+          <li class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><a href="mailto:Contact@moroccantransfer.com">Contact@moroccantransfer.com</a></li>
+          <li class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Marrakech, Maroc</li>
+          <li class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Lun–Dim : 06h00 – 23h00</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">2012 – 2026 © MoroccanTransfer.com — <a href="#">Mentions légales</a> · <a href="#">Confidentialité</a></div>
+      <div class="footer-payment-icons">
+        <span class="payment-icon">VISA</span><span class="payment-icon">MC</span><span class="payment-icon">AMEX</span><span class="payment-icon">PAYPAL</span><span class="payment-icon">STRIPE</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/212707473742" class="whatsapp-float" aria-label="WhatsApp" target="_blank" rel="noopener">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<button class="scroll-top" aria-label="Retour en haut">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<script src="assets/js/main.js"></script>
+<script>
+// Contact form validation
+document.getElementById('contactForm')?.addEventListener('submit', function(e) {
+  e.preventDefault();
+  const required = ['firstname','lastname','email','phone','service_type','travel_date'];
+  const errors = [];
+  const labels = {firstname:'Prénom',lastname:'Nom',email:'Email',phone:'Téléphone',service_type:'Type de prestation',travel_date:'Date'};
+  required.forEach(name => {
+    const el = this.querySelector('[name="'+name+'"]');
+    if (!el || !el.value.trim()) errors.push(labels[name] + ' est requis.');
+  });
+  const errBox = document.getElementById('formErrors');
+  const errList = errBox.querySelector('ul');
+  errList.innerHTML = errors.map(m=>'<li>'+m+'</li>').join('');
+  errBox.style.display = errors.length ? 'block' : 'none';
+  if (!errors.length) {
+    window.showToast && window.showToast('Merci ! Votre demande a bien été envoyée. Nous vous répondons sous 2 heures.', 'success');
+    this.reset();
+  }
+});
+</script>
+<script src="assets/js/lang-switcher.js"></script>
+</body>
+</html>

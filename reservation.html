@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Réservation — MoroccanTransfer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#f5f0eb;font-family:'DM Sans',sans-serif;color:#111;}
+
+/* ── PAGE LAYOUT ── */
+.res-page{min-height:100vh;padding:40px 20px 80px;}
+.res-container{max-width:1060px;margin:0 auto;display:grid;grid-template-columns:1fr 420px;gap:40px;align-items:start;}
+@media(max-width:860px){.res-container{grid-template-columns:1fr;}}
+
+/* ── LEFT: EXCURSION SUMMARY ── */
+.res-summary{background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 4px 30px rgba(0,0,0,0.08);}
+.res-img-wrap{position:relative;height:320px;overflow:hidden;background:#ddd;}
+.res-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
+.res-img-badge{position:absolute;top:16px;left:16px;background:#C9A84C;color:#fff;font-size:12px;font-weight:700;padding:5px 12px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px;}
+.res-info{padding:28px;}
+.res-category{font-size:12px;font-weight:600;color:#C9A84C;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.res-name{font-family:'DM Serif Display',Georgia,serif;font-size:clamp(20px,3vw,28px);color:#111;margin-bottom:12px;line-height:1.2;}
+.res-meta{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:18px;}
+.res-meta-item{display:flex;align-items:center;gap:6px;font-size:13px;color:#666;}
+.res-meta-item svg{color:#C9A84C;flex-shrink:0;}
+.res-desc{font-size:14px;color:#555;line-height:1.7;padding-top:16px;border-top:1px solid #f0ece6;}
+.res-price-row{display:flex;align-items:center;justify-content:space-between;margin-top:18px;padding-top:18px;border-top:1px solid #f0ece6;}
+.res-price-label{font-size:13px;color:#888;}
+.res-price-val{font-family:'DM Serif Display',Georgia,serif;font-size:28px;color:#C9A84C;font-weight:700;}
+.res-price-per{font-size:12px;color:#aaa;display:block;text-align:right;}
+
+/* ── RIGHT: FORM ── */
+.res-form-card{background:#fff;border-radius:18px;padding:32px 28px;box-shadow:0 4px 30px rgba(0,0,0,0.08);position:sticky;top:100px;}
+.res-form-title{font-family:'DM Serif Display',Georgia,serif;font-size:22px;color:#111;margin-bottom:24px;text-align:center;padding-bottom:16px;border-bottom:2px solid #f0ece6;}
+
+.form-group{margin-bottom:18px;}
+.form-label{display:block;font-size:13px;font-weight:600;color:#444;margin-bottom:7px;}
+.form-input,.form-select{width:100%;padding:11px 14px;border:1.5px solid #e8e2da;border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;color:#111;background:#faf8f5;transition:border-color .2s,box-shadow .2s;outline:none;}
+.form-input:focus,.form-select:focus{border-color:#C9A84C;box-shadow:0 0 0 3px rgba(201,168,76,0.12);}
+.form-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px;}
+
+/* Time slots */
+.time-slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.time-slot{position:relative;}
+.time-slot input[type=radio]{position:absolute;opacity:0;width:0;height:0;}
+.time-slot label{display:flex;align-items:center;justify-content:center;padding:9px 6px;border:1.5px solid #e8e2da;border-radius:8px;font-size:13px;font-weight:500;color:#555;cursor:pointer;transition:all .2s;background:#faf8f5;}
+.time-slot input:checked+label{border-color:#C9A84C;background:#C9A84C;color:#fff;font-weight:600;}
+.time-slot label:hover{border-color:#C9A84C;color:#C9A84C;}
+
+/* Persons row */
+.persons-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center;}
+.price-range{font-size:12px;color:#999;padding:11px 14px;background:#faf8f5;border:1.5px solid #e8e2da;border-radius:10px;text-align:center;}
+
+/* Supplements */
+.supplements{display:flex;flex-direction:column;gap:10px;}
+.supplement-item{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border:1.5px solid #e8e2da;border-radius:10px;cursor:pointer;transition:border-color .2s;background:#faf8f5;}
+.supplement-item:hover{border-color:#C9A84C;}
+.supplement-item.active{border-color:#C9A84C;background:#fffbf0;}
+.supp-left{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:500;color:#333;}
+.supp-check{width:18px;height:18px;border:2px solid #ddd;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;}
+.supplement-item.active .supp-check{background:#C9A84C;border-color:#C9A84C;}
+.supplement-item.active .supp-check::after{content:'✓';color:#fff;font-size:11px;font-weight:700;}
+.supp-price{font-size:13px;font-weight:600;color:#C9A84C;}
+
+/* Total */
+.res-total-box{background:#f5f0eb;border-radius:12px;padding:16px 18px;margin:20px 0;display:flex;align-items:center;justify-content:space-between;}
+.res-total-label{font-size:14px;font-weight:600;color:#555;}
+.res-total-val{font-family:'DM Serif Display',Georgia,serif;font-size:28px;color:#C9A84C;font-weight:700;}
+
+/* CTA */
+.btn-reserver{width:100%;padding:16px;background:#C9A84C;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;letter-spacing:.5px;text-transform:uppercase;transition:background .2s,transform .15s;display:flex;align-items:center;justify-content:center;gap:10px;}
+.btn-reserver:hover{background:#b8943e;transform:translateY(-1px);}
+.btn-reserver svg{flex-shrink:0;}
+.res-note{text-align:center;font-size:11px;color:#aaa;margin-top:12px;line-height:1.6;}
+
+/* Back link */
+.res-back{display:inline-flex;align-items:center;gap:8px;color:#888;font-size:13px;margin-bottom:28px;text-decoration:none;transition:color .2s;}
+.res-back:hover{color:#C9A84C;}
+.res-back svg{transition:transform .2s;}
+.res-back:hover svg{transform:translateX(-3px);}
+
+/* Page header */
+.res-page-header{max-width:1060px;margin:0 auto 0;}
+
+/* Skeleton loader */
+.skeleton{background:linear-gradient(90deg,#e8e2da 25%,#f0ebe3 50%,#e8e2da 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px;}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* Success state */
+.res-success{display:none;text-align:center;padding:40px 20px;}
+.res-success svg{margin-bottom:16px;color:#C9A84C;}
+.res-success h3{font-family:'DM Serif Display',Georgia,serif;font-size:22px;margin-bottom:8px;}
+.res-success p{color:#666;font-size:14px;}
+
+@media(max-width:768px){
+  .res-form-card{position:static!important;top:auto!important}
+  .res-img-wrap{height:260px}
+  .res-info{padding:20px 18px}
+}
+@media(max-width:480px){
+  .res-container{gap:20px}
+  .res-img-wrap{height:200px}
+  .time-slots{grid-template-columns:1fr!important}
+  .persons-row{grid-template-columns:1fr!important}
+  .res-form-card{padding:22px 16px}
+  .res-name{font-size:20px}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ TOP BAR ══════════════ -->
+<div class="topbar">
+  <div class="container">
+    <div class="topbar-inner">
+      <div class="topbar-left">
+        <a href="tel:+212707473742" class="topbar-item">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.81 19.79 19.79 0 01.04 2.27 2 2 0 012 .09h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+          +212 707-473742
+        </a>
+        <a href="mailto:Contact@moroccantransfer.com" class="topbar-item">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Contact@moroccantransfer.com
+        </a>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-social">
+          <a href="#" aria-label="Facebook"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ HEADER ══════════════ -->
+<header class="site-header">
+  <nav class="nav-bar">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo">
+          <img src="Moroccan Transfer.png" alt="Moroccan Transfer">
+          <div>
+            <span class="nav-logo-text">Moroccan<span>Transfer</span></span>
+            <span class="nav-logo-tagline">Votre agence locale au Maroc</span>
+          </div>
+        </a>
+        <ul class="nav-menu">
+          <li class="nav-item"><a href="index.html" class="nav-link">Accueil</a></li>
+          <li class="nav-item nav-dropdown">
+            <a href="excursions/index.html" class="nav-link">Excursions <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></a>
+            <ul class="nav-dropdown-menu">
+              <li><a href="excursions/index.html" class="nav-dropdown-item">Toutes les excursions</a></li>
+              <li><a href="excursions/index.html" class="nav-dropdown-item">Désert d'Agafay</a></li>
+              <li><a href="excursions/index.html" class="nav-dropdown-item">Cascades d'Ouzoud</a></li>
+              <li><a href="excursions/index.html" class="nav-dropdown-item">Vallée de l'Ourika</a></li>
+            </ul>
+          </li>
+          <li class="nav-item nav-dropdown">
+            <a href="transferts/index.html" class="nav-link">Transferts <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg></a>
+            <ul class="nav-dropdown-menu">
+              <li><a href="transferts/index.html" class="nav-dropdown-item">Aéroport Marrakech (RAK)</a></li>
+              <li><a href="transferts/index.html" class="nav-dropdown-item">Aéroport Casablanca (CMN)</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a href="activites/index.html" class="nav-link">Activités</a></li>
+          <li class="nav-item"><a href="blog/index.html" class="nav-link">Blog</a></li>
+          <li class="nav-item"><a href="apropos/index.html" class="nav-link">À propos</a></li>
+          <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+        <div class="nav-cta">
+          <div class="nav-phone">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.81 19.79 19.79 0 01.04 2.27 2 2 0 012 .09h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+            <div><small>Appelez-nous</small>+212 707-473742</div>
+          </div>
+        </div>
+        <button class="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="mobile-nav-overlay"></div>
+<div class="mobile-nav">
+  <div class="mobile-nav-close">
+    <span class="mobile-nav-logo">Moroccan<span>Transfer</span></span>
+    <button style="font-size:22px;color:rgba(255,255,255,0.6);background:none;border:none;cursor:pointer;">✕</button>
+  </div>
+  <a href="index.html" class="mobile-nav-link">Accueil</a>
+  <a href="excursions/index.html" class="mobile-nav-link">Excursions</a>
+  <a href="transferts/index.html" class="mobile-nav-link">Transferts</a>
+  <a href="activites/index.html" class="mobile-nav-link">Activités</a>
+  <a href="blog/index.html" class="mobile-nav-link">Blog</a>
+  <a href="apropos/index.html" class="mobile-nav-link">À propos</a>
+  <a href="contact.html" class="mobile-nav-link">Contact</a>
+</div>
+
+<!-- ══════════════ RESERVATION PAGE ══════════════ -->
+<div class="res-page">
+  <div class="res-page-header">
+    <a href="javascript:history.back()" class="res-back">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="19 12 5 12"/><polyline points="12 5 5 12 12 19"/></svg>
+      Retour aux excursions
+    </a>
+  </div>
+
+  <div class="res-container">
+
+    <!-- LEFT: EXCURSION INFO -->
+    <div class="res-summary">
+      <div class="res-img-wrap">
+        <img id="resImage" src="" alt="">
+        <span class="res-img-badge" id="resBadge">Excursion</span>
+      </div>
+      <div class="res-info">
+        <div class="res-category" id="resCategory">Marrakech</div>
+        <h1 class="res-name" id="resName">Chargement…</h1>
+        <div class="res-meta">
+          <span class="res-meta-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span id="resMeta1">Marrakech</span>
+          </span>
+          <span class="res-meta-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            <span>1–8 personnes</span>
+          </span>
+          <span class="res-meta-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span id="resDuration">Journée complète</span>
+          </span>
+        </div>
+        <p class="res-desc" id="resDesc">Transport aller-retour depuis votre hôtel inclus. Guides francophones professionnels. Annulation gratuite jusqu'à 48h avant le départ.</p>
+        <div class="res-price-row">
+          <span class="res-price-label">Prix par personne</span>
+          <div>
+            <span class="res-price-val" id="resPriceDisplay">€0</span>
+            <span class="res-price-per">à partir de</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: BOOKING FORM -->
+    <div class="res-form-card">
+      <h2 class="res-form-title">Réservation</h2>
+
+      <div id="formContent">
+
+        <div class="form-group">
+          <label class="form-label">Date :</label>
+          <input type="date" class="form-input" id="resDate" min="">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Heure de départ :</label>
+          <div class="time-slots" style="grid-template-columns:auto;">
+            <div class="time-slot"><input type="radio" name="heure" id="h9" value="9h00" checked><label for="h9" style="justify-content:flex-start;padding:9px 16px;">9h00</label></div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Nombre de Personnes :</label>
+          <div class="persons-row">
+            <div class="price-range" id="priceRangeLabel">€0 — €0</div>
+            <select class="form-select" id="resPersons">
+              <option value="1">1 personne</option>
+              <option value="2">2 personnes</option>
+              <option value="3">3 personnes</option>
+              <option value="4">4 personnes</option>
+              <option value="5">5 personnes</option>
+              <option value="6">6 personnes</option>
+              <option value="7">7 personnes</option>
+              <option value="8">8 personnes</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Votre nom complet :</label>
+          <input type="text" class="form-input" id="resNom" placeholder="Ex : Ahmed Benali">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Téléphone / WhatsApp :</label>
+          <input type="tel" class="form-input" id="resTel" placeholder="+212 6XX XXX XXX">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Ajouter un supplément <small style="font-weight:400;color:#aaa;">(prix par personne)</small></label>
+          <div class="supplements">
+            <div class="supplement-item" data-price="20" onclick="toggleSupp(this)">
+              <div class="supp-left"><div class="supp-check"></div>Repas de Midi</div>
+              <span class="supp-price">+20€</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="res-total-box">
+          <span class="res-total-label">Total :</span>
+          <span class="res-total-val" id="resTotalVal">€0</span>
+        </div>
+
+        <button class="btn-reserver" onclick="submitReservation()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.81"/><path d="M16 2a15.003 15.003 0 010 20"/></svg>
+          Réservez Maintenant
+        </button>
+        <p class="res-note">✓ Confirmation sous 2h · ✓ Annulation gratuite 48h avant</p>
+
+      </div>
+
+      <!-- SUCCESS STATE -->
+      <div class="res-success" id="resSuccess">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
+        <h3>Demande envoyée !</h3>
+        <p style="margin:10px 0 20px;">Nous vous confirmons votre réservation sous 2 heures par WhatsApp ou email.</p>
+        <a href="index.html" style="display:inline-block;padding:12px 28px;background:#C9A84C;color:#fff;border-radius:10px;font-weight:600;text-decoration:none;font-size:14px;">Retour à l'accueil</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo-row">
+          <img src="Moroccan Transfer.png" alt="Moroccan Transfer Logo">
+          <span class="footer-brand">Moroccan<span>Transfer</span></span>
+        </div>
+        <p class="footer-desc">Votre agence de transferts et excursions privées au Maroc depuis 2012. Professionnels, ponctuels et passionnés du Maroc authentique.</p>
+        <div class="footer-social">
+          <a href="#" class="social-btn" aria-label="Facebook"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+          <a href="#" class="social-btn" aria-label="Instagram"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://www.tripadvisor.com/Attraction_Review-g293734-d17333913-Reviews-Morocco_Transfer-Marrakech_Marrakech_Safi.html" target="_blank" rel="noopener" class="social-btn" aria-label="TripAdvisor"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12.006 4.295c-2.29 0-4.408.738-6.13 1.984L3 6.28l2.569.017A9.928 9.928 0 002 13.994C2 19.52 6.479 24 12.006 24S22 19.52 22 13.994c0-3.33-1.636-6.28-4.157-8.11l2.43-.006-2.85-.004A9.926 9.926 0 0012.006 4.3zM7.22 14.12c-.924 0-1.673-.75-1.673-1.673s.75-1.673 1.673-1.673 1.673.75 1.673 1.673-.75 1.673-1.673 1.673zm4.786 3.87c-2.184 0-3.953-1.77-3.953-3.954s1.77-3.953 3.953-3.953 3.953 1.77 3.953 3.953-1.77 3.954-3.953 3.954zm0-6.252a2.3 2.3 0 00-2.298 2.298 2.3 2.3 0 002.298 2.298 2.3 2.3 0 002.298-2.298 2.3 2.3 0 00-2.298-2.298zm4.794 2.382c-.924 0-1.673-.75-1.673-1.673s.75-1.673 1.673-1.673 1.673.75 1.673 1.673-.75 1.673-1.673 1.673z"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <h4 class="footer-col-title">Parcourir</h4>
+        <ul class="footer-links">
+          <li><a href="excursions/index.html" class="footer-link">Excursions depuis Agadir</a></li>
+          <li><a href="excursions/index.html" class="footer-link">Excursion Marrakech</a></li>
+          <li><a href="excursions/index.html" class="footer-link">Excursion Essaouira</a></li>
+          <li><a href="transferts/index.html" class="footer-link">Transferts aéroport</a></li>
+          <li><a href="activites/index.html" class="footer-link">Activités &amp; Loisirs</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-col-title">Informations</h4>
+        <ul class="footer-links">
+          <li><a href="apropos/index.html" class="footer-link">À propos de nous</a></li>
+          <li><a href="#" class="footer-link">FAQ</a></li>
+          <li><a href="#" class="footer-link">Nos véhicules</a></li>
+          <li><a href="#" class="footer-link">Avis clients</a></li>
+          <li><a href="#" class="footer-link">Mentions légales</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-col-title">Coordonnées</h4>
+        <ul class="footer-contact-list">
+          <li class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.81 19.79 19.79 0 01.04 2.27 2 2 0 012 .09h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg><a href="tel:+212707473742">+212 707-473742</a></li>
+          <li class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><a href="mailto:Contact@moroccantransfer.com">Contact@moroccantransfer.com</a></li>
+          <li class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Marrakech, Maroc</li>
+          <li class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Lun–Dim : 06h00 – 23h00</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">2012 – 2026 © MoroccanTransfer.com — <a href="#">Mentions légales</a> · <a href="#">Confidentialité</a></div>
+      <div class="footer-payment-icons">
+        <span class="payment-icon">VISA</span><span class="payment-icon">MC</span><span class="payment-icon">AMEX</span><span class="payment-icon">PAYPAL</span><span class="payment-icon">STRIPE</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/212707473742" class="whatsapp-float" aria-label="WhatsApp" target="_blank" rel="noopener">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script src="assets/js/main.js"></script>
+<script>
+// ── READ FROM sessionStorage ──
+const raw = sessionStorage.getItem('mtResData');
+const data = raw ? JSON.parse(raw) : {};
+const name     = data.name     || 'Excursion';
+const price    = parseInt(data.price || 0, 10);
+const image    = data.image    || '';
+const category = data.category || 'Marrakech';
+const duration = data.duration || 'Journée complète';
+const desc     = data.desc     || 'Transport aller-retour depuis votre hôtel inclus. Guides francophones. Annulation gratuite 48h avant.';
+
+// ── POPULATE PAGE ──
+document.getElementById('resImage').src = image;
+document.getElementById('resImage').alt = name;
+document.getElementById('resBadge').textContent = category;
+document.getElementById('resCategory').textContent = category;
+document.getElementById('resName').textContent = name;
+document.getElementById('resDuration').textContent = duration;
+document.getElementById('resDesc').textContent = desc;
+document.getElementById('resMeta1').textContent = category;
+document.getElementById('resPriceDisplay').textContent = '€' + price;
+document.title = 'Réserver — ' + name + ' — MoroccanTransfer';
+
+// Set min date to today
+const today = new Date();
+const yyyy = today.getFullYear();
+const mm = String(today.getMonth()+1).padStart(2,'0');
+const dd = String(today.getDate()+2).padStart(2,'0');
+document.getElementById('resDate').min = yyyy+'-'+mm+'-'+dd;
+document.getElementById('resDate').value = yyyy+'-'+mm+'-'+dd;
+
+// ── PRICE CALCULATION ──
+let suppTotal = 0;
+
+function updateTotal() {
+  const persons = parseInt(document.getElementById('resPersons').value, 10);
+  const base = price * persons;
+  const suppCost = suppTotal * persons;
+  const total = base + suppCost;
+  document.getElementById('resTotalVal').textContent = '€' + total;
+  document.getElementById('priceRangeLabel').textContent = '€' + price + ' – €' + (price * 8);
+}
+
+document.getElementById('resPersons').addEventListener('change', updateTotal);
+updateTotal();
+
+function toggleSupp(el) {
+  const p = parseInt(el.dataset.price, 10);
+  if (el.classList.contains('active')) {
+    el.classList.remove('active');
+    suppTotal -= p;
+  } else {
+    el.classList.add('active');
+    suppTotal += p;
+  }
+  updateTotal();
+}
+
+// ── SUBMIT ──
+function submitReservation() {
+  const nom  = document.getElementById('resNom').value.trim();
+  const tel  = document.getElementById('resTel').value.trim();
+  const date = document.getElementById('resDate').value;
+  const heure = document.querySelector('input[name=heure]:checked').value;
+  const persons = document.getElementById('resPersons').value;
+  const total = document.getElementById('resTotalVal').textContent;
+
+  if (!nom) { alert('Veuillez entrer votre nom complet.'); return; }
+  if (!tel) { alert('Veuillez entrer votre numéro de téléphone.'); return; }
+  if (!date) { alert('Veuillez choisir une date.'); return; }
+
+  // Build WhatsApp message
+  const msg = encodeURIComponent(
+    `🌍 Nouvelle réservation — MoroccanTransfer\n\n` +
+    `📌 Excursion : ${name}\n` +
+    `📅 Date : ${date}\n` +
+    `🕐 Heure : ${heure}\n` +
+    `👥 Personnes : ${persons}\n` +
+    `💰 Total : ${total}\n\n` +
+    `👤 Nom : ${nom}\n` +
+    `📞 Tél : ${tel}`
+  );
+
+  // Show success state
+  document.getElementById('formContent').style.display = 'none';
+  document.getElementById('resSuccess').style.display = 'block';
+
+  // Open WhatsApp
+  setTimeout(() => {
+    window.open('https://wa.me/212707473742?text=' + msg, '_blank');
+  }, 600);
+}
+</script>
+<script src="assets/js/lang-switcher.js"></script>
+</body>
+</html>
