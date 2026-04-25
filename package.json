@@ -1,0 +1,10 @@
+{
+  "name": "moroccan-transfer",
+  "version": "1.0.0",
+  "description": "MoroccanTransfer - Agence de transferts et excursions privées au Maroc",
+  "scripts": {
+    "build": "echo 'Static site'",
+    "start": "npx serve ."
+  },
+  "keywords": ["maroc", "transfert", "excursion", "tourisme"]
+}
