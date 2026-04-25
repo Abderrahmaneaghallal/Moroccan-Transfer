@@ -280,7 +280,7 @@
             <p>Devis gratuit · Réponse sous 2h · Sans engagement</p>
           </div>
           <div class="cfp-body">
-            <form id="contactForm" action="#" method="post">
+            <form id="contactForm" action="https://formspree.io/f/xgorqaqw" method="POST">
 
               <div class="form-row">
                 <div class="form-group">
@@ -430,7 +430,7 @@
 <script src="assets/js/main.js"></script>
 <script>
 // Contact form validation
-document.getElementById('contactForm')?.addEventListener('submit', function(e) {
+document.getElementById('contactForm')?.addEventListener('submit', async function(e) {
   e.preventDefault();
   const required = ['firstname','lastname','email','phone','service_type','travel_date'];
   const errors = [];
@@ -443,9 +443,31 @@ document.getElementById('contactForm')?.addEventListener('submit', function(e) {
   const errList = errBox.querySelector('ul');
   errList.innerHTML = errors.map(m=>'<li>'+m+'</li>').join('');
   errBox.style.display = errors.length ? 'block' : 'none';
-  if (!errors.length) {
-    window.showToast && window.showToast('Merci ! Votre demande a bien été envoyée. Nous vous répondons sous 2 heures.', 'success');
-    this.reset();
+  if (errors.length) return;
+
+  const btn = this.querySelector('.form-submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Envoi en cours…';
+
+  try {
+    const res = await fetch('https://formspree.io/f/xgorqaqw', {
+      method: 'POST',
+      body: new FormData(this),
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      btn.textContent = '✓ Message envoyé !';
+      btn.style.background = '#22c55e';
+      this.reset();
+      window.showToast && window.showToast('Merci ! Votre demande a bien été envoyée. Nous vous répondons sous 2 heures.', 'success');
+    } else {
+      throw new Error();
+    }
+  } catch {
+    btn.disabled = false;
+    btn.textContent = 'Envoyer ma demande →';
+    errList.innerHTML = '<li>Une erreur est survenue. Veuillez réessayer ou nous contacter par WhatsApp.</li>';
+    errBox.style.display = 'block';
   }
 });
 </script>
