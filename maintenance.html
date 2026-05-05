@@ -144,7 +144,32 @@ h1 span{color:#C9A84C;}
 
 /* Gear animation inside icon */
 .gear{animation:spin 6s linear infinite;}
-@keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}</style>
+@keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+
+/* ── RESPONSIVE ── */
+@media(max-width:600px){
+  body{padding:32px 20px;overflow-y:auto;justify-content:flex-start;padding-top:40px;}
+  .logo{margin-bottom:32px;gap:10px;}
+  .logo img{height:40px;}
+  .logo-text{font-size:18px;}
+  .maintenance-icon{width:76px;height:76px;margin-bottom:24px;}
+  .maintenance-icon svg{width:34px;height:34px;}
+  .badge{font-size:11px;padding:6px 14px;margin-bottom:18px;}
+  h1{font-size:clamp(28px,9vw,40px);margin-bottom:16px;}
+  .subtitle{font-size:14px;margin-bottom:32px;padding:0 4px;}
+  .subtitle br{display:none;}
+  .divider{margin-bottom:32px;}
+  .contact-strip{flex-direction:column;align-items:stretch;gap:12px;margin-bottom:32px;width:100%;max-width:360px;}
+  .contact-btn{justify-content:center;padding:14px 20px;font-size:14px;}
+  .social-row{margin-bottom:32px;}
+  .footer-note{font-size:11px;}
+}
+
+@media(max-width:360px){
+  body{padding:28px 16px;}
+  h1{font-size:26px;}
+  .contact-btn{font-size:13px;padding:13px 16px;}
+}</style>
 </head>
 <body>
 
