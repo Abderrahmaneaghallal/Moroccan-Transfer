@@ -447,7 +447,7 @@
                 </div>
               </div>
 
-              <div class="fg-row">
+              <div class="fg-row" id="passengersRow">
                 <div class="fg">
                   <label>N° de vol</label>
                   <input type="text" name="flight_number" placeholder="ex : AT 502">
@@ -461,43 +461,9 @@
                 </div>
               </div>
 
-              <div>
-                <span class="veh-label">Type de véhicule</span>
-                <div class="veh-opts">
-                  <label class="veh-opt sel">
-                    <input type="radio" name="vehicle" value="kodiaq" checked>
-                    <div class="veh-opt-info">
-                      <strong>Skoda Kodiaq</strong>
-                      <span>1–4 personnes · 2 bagages</span>
-                    </div>
-                    <span class="veh-opt-price">dès €45</span>
-                  </label>
-                  <label class="veh-opt">
-                    <input type="radio" name="vehicle" value="prado">
-                    <div class="veh-opt-info">
-                      <strong>Toyota Land Cruiser Prado TX</strong>
-                      <span>1–6 personnes · Grand coffre</span>
-                    </div>
-                    <span class="veh-opt-price">dès €55</span>
-                  </label>
-                  <label class="veh-opt">
-                    <input type="radio" name="vehicle" value="vito">
-                    <div class="veh-opt-info">
-                      <strong>Mercedes Vito</strong>
-                      <span>5–7 personnes · 5 bagages</span>
-                    </div>
-                    <span class="veh-opt-price">dès €65</span>
-                  </label>
-                  <label class="veh-opt">
-                    <input type="radio" name="vehicle" value="sprinter">
-                    <div class="veh-opt-info">
-                      <strong>Mercedes Sprinter</strong>
-                      <span>8–18 personnes</span>
-                    </div>
-                    <span class="veh-opt-price">dès €90</span>
-                  </label>
-                </div>
-              </div>
+              <!-- Vehicle type and name hidden inputs -->
+              <input type="hidden" name="vehicle" id="mtHiddenVehicle" value="">
+              <input type="hidden" name="vehicle_name" id="mtHiddenVehicleName" value="">
 
               <div class="fg">
                 <label>Votre nom complet</label>
@@ -663,14 +629,6 @@
 
 <script src="../assets/js/main.js"></script>
 <script>
-// Vehicle option highlight
-document.querySelectorAll('.veh-opt').forEach(function(opt) {
-  opt.addEventListener('click', function() {
-    document.querySelectorAll('.veh-opt').forEach(function(o){ o.classList.remove('sel'); });
-    opt.classList.add('sel');
-  });
-});
-
 // Pre-select vehicle from sessionStorage (set by homepage / vehicules page buttons)
 (function() {
   var vtype = sessionStorage.getItem('mtVehicle');
@@ -689,21 +647,23 @@ document.querySelectorAll('.veh-opt').forEach(function(opt) {
   };
   if (vname && nameMap[vname]) vtype = nameMap[vname];
 
-  // Select the matching radio + highlight
-  var radio = document.querySelector('input[name="vehicle"][value="' + vtype + '"]');
-  if (radio) {
-    radio.checked = true;
-    document.querySelectorAll('.veh-opt').forEach(function(o){ o.classList.remove('sel'); });
-    radio.closest('.veh-opt').classList.add('sel');
+  // Set hidden inputs
+  var hiddenVehicle = document.getElementById('mtHiddenVehicle');
+  if (hiddenVehicle) {
+    hiddenVehicle.value = vtype;
+  }
+  var hiddenVehicleName = document.getElementById('mtHiddenVehicleName');
+  if (hiddenVehicleName) {
+    hiddenVehicleName.value = vname || '';
   }
 
-  // Show vehicle name as a helper note under the vehicle selector
+  // Show vehicle name as a helper note
   if (vname) {
     var note = document.createElement('p');
     note.style.cssText = 'font-size:12px;color:#C9A84C;font-weight:600;margin-bottom:14px;';
     note.textContent = '✓ Véhicule sélectionné : ' + vname;
-    var vehOpts = document.querySelector('.veh-opts');
-    if (vehOpts) vehOpts.after(note);
+    var target = document.getElementById('passengersRow');
+    if (target) target.after(note);
   }
 
   // Scroll to form
@@ -723,14 +683,54 @@ document.getElementById('tfForm').addEventListener('submit', function(e) {
   var date      = this.querySelector('[name="travel_date"]').value;
   var name      = this.querySelector('[name="name"]').value;
   var phone     = this.querySelector('[name="phone"]').value;
-  var vehicle   = this.querySelector('[name="vehicle"]:checked').value;
   var passengers= this.querySelector('[name="passengers"]').value;
   var flight    = this.querySelector('[name="flight_number"]').value;
+
+  var vehicle = this.querySelector('#mtHiddenVehicle').value;
+  var vehicleName = this.querySelector('#mtHiddenVehicleName').value;
 
   if (!airport || !address || !date || !name || !phone) {
     window.showToast('Veuillez remplir tous les champs obligatoires.', 'error');
     return;
   }
+
+  // If vehicle is not pre-selected, determine based on passengers
+  if (!vehicle) {
+    var passengersNum = parseInt(passengers);
+    if (isNaN(passengersNum)) {
+      vehicle = "sprinter";
+      vehicleName = "Mercedes Sprinter";
+    } else if (passengersNum >= 1 && passengersNum <= 4) {
+      vehicle = "kodiaq";
+      vehicleName = "Skoda Kodiaq";
+    } else if (passengersNum >= 5 && passengersNum <= 6) {
+      vehicle = "prado";
+      vehicleName = "Toyota Land Cruiser Prado TX";
+    } else if (passengersNum === 7) {
+      vehicle = "vito";
+      vehicleName = "Mercedes Vito";
+    } else {
+      vehicle = "sprinter";
+      vehicleName = "Mercedes Sprinter";
+    }
+  } else if (!vehicleName) {
+    var nameMap = {
+      'kodiaq': 'Skoda Kodiaq',
+      'prado': 'Toyota Land Cruiser Prado TX',
+      'vito': 'Mercedes Vito',
+      'sprinter': 'Mercedes Sprinter'
+    };
+    vehicleName = nameMap[vehicle] || vehicle;
+  }
+
+  // Calculate the price based on vehicle
+  var priceMap = {
+    'kodiaq': '€45',
+    'prado': '€55',
+    'vito': '€65',
+    'sprinter': '€90'
+  };
+  var price = priceMap[vehicle] || '€45';
 
   var msg = 'Bonjour MoroccanTransfer 👋\n\n'
     + '🚖 *Demande de transfert*\n'
@@ -739,8 +739,9 @@ document.getElementById('tfForm').addEventListener('submit', function(e) {
     + '• Adresse : ' + address + '\n'
     + '• Date : ' + date + '\n'
     + '• Vol : ' + (flight || 'N/A') + '\n'
-    + '• Véhicule : ' + vehicle + '\n'
-    + '• Passagers : ' + passengers + '\n\n'
+    + '• Véhicule : ' + vehicleName + '\n'
+    + '• Passagers : ' + passengers + '\n'
+    + '• Prix estimé : ' + price + '\n\n'
     + '👤 *Contact*\n'
     + '• Nom : ' + name + '\n'
     + '• Tél : ' + phone;
