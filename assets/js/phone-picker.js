@@ -40,11 +40,31 @@
       /* Numbers-only */
       input.setAttribute('inputmode', 'numeric');
       input.addEventListener('input', function () {
-        var pos = this.selectionStart;
-        var cleaned = this.value.replace(/[^0-9\s\-]/g, '');
+        var placeholder = this.getAttribute('placeholder') || '';
+        var maxDigits = 15; // default fallback
+        if (placeholder && /\d/.test(placeholder)) {
+          maxDigits = placeholder.replace(/\D/g, '').length;
+        }
+
+        var val = this.value;
+        var cleaned = "";
+        var digitCount = 0;
+        for (var i = 0; i < val.length; i++) {
+          var char = val[i];
+          if (/[0-9]/.test(char)) {
+            if (digitCount < maxDigits) {
+              cleaned += char;
+              digitCount++;
+            }
+          } else if (/[\s\-]/.test(char)) {
+            cleaned += char;
+          }
+        }
+
         if (cleaned !== this.value) {
+          var pos = this.selectionStart;
           this.value = cleaned;
-          try { this.setSelectionRange(pos - 1, pos - 1); } catch(e){}
+          try { this.setSelectionRange(pos, pos); } catch (e) {}
         }
       });
       input.addEventListener('keypress', function (e) {
