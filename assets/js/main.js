@@ -587,3 +587,57 @@ window.showToast = function(msg, type = 'success') {
 
   goTo(0, false);
 })();
+
+/* ── COMMAND BUTTON INTERCEPTOR ── */
+(function() {
+  document.addEventListener('click', function(e) {
+    const btn = e.target.closest('.btn-commander');
+    if (!btn) return;
+    const href = btn.getAttribute('href');
+    if (href && href.indexOf('reservation.html') > -1) {
+      e.preventDefault();
+      const card = btn.closest('.tour-card');
+      if (card) {
+        const titleEl = card.querySelector('.card-title a') || card.querySelector('.card-title') || card.querySelector('h3');
+        const priceEl = card.querySelector('.card-price strong') || card.querySelector('[data-price-eur]');
+        const catEl   = card.querySelector('.card-badge-cat') || card.querySelector('.card-badge');
+        const durEl   = card.querySelector('.card-badge-duration') || card.querySelector('.duration') || card.querySelector('.card-badge-dur');
+        const imgEl   = card.querySelector('.tour-gallery img') || card.querySelector('img');
+        const descEl  = card.querySelector('.card-excerpt') || card.querySelector('.card-desc') || card.querySelector('p');
+
+        const name     = titleEl ? titleEl.textContent.trim() : 'Excursion';
+        const price    = priceEl ? (priceEl.dataset.priceEur || priceEl.textContent.replace(/\D/g, '')) : '0';
+        const category = catEl ? catEl.textContent.trim() : 'Marrakech';
+        const duration = durEl ? durEl.textContent.trim() : 'Journée complète';
+        const image    = imgEl ? imgEl.src : '';
+        const desc     = descEl ? descEl.textContent.trim() : '';
+
+        // Save to sessionStorage as fallback
+        try {
+          sessionStorage.setItem('mtResData', JSON.stringify({
+            name: name,
+            price: parseInt(price, 10),
+            category: category,
+            duration: duration,
+            image: image,
+            desc: desc
+          }));
+        } catch(err) {}
+
+        // Build query string
+        const params = new URLSearchParams();
+        params.set('name', name);
+        params.set('price', price);
+        params.set('category', category);
+        params.set('duration', duration);
+        params.set('image', image);
+        params.set('desc', desc);
+
+        // Redirect
+        window.location.href = href.split('?')[0] + '?' + params.toString();
+      } else {
+        window.location.href = href;
+      }
+    }
+  });
+})();

@@ -418,16 +418,33 @@ let excursionName = 'Excursion';
 let suppTotal = 0;
 
 function initPage() {
-  const raw = sessionStorage.getItem('mtResData');
+  const params = new URLSearchParams(window.location.search);
   let data = {};
-  if (raw) {
-    try {
-      data = JSON.parse(raw);
-    } catch (e) {
+
+  if (params.has('name')) {
+    data = {
+      name: params.get('name'),
+      price: params.get('price'),
+      category: params.get('category'),
+      duration: params.get('duration'),
+      image: params.get('image'),
+      desc: params.get('desc')
+    };
+  } else {
+    const raw = sessionStorage.getItem('mtResData');
+    if (raw) {
       try {
-        data = JSON.parse(raw.replace(/\\+'/g, "'"));
-      } catch (err) {
-        console.error("JSON parse error:", err);
+        data = JSON.parse(raw);
+      } catch (e) {
+        try {
+          data = JSON.parse(raw.replace(/\\+'/g, "'"));
+        } catch (err) {
+          try {
+            data = Function("return (" + raw + ")")();
+          } catch (evalErr) {
+            console.error("JSON parse error:", evalErr);
+          }
+        }
       }
     }
   }
