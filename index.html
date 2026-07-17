@@ -12,6 +12,202 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"TravelAgency","name":"MoroccanTransfer","url":"https://moroccan-transfer.com","description":"Transferts aéroport privés et excursions au Maroc","telephone":"+212707473742","address":{"@type":"PostalAddress","addressLocality":"Agadir","addressCountry":"MA"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"847"}}
 </script>
+<style>
+/* ── NAVETTE SECTION ── */
+.navette-section {
+  background: #ffffff;
+  padding: 80px 0;
+  border-top: 1px solid #f0ece6;
+  border-bottom: 1px solid #f0ece6;
+}
+.navette-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 60px;
+  align-items: center;
+}
+.navette-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  border: 1px solid #C9A84C;
+  border-radius: 20px;
+  color: #C9A84C;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 18px;
+  background: rgba(201, 168, 76, 0.05);
+}
+.navette-title {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: clamp(28px, 4.2vw, 44px);
+  color: #111;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.navette-subtitle {
+  color: #C9A84C;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 22px;
+  letter-spacing: 0.5px;
+}
+.navette-desc {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.65;
+  margin-bottom: 24px;
+}
+.navette-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 32px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.navette-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #222;
+  font-weight: 600;
+}
+.navette-list li svg {
+  color: #22c55e;
+  flex-shrink: 0;
+}
+
+/* Price & CTA bar */
+.navette-cta-bar {
+  background: #111111;
+  border-radius: 16px;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  max-width: 480px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+.navette-price-block {
+  color: #fff;
+}
+.navette-price-label {
+  font-size: 9px;
+  font-weight: 700;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: block;
+  margin-bottom: 2px;
+}
+.navette-price-val {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 38px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+.navette-price-val span {
+  font-size: 24px;
+  color: #C9A84C;
+  vertical-align: middle;
+  margin-left: 2px;
+}
+.navette-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #22c55e;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background .2s, transform .1s;
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.25);
+  border: none;
+}
+.navette-btn:hover {
+  background: #1ab050;
+  transform: translateY(-1px);
+  color: #fff;
+}
+
+/* Timeline card on right */
+.navette-visual-card {
+  background: #111111;
+  border: 1.5px solid rgba(201, 168, 76, 0.4);
+  border-radius: 20px;
+  padding: 44px 36px;
+  box-shadow: 0 12px 36px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  position: relative;
+}
+.timeline-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  z-index: 2;
+}
+.timeline-icon-wrap {
+  width: 44px;
+  height: 44px;
+  background: #1c1c1c;
+  border: 1.5px solid #C9A84C;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #C9A84C;
+  flex-shrink: 0;
+}
+.timeline-icon-wrap svg {
+  width: 18px;
+  height: 18px;
+}
+.timeline-content {
+  color: #fff;
+}
+.timeline-content strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.timeline-content span {
+  font-size: 12px;
+  color: #888;
+}
+.timeline-line {
+  position: absolute;
+  left: 57px;
+  top: 64px;
+  width: 2px;
+  height: 52px;
+  background: linear-gradient(to bottom, #C9A84C, rgba(201, 168, 76, 0.15));
+  z-index: 1;
+}
+
+@media(max-width: 768px) {
+  .navette-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .navette-cta-bar {
+    max-width: 100%;
+  }
+}
+</style>
 </head>
 <body>
 
@@ -835,95 +1031,87 @@
   </div>
 </section>
 
-<!-- ══════════════ FLOTTE VÉHICULES ══════════════ -->
-<section class="section-pad fleet-section" id="vehicules">
+<!-- ══════════════ NAVETTE AEROPORT (SHUTTLE) ══════════════ -->
+<section class="navette-section" id="vehicules">
   <div class="container">
-    <div class="section-head center">
-      <span class="section-label">Transport Touristique</span>
-      <h2 class="section-title">Notre flotte de véhicules</h2>
-      <p class="section-sub">Des véhicules confortables, climatisés et entretenus — avec chauffeur professionnel inclus pour tous vos transferts et excursions au Maroc.</p>
-    </div>
-    <div class="fleet-vehicles-grid">
-
-      <!-- Skoda Kodiaq -->
-      <div class="fleet-vehicle-card reveal">
-        <div class="fleet-vehicle-img">
-          <img src="Véhicule/Skoda Kodiaq.png" alt="Skoda Kodiaq" loading="lazy">
-          <span class="fleet-vehicle-badge">4 passagers</span>
-        </div>
-        <div class="fleet-vehicle-body">
-          <h3 class="fleet-vehicle-name">Skoda Kodiaq</h3>
-          <p class="fleet-vehicle-desc">Berline premium idéale pour les couples et petits groupes. Coffre spacieux, climatisation bi-zone, confort de haut standing pour vos transferts privés.</p>
-          <ul class="fleet-vehicle-features">
-            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Climatisation</li>
-            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> WiFi à bord</li>
-            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Eau offerte</li>
-            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Chauffeur privé</li>
-          </ul>
-          <a onclick="sessionStorage.setItem('mtVehicle','kodiaq');sessionStorage.setItem('mtVehicleName','Skoda Kodiaq')" href="transferts/index.html" class="fleet-vehicle-btn">Réserver</a>
-        </div>
-      </div>
-
-      <!-- Toyota Land Cruiser Prado -->
-      <div class="fleet-vehicle-card reveal delay-1">
-        <div class="fleet-vehicle-img">
-          <img src="Véhicule/Toyota Land Cruiser Prado TX.webp" alt="Toyota Land Cruiser Prado TX" loading="lazy">
-          <span class="fleet-vehicle-badge">6 passagers</span>
-        </div>
-        <div class="fleet-vehicle-body">
-          <h3 class="fleet-vehicle-name">Toyota Land Cruiser Prado TX</h3>
-          <p class="fleet-vehicle-desc">4×4 tout-terrain incontournable pour explorer les pistes de l'Atlas, le désert de Merzouga et les gorges du Dadès dans le confort total.</p>
-          <ul class="fleet-vehicle-features">
-            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> 4×4 tout-terrain</li>
-            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Climatisation</li>
-            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Grand coffre</li>
-            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Chauffeur privé</li>
-          </ul>
-          <a onclick="sessionStorage.setItem('mtVehicle','prado');sessionStorage.setItem('mtVehicleName','Toyota Land Cruiser Prado TX')" href="transferts/index.html" class="fleet-vehicle-btn">Réserver</a>
-        </div>
-      </div>
-
-      <!-- Mercedes Vito -->
-      <div class="fleet-vehicle-card reveal delay-2">
-        <div class="fleet-vehicle-img">
-          <img src="Véhicule/Mercedes Vito.png" alt="Mercedes Vito" loading="lazy">
-          <span class="fleet-vehicle-badge">7 passagers</span>
-        </div>
-        <div class="fleet-vehicle-body">
-          <h3 class="fleet-vehicle-name">Mercedes Vito</h3>
-          <p class="fleet-vehicle-desc">Minivan premium pour les familles et groupes jusqu'à 7 personnes. Intérieur raffiné, sièges capitaines, idéal pour les circuits et excursions à la journée.</p>
-          <ul class="fleet-vehicle-features">
-            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> 7 places</li>
-            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Climatisation</li>
-            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Bagages volumineux</li>
-            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Chauffeur privé</li>
-          </ul>
-          <a onclick="sessionStorage.setItem('mtVehicle','vito');sessionStorage.setItem('mtVehicleName','Mercedes Vito')" href="transferts/index.html" class="fleet-vehicle-btn">Réserver</a>
+    <div class="navette-grid">
+      
+      <!-- Left Column: Details -->
+      <div class="reveal">
+        <span class="navette-badge">Service Exclusif</span>
+        <h2 class="navette-title">
+          Navette Aéroport 
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="transform: rotate(45deg); vertical-align: middle;">
+            <path d="M22 2L15 22L11 13L2 9L22 2Z" />
+          </svg>
+        </h2>
+        <div class="navette-subtitle">Aéroport Marrakech Menara ⇄ Centre-ville</div>
+        <p class="navette-desc">Profitez d'un transfert privé, confortable et ponctuel. Fini l'attente et le stress à l'arrivée ! Nos chauffeurs vous accueillent avec une pancarte à votre nom.</p>
+        
+        <ul class="navette-list">
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Chauffeur professionnel
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Véhicule climatisé
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Ponctualité garantie
+          </li>
+        </ul>
+        
+        <div class="navette-cta-bar">
+          <div class="navette-price-block">
+            <span class="navette-price-label">À partir de</span>
+            <div class="navette-price-val">15<span>€</span></div>
+          </div>
+          <a href="transferts/index.html" class="navette-btn">
+            Réserver maintenant
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 4px;">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
         </div>
       </div>
-
-      <!-- Mercedes Sprinter -->
-      <div class="fleet-vehicle-card reveal delay-3">
-        <div class="fleet-vehicle-img">
-          <img src="Véhicule/Mercedes Sprinter.png" alt="Mercedes Sprinter" loading="lazy">
-          <span class="fleet-vehicle-badge">18 passagers</span>
-        </div>
-        <div class="fleet-vehicle-body">
-          <h3 class="fleet-vehicle-name">Mercedes Sprinter</h3>
-          <p class="fleet-vehicle-desc">Minibus grand confort pour les groupes jusqu'à 18 personnes. Parfait pour les séminaires d'entreprise, groupes touristiques et transferts aéroport collectifs.</p>
-          <ul class="fleet-vehicle-features">
-            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> 18 places</li>
-            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Climatisation</li>
-            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Groupes & séminaires</li>
-            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Chauffeur professionnel</li>
-          </ul>
-          <a onclick="sessionStorage.setItem('mtVehicle','sprinter');sessionStorage.setItem('mtVehicleName','Mercedes Sprinter')" href="transferts/index.html" class="fleet-vehicle-btn">Réserver</a>
+      
+      <!-- Right Column: Visual Timeline Card -->
+      <div class="reveal delay-1">
+        <div class="navette-visual-card">
+          
+          <div class="timeline-line"></div>
+          
+          <div class="timeline-item">
+            <div class="timeline-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 2L15 22L11 13L2 9L22 2Z" />
+              </svg>
+            </div>
+            <div class="timeline-content">
+              <strong>Aéroport RAK</strong>
+              <span>Marrakech-Ménara</span>
+            </div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                <path d="M9 21V9a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v12"/>
+              </svg>
+            </div>
+            <div class="timeline-content">
+              <strong>Centre-ville</strong>
+              <span>Hôtel / Riad / Médina</span>
+            </div>
+          </div>
+          
         </div>
       </div>
-
-    </div>
-    <div class="fleet-cta-row">
-      <a href="vehicules/index.html" class="btn btn-outline">Voir tous nos véhicules</a>
+      
     </div>
   </div>
 </section>
