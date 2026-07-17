@@ -867,13 +867,14 @@ document.getElementById('tfForm').addEventListener('submit', function(e) {
 
   // Calculate the price based on vehicle
   var priceMap = {
-    'kodiaq': '€45',
-    'prado': '€55',
-    'vito': '€65',
-    'sprinter': '€90'
+    'kodiaq': '45 €',
+    'prado': '55 €',
+    'vito': '65 €',
+    'sprinter': '90 €'
   };
-  var price = priceMap[vehicle] || '€45';
+  var price = priceMap[vehicle] || '45 €';
   var lowerAddress = address.toLowerCase();
+
   if (airport === 'RAK') {
     if (lowerAddress.includes('agafay')) {
       price = '45 €';
@@ -886,7 +887,8 @@ document.getElementById('tfForm').addEventListener('submit', function(e) {
     } else if (lowerAddress.includes('agadir')) {
       price = '150 €';
     } else {
-      price = '€15';
+      // Local Marrakech transfer (marrakech to hotel or hotel to airport) is always 15 € for all vehicles
+      price = '15 €';
     }
   } else if (airport === 'CMN') {
     if (lowerAddress.includes('marrakech')) {
