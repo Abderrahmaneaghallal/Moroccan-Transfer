@@ -813,7 +813,8 @@ document.getElementById('tfForm').addEventListener('submit', function(e) {
   var address   = this.querySelector('[name="address"]').value;
   var date      = this.querySelector('[name="travel_date"]').value;
   var name      = this.querySelector('[name="name"]').value;
-  var phone     = this.querySelector('[name="phone"]').value;
+  var phoneInput = this.querySelector('[name="phone"]');
+  var phone     = phoneInput.value.trim();
   var passengers= this.querySelector('[name="passengers"]').value;
   var flight    = this.querySelector('[name="flight_number"]').value;
 
@@ -823,6 +824,16 @@ document.getElementById('tfForm').addEventListener('submit', function(e) {
   if (!airport || !address || !date || !name || !phone) {
     window.showToast('Veuillez remplir tous les champs obligatoires.', 'error');
     return;
+  }
+
+  var iti = phoneInput.itiInstance;
+  var fullPhone = phone;
+  if (iti) {
+    if (!iti.isValidNumber()) {
+      window.showToast('Veuillez entrer un numéro de téléphone valide.', 'error');
+      return;
+    }
+    fullPhone = iti.getNumber();
   }
 
   // If vehicle is not pre-selected, determine based on passengers
@@ -899,7 +910,7 @@ document.getElementById('tfForm').addEventListener('submit', function(e) {
     + '• Prix estimé : ' + price + '\n\n'
     + '👤 *Contact*\n'
     + '• Nom : ' + name + '\n'
-    + '• Tél : ' + phone;
+    + '• Tél : ' + fullPhone;
 
   var url = 'https://wa.me/212707473742?text=' + encodeURIComponent(msg);
   window.open(url, '_blank');

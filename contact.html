@@ -439,6 +439,17 @@ document.getElementById('contactForm')?.addEventListener('submit', async functio
     const el = this.querySelector('[name="'+name+'"]');
     if (!el || !el.value.trim()) errors.push(labels[name] + ' est requis.');
   });
+
+  const phoneInput = this.querySelector('[name="phone"]');
+  if (phoneInput && phoneInput.value.trim()) {
+    const iti = phoneInput.itiInstance;
+    if (iti && !iti.isValidNumber()) {
+      errors.push('Veuillez entrer un numéro de téléphone valide.');
+    } else if (iti) {
+      phoneInput.value = iti.getNumber();
+    }
+  }
+
   const errBox = document.getElementById('formErrors');
   const errList = errBox.querySelector('ul');
   errList.innerHTML = errors.map(m=>'<li>'+m+'</li>').join('');

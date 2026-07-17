@@ -30,7 +30,7 @@
       if (input.dataset.itiInit) return;
       input.dataset.itiInit = '1';
 
-      window.intlTelInput(input, {
+      input.itiInstance = window.intlTelInput(input, {
         initialCountry: 'ma',
         preferredCountries: ['ma', 'fr', 'be', 'ch', 'gb', 'de', 'es', 'it', 'nl', 'pt', 'us', 'ca', 'dz', 'tn', 'sa', 'ae'],
         separateDialCode: true,

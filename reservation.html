@@ -414,6 +414,7 @@ body{background:#f5f0eb;font-family:'DM Sans',sans-serif;color:#111;}
 <script src="assets/js/toursData.js"></script>
 <script>
 let price = 0;
+let excursionName = 'Excursion';
 
 function initPage() {
   const raw = sessionStorage.getItem('mtResData');
@@ -430,7 +431,7 @@ function initPage() {
     }
   }
 
-  const name     = data.name     || 'Excursion';
+  excursionName  = data.name     || 'Excursion';
   price          = parseInt(data.price || 0, 10);
   const image    = data.image    || '';
   const category = data.category || 'Marrakech';
@@ -439,15 +440,15 @@ function initPage() {
 
   // ── POPULATE PAGE ──
   document.getElementById('resImage').src = image;
-  document.getElementById('resImage').alt = name;
+  document.getElementById('resImage').alt = excursionName;
   document.getElementById('resBadge').textContent = category;
   document.getElementById('resCategory').textContent = category;
-  document.getElementById('resName').textContent = name;
+  document.getElementById('resName').textContent = excursionName;
   document.getElementById('resDuration').textContent = duration;
   document.getElementById('resDesc').textContent = desc;
   document.getElementById('resMeta1').textContent = category;
   document.getElementById('resPriceDisplay').textContent = '€' + price;
-  document.title = 'Réserver — ' + name + ' — MoroccanTransfer';
+  document.title = 'Réserver — ' + excursionName + ' — MoroccanTransfer';
 
   // ── INCLUS / EXCLUS ──
   (function populateIncExc() {
@@ -495,7 +496,7 @@ function initPage() {
       'Excursion Imlil & Toubkal':              'excursion-imlil',
       'Barrage Lalla Takerkoust':               'barrage-takerkoust',
     };
-    var key = nameMap[name] || data.tourId;
+    var key = nameMap[excursionName] || data.tourId;
     if (!key) {
       document.getElementById('resIncExc').style.display = 'none';
       return;
@@ -569,19 +570,40 @@ function submitReservation() {
   const total = document.getElementById('resTotalVal').textContent;
 
   if (!nom) { alert('Veuillez entrer votre nom complet.'); return; }
-  if (!tel) { alert('Veuillez entrer votre numéro de téléphone.'); return; }
+  
+  // Phone verification
+  const telInput = document.getElementById('resTel');
+  const iti = telInput.itiInstance;
+  let fullTel = tel;
+  if (iti) {
+    if (!tel) {
+      alert('Veuillez entrer votre numéro de téléphone.');
+      return;
+    }
+    if (!iti.isValidNumber()) {
+      alert('Veuillez entrer un numéro de téléphone valide.');
+      return;
+    }
+    fullTel = iti.getNumber();
+  } else {
+    if (!tel) {
+      alert('Veuillez entrer votre numéro de téléphone.');
+      return;
+    }
+  }
+
   if (!date) { alert('Veuillez choisir une date.'); return; }
 
   // Build WhatsApp message
   const msg = encodeURIComponent(
     `🌍 Nouvelle réservation — MoroccanTransfer\n\n` +
-    `📌 Excursion : ${name}\n` +
+    `📌 Excursion : ${excursionName}\n` +
     `📅 Date : ${date}\n` +
     `🕐 Heure : ${heure}\n` +
     `👥 Personnes : ${persons}\n` +
     `💰 Total : ${total}\n\n` +
     `👤 Nom : ${nom}\n` +
-    `📞 Tél : ${tel}`
+    `📞 Tél : ${fullTel}`
   );
 
   // Show success state
