@@ -342,5 +342,61 @@ const toursData = {
       "Recharges",
       "Coffret luxe"
     ]
+  },
+  "ouarzazate-aitbenhaddou": {
+    included: [
+      "Transport privé aller-retour en 4x4 ou Minivan climatisé",
+      "Chauffeur professionnel francophone",
+      "Visite de la Kasbah d'Aït Ben Haddou (classée UNESCO)",
+      "Arrêts photos panoramiques au col de Tizi n'Tichka (2260m)",
+      "Assurance transport passagers"
+    ],
+    excluded: [
+      "Déjeuner et boissons (environ 10-15€)",
+      "Guide local optionnel à Aït Ben Haddou (environ 5€)",
+      "Frais d'entrée aux Studios de cinéma (8€/pers)"
+    ]
+  },
+  "excursion-essaouira": {
+    included: [
+      "Transport privé aller-retour depuis Marrakech",
+      "Chauffeur professionnel parlant français",
+      "Temps libre pour visiter la Médina, la Scala et le Port",
+      "Visite libre d'une coopérative d'huile d'Argan féminine",
+      "Assistance téléphonique 24/7"
+    ],
+    excluded: [
+      "Déjeuner (poisson frais au port conseillé)",
+      "Guide local optionnel dans la Médina",
+      "Dépenses personnelles et pourboires"
+    ]
+  },
+  "excursion-imlil": {
+    included: [
+      "Transport privatisé climatisé avec chauffeur",
+      "Randonnée pédestre accompagnée dans la vallée",
+      "Visite des villages berbères traditionnels d'Imlil",
+      "Déjeuner traditionnel berbère chez l'habitant",
+      "Pause thé à la menthe"
+    ],
+    excluded: [
+      "Guide de montagne certifié (en option)",
+      "Location de mules si nécessaire",
+      "Dépenses personnelles et boissons"
+    ]
+  },
+  "barrage-takerkoust": {
+    included: [
+      "Transport privé aller-retour depuis Marrakech",
+      "Chauffeur professionnel dévoué",
+      "Découverte panoramique du lac et du barrage",
+      "Arrêt dans un café local face au lac (consommation libre)",
+      "Assurance passager incluse"
+    ],
+    excluded: [
+      "Activités nautiques (Jet-ski, Quad, Buggy) en option",
+      "Déjeuner",
+      "Pourboires"
+    ]
   }
 };
