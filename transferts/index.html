@@ -141,6 +141,78 @@
   .tf-form-body{padding:20px 18px;}
   .tf-form-head{padding:22px 20px;}
 }
+
+/* ── INTERCITY TRANSFERS ── */
+.intercity-box {
+  background: #111;
+  border: 2px solid #C9A84C;
+  border-radius: 18px;
+  padding: 30px;
+  margin-bottom: 28px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+.intercity-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  border-bottom: 1px dotted rgba(201,168,76,0.4);
+  padding-bottom: 16px;
+}
+.intercity-icon {
+  width: 38px;
+  height: 38px;
+  background: #C9A84C;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #111;
+}
+.intercity-title {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #C9A84C;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 0;
+}
+.intercity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.intercity-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding-bottom: 12px;
+}
+.intercity-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.intercity-route {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255,255,255,0.9);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.intercity-arrow {
+  color: #C9A84C;
+  font-weight: 700;
+  font-size: 16px;
+}
+.intercity-price {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+}
 </style>
 </head>
 <body>
@@ -367,6 +439,58 @@
             </div>
           </div>
 
+        </div>
+
+        <!-- Intercity Transfers -->
+        <div class="intercity-box reveal">
+          <div class="intercity-head">
+            <div class="intercity-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <h3 class="intercity-title">Intercity Transfers</h3>
+          </div>
+          <div class="intercity-list">
+            <div class="intercity-row">
+              <div class="intercity-route">
+                <span>Marrakech</span>
+                <span class="intercity-arrow">⇄</span>
+                <span>Agafay</span>
+              </div>
+              <div class="intercity-price">45 €</div>
+            </div>
+            <div class="intercity-row">
+              <div class="intercity-route">
+                <span>Marrakech</span>
+                <span class="intercity-arrow">⇄</span>
+                <span>Essaouira</span>
+              </div>
+              <div class="intercity-price">100 €</div>
+            </div>
+            <div class="intercity-row">
+              <div class="intercity-route">
+                <span>Marrakech</span>
+                <span class="intercity-arrow">⇄</span>
+                <span>Casablanca City</span>
+              </div>
+              <div class="intercity-price">150 €</div>
+            </div>
+            <div class="intercity-row">
+              <div class="intercity-route">
+                <span>Marrakech</span>
+                <span class="intercity-arrow">⇄</span>
+                <span>Casablanca Airport</span>
+              </div>
+              <div class="intercity-price">130 €</div>
+            </div>
+            <div class="intercity-row">
+              <div class="intercity-route">
+                <span>Marrakech</span>
+                <span class="intercity-arrow">⇄</span>
+                <span>Agadir</span>
+              </div>
+              <div class="intercity-price">150 €</div>
+            </div>
+          </div>
         </div>
 
         <!-- Included -->
@@ -731,8 +855,29 @@ document.getElementById('tfForm').addEventListener('submit', function(e) {
     'sprinter': '€90'
   };
   var price = priceMap[vehicle] || '€45';
+  var lowerAddress = address.toLowerCase();
   if (airport === 'RAK') {
-    price = '€15';
+    if (lowerAddress.includes('agafay')) {
+      price = '45 €';
+    } else if (lowerAddress.includes('essaouira')) {
+      price = '100 €';
+    } else if (lowerAddress.includes('casablanca') && (lowerAddress.includes('aeroport') || lowerAddress.includes('aéroport') || lowerAddress.includes('airport') || lowerAddress.includes('cmn'))) {
+      price = '130 €';
+    } else if (lowerAddress.includes('casablanca')) {
+      price = '150 €';
+    } else if (lowerAddress.includes('agadir')) {
+      price = '150 €';
+    } else {
+      price = '€15';
+    }
+  } else if (airport === 'CMN') {
+    if (lowerAddress.includes('marrakech')) {
+      price = '130 €';
+    }
+  } else if (airport === 'AGA') {
+    if (lowerAddress.includes('marrakech')) {
+      price = '150 €';
+    }
   }
 
   var msg = 'Bonjour MoroccanTransfer 👋\n\n'
