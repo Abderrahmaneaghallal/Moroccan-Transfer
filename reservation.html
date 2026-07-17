@@ -423,7 +423,7 @@ function initPage() {
       data = JSON.parse(raw);
     } catch (e) {
       try {
-        data = JSON.parse(raw.replace(/\\'/g, "'").replace(/\\\\'/g, "'"));
+        data = JSON.parse(raw.replace(/\\+'/g, "'"));
       } catch (err) {
         console.error("JSON parse error:", err);
       }
