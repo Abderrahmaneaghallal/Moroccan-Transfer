@@ -415,6 +415,7 @@ body{background:#f5f0eb;font-family:'DM Sans',sans-serif;color:#111;}
 <script>
 let price = 0;
 let excursionName = 'Excursion';
+let suppTotal = 0;
 
 function initPage() {
   const raw = sessionStorage.getItem('mtResData');
@@ -534,8 +535,6 @@ document.getElementById('resDate').min = yyyy+'-'+mm+'-'+dd;
 document.getElementById('resDate').value = yyyy+'-'+mm+'-'+dd;
 
 // ── PRICE CALCULATION ──
-let suppTotal = 0;
-
 function updateTotal() {
   const persons = parseInt(document.getElementById('resPersons').value, 10);
   const base = price * persons;
