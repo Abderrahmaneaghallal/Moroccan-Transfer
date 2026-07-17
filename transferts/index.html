@@ -928,6 +928,41 @@
   sessionStorage.removeItem('mtVehicleName');
 })();
 
+// Pre-fill form from URL query parameters (set by homepage Navette section)
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var airportVal = params.get('airport');
+  var addressVal = params.get('address');
+  
+  if (airportVal || addressVal) {
+    if (airportVal) {
+      var airportSelect = document.querySelector('select[name="airport"]');
+      if (airportSelect) {
+        airportSelect.value = airportVal;
+        airportSelect.dispatchEvent(new Event('change'));
+      }
+    }
+    
+    var directionSelect = document.querySelector('select[name="direction"]');
+    if (directionSelect) {
+      directionSelect.value = 'arrival';
+    }
+    
+    if (addressVal) {
+      var addressInput = document.querySelector('input[name="address"]');
+      if (addressInput) {
+        addressInput.value = addressVal;
+      }
+    }
+    
+    // Scroll to form
+    setTimeout(function() {
+      var el = document.getElementById('booking-form');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+})();
+
 // Auto-fill form from card buttons
 document.querySelectorAll('.ap-btn').forEach(function(btn) {
   btn.addEventListener('click', function(e) {
