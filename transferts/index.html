@@ -318,7 +318,7 @@
               <div class="ap-row"><span>Médina Marrakech</span><strong>15 min</strong></div>
               <div class="ap-row"><span>Palmeraie</span><strong>25 min</strong></div>
               <div class="ap-row"><span>Essaouira</span><strong>2h30</strong></div>
-              <div class="ap-row"><span>À partir de</span><strong class="ap-price">€18</strong></div>
+              <div class="ap-row"><span>À partir de</span><strong class="ap-price">€15</strong></div>
             </div>
             <div class="ap-card-foot">
               <a href="#booking-form" class="ap-btn">Réserver ce trajet</a>
@@ -731,6 +731,9 @@ document.getElementById('tfForm').addEventListener('submit', function(e) {
     'sprinter': '€90'
   };
   var price = priceMap[vehicle] || '€45';
+  if (airport === 'RAK') {
+    price = '€15';
+  }
 
   var msg = 'Bonjour MoroccanTransfer 👋\n\n'
     + '🚖 *Demande de transfert*\n'
