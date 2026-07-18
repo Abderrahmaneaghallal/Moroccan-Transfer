@@ -275,7 +275,7 @@ body{background:#f5f0eb;font-family:'DM Sans',sans-serif;color:#111;}
           </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" id="pricingTypeGroup">
           <label class="form-label">Type de tarif :</label>
           <div class="pricing-type-toggle" style="display:flex;gap:10px;margin-bottom:14px;">
             <button type="button" class="tariff-btn active" id="btnVoiture" data-type="voiture" onclick="setPricingType('voiture')" style="flex:1;padding:12px 14px;border-radius:10px;border:1.5px solid #C9A84C;background:#C9A84C;color:#ffffff;font-weight:600;font-size:14px;cursor:pointer;transition:all 0.2s ease;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 2px 8px rgba(201,168,76,0.25);">
@@ -421,6 +421,21 @@ const excursionTariffs = {
   "désert d'agafay":                    { carPrice: 70,  perPersonPrice: null }
 };
 
+function isCarExcursion(name) {
+  if (!name) return false;
+  const cleanName = name.trim().toLowerCase()
+    .replace(/’/g, "'")
+    .replace(/\\'/g, "'")
+    .replace(/&amp;/g, "&");
+
+  for (const key in excursionTariffs) {
+    if (cleanName === key || cleanName.includes(key) || key.includes(cleanName)) {
+      return true;
+    }
+  }
+  return false;
+}
+
 function getTariffInfo(name, defaultPrice) {
   if (!name) return { carPrice: defaultPrice || 0, perPersonPrice: defaultPrice || null };
   const cleanName = name.trim().toLowerCase()
@@ -481,14 +496,16 @@ function setPricingType(type) {
 let currentPassengerCount = 2;
 
 function changePassengerCount(delta) {
+  const validCarExcursion = isCarExcursion(excursionName);
   const mode = document.getElementById('resPricingType').value;
-  if (mode === 'voiture') return;
+  if (validCarExcursion && mode === 'voiture') return;
 
   currentPassengerCount = Math.max(1, Math.min(12, currentPassengerCount + delta));
   updatePricingOptions();
 }
 
 function updatePricingOptions() {
+  const pricingTypeGroup = document.getElementById('pricingTypeGroup');
   const pricingType = document.getElementById('resPricingType');
   const personsHidden = document.getElementById('resPersons');
   const displayVal = document.getElementById('stepperDisplayVal');
@@ -497,14 +514,26 @@ function updatePricingOptions() {
 
   if (!pricingType || !personsHidden) return;
 
-  const mode = pricingType.value;
+  const validCarExcursion = isCarExcursion(excursionName);
 
-  if (mode === 'voiture') {
-    personsHidden.value = '2 à 6 personnes';
-    if (displayVal) displayVal.textContent = '2 à 6';
-    if (minusBtn) minusBtn.style.opacity = '0.4';
-    if (plusBtn) plusBtn.style.opacity = '0.4';
+  if (validCarExcursion) {
+    if (pricingTypeGroup) pricingTypeGroup.style.display = 'block';
+    const mode = pricingType.value;
+
+    if (mode === 'voiture') {
+      personsHidden.value = '2 à 6 personnes';
+      if (displayVal) displayVal.textContent = '2 à 6';
+      if (minusBtn) minusBtn.style.opacity = '0.4';
+      if (plusBtn) plusBtn.style.opacity = '0.4';
+    } else {
+      personsHidden.value = currentPassengerCount;
+      if (displayVal) displayVal.textContent = currentPassengerCount;
+      if (minusBtn) minusBtn.style.opacity = currentPassengerCount <= 1 ? '0.4' : '1';
+      if (plusBtn) plusBtn.style.opacity = currentPassengerCount >= 12 ? '0.4' : '1';
+    }
   } else {
+    if (pricingTypeGroup) pricingTypeGroup.style.display = 'none';
+    pricingType.value = 'personne';
     personsHidden.value = currentPassengerCount;
     if (displayVal) displayVal.textContent = currentPassengerCount;
     if (minusBtn) minusBtn.style.opacity = currentPassengerCount <= 1 ? '0.4' : '1';
@@ -647,25 +676,26 @@ document.getElementById('resDate').value = yyyy+'-'+mm+'-'+dd;
 // ── PRICE CALCULATION ──
 function updateTotal() {
   const pricingType = document.getElementById('resPricingType');
-  const personsSelect = document.getElementById('resPersons');
-  if (!pricingType || !personsSelect) return;
+  const personsHidden = document.getElementById('resPersons');
+  if (!pricingType || !personsHidden) return;
 
+  const validCarExcursion = isCarExcursion(excursionName);
   const mode = pricingType.value;
-  const tariff = getTariffInfo(excursionName, price);
   const submitBtnText = document.getElementById('resSubmitBtnText');
   const priceDisplay = document.getElementById('resPriceDisplay');
   const totalVal = document.getElementById('resTotalVal');
 
-  if (mode === 'voiture') {
+  if (validCarExcursion && mode === 'voiture') {
+    const tariff = getTariffInfo(excursionName, price);
     const carP = tariff.carPrice || price || 0;
     const total = carP + suppTotal;
     if (totalVal) totalVal.textContent = '€' + total;
     if (priceDisplay) priceDisplay.textContent = '€' + carP;
     if (submitBtnText) submitBtnText.textContent = 'Réservez Maintenant';
-  } else {
-    // Mode = Par personne
+  } else if (validCarExcursion && mode === 'personne') {
+    const tariff = getTariffInfo(excursionName, price);
     if (tariff.perPersonPrice !== null && tariff.perPersonPrice !== undefined) {
-      const count = parseInt(personsSelect.value || 1, 10);
+      const count = parseInt(personsHidden.value || 1, 10);
       const perP = tariff.perPersonPrice;
       const baseCost = count * perP;
       const suppCost = suppTotal * count;
@@ -680,6 +710,16 @@ function updateTotal() {
       if (priceDisplay) priceDisplay.textContent = 'Sur devis';
       if (submitBtnText) submitBtnText.textContent = 'Demander un devis';
     }
+  } else {
+    // Other activities & non-car excursions
+    const count = parseInt(personsHidden.value || 1, 10);
+    const baseCost = count * (price || 0);
+    const suppCost = suppTotal * count;
+    const total = baseCost + suppCost;
+
+    if (totalVal) totalVal.textContent = '€' + total;
+    if (priceDisplay) priceDisplay.textContent = '€' + (price || 0) + ' / pers.';
+    if (submitBtnText) submitBtnText.textContent = 'Réservez Maintenant';
   }
 }
 
@@ -707,6 +747,7 @@ function submitReservation() {
   const tel  = document.getElementById('resTel').value.trim();
   const date = document.getElementById('resDate').value;
   const heure = document.querySelector('input[name=heure]:checked').value;
+  const validCarExcursion = isCarExcursion(excursionName);
   const mode = document.getElementById('resPricingType').value;
   const modeLabel = mode === 'voiture' ? 'Par voiture (2 à 6 personnes)' : 'Par personne';
   const persons = document.getElementById('resPersons').value;
@@ -738,17 +779,23 @@ function submitReservation() {
   if (!date) { alert('Veuillez choisir une date.'); return; }
 
   // Build WhatsApp message
-  const msg = encodeURIComponent(
-    `🌍 Nouvelle réservation — MoroccanTransfer\n\n` +
-    `📌 Excursion : ${excursionName}\n` +
-    `🚘 Tarif : ${modeLabel}\n` +
-    `👥 Nombre : ${persons}\n` +
-    `📅 Date : ${date}\n` +
-    `🕐 Heure : ${heure}\n` +
-    `💰 Total : ${total}\n\n` +
-    `👤 Nom : ${nom}\n` +
+  let msgLines = [
+    `🌍 Nouvelle réservation — MoroccanTransfer\n`,
+    `📌 Prestation : ${excursionName}`
+  ];
+  if (validCarExcursion) {
+    msgLines.push(`🚘 Tarif : ${modeLabel}`);
+  }
+  msgLines.push(
+    `👥 Nombre : ${persons}`,
+    `📅 Date : ${date}`,
+    `🕐 Heure : ${heure}`,
+    `💰 Total : ${total}\n`,
+    `👤 Nom : ${nom}`,
     `📞 Tél : ${fullTel}`
   );
+
+  const msg = encodeURIComponent(msgLines.join('\n'));
 
   // Show success state
   document.getElementById('formContent').style.display = 'none';
