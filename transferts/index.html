@@ -692,11 +692,13 @@
                   <input type="text" name="flight_number" placeholder="ex : AT 502">
                 </div>
                 <div class="fg">
-                  <label>Passagers</label>
-                  <select name="passengers">
-                    <option>1</option><option>2</option><option>3</option><option>4</option>
-                    <option>5</option><option>6</option><option>7</option><option value="8+">8+</option>
-                  </select>
+                  <label style="text-transform:uppercase;font-size:11px;letter-spacing:0.5px;color:#777;font-weight:600;">NOMBRE DE PERSONNES</label>
+                  <div class="stepper-box" style="display:flex;align-items:center;justify-content:space-between;background:#ffffff;border:1.5px solid #EFE9DF;border-radius:10px;padding:3px 5px;width:100%;height:44px;">
+                    <button type="button" class="stepper-btn" onclick="changeTfPassengers(-1)" style="width:34px;height:34px;border-radius:8px;border:none;background:#fdfbf7;color:#C9A84C;font-size:20px;font-weight:600;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.15s ease;">–</button>
+                    <div class="stepper-val" id="tfPassengersVal" style="flex:1;text-align:center;font-size:15px;font-weight:700;color:#111111;">2</div>
+                    <button type="button" class="stepper-btn" onclick="changeTfPassengers(1)" style="width:34px;height:34px;border-radius:8px;border:none;background:#fdfbf7;color:#C9A84C;font-size:20px;font-weight:600;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.15s ease;">+</button>
+                  </div>
+                  <input type="hidden" name="passengers" id="tfPassengersInput" value="2">
                 </div>
               </div>
 
@@ -868,6 +870,15 @@
 
 <script src="../assets/js/main.js"></script>
 <script>
+let tfPassengerCount = 2;
+function changeTfPassengers(delta) {
+  tfPassengerCount = Math.max(1, Math.min(16, tfPassengerCount + delta));
+  const display = document.getElementById('tfPassengersVal');
+  const input = document.getElementById('tfPassengersInput');
+  if (display) display.textContent = tfPassengerCount;
+  if (input) input.value = tfPassengerCount;
+}
+
 // Pre-select vehicle from sessionStorage (set by homepage / vehicules page buttons)
 (function() {
   var vtype = sessionStorage.getItem('mtVehicle');

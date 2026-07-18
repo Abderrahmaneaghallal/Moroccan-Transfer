@@ -291,10 +291,13 @@ body{background:#f5f0eb;font-family:'DM Sans',sans-serif;color:#111;}
         </div>
 
         <div class="form-group">
-          <label class="form-label">Nombre de Personnes :</label>
-          <select class="form-select" id="resPersons" style="background:#fff;border:1px solid #e5e7eb;font-size:14px;font-weight:500;color:#1a1a1a;border-radius:10px;padding:12px 14px;width:100%;">
-            <option value="2 à 6 personnes" selected>2 à 6 personnes (Voiture entière)</option>
-          </select>
+          <label class="form-label" style="text-transform:uppercase;font-size:12px;letter-spacing:0.5px;color:#777;font-weight:600;">NOMBRE DE PERSONNES</label>
+          <div class="stepper-box" style="display:flex;align-items:center;justify-content:space-between;background:#ffffff;border:1.5px solid #EFE9DF;border-radius:12px;padding:4px 6px;width:100%;height:46px;box-shadow:0 1px 3px rgba(0,0,0,0.02);">
+            <button type="button" class="stepper-btn" id="stepperMinusBtn" onclick="changePassengerCount(-1)" style="width:38px;height:38px;border-radius:8px;border:none;background:#fdfbf7;color:#C9A84C;font-size:22px;font-weight:600;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.15s ease;">–</button>
+            <div class="stepper-val" id="stepperDisplayVal" style="flex:1;text-align:center;font-size:16px;font-weight:700;color:#111111;">2 à 6</div>
+            <button type="button" class="stepper-btn" id="stepperPlusBtn" onclick="changePassengerCount(1)" style="width:38px;height:38px;border-radius:8px;border:none;background:#fdfbf7;color:#C9A84C;font-size:22px;font-weight:600;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.15s ease;">+</button>
+          </div>
+          <input type="hidden" id="resPersons" value="2 à 6 personnes">
         </div>
 
         <div class="form-group">
@@ -475,31 +478,37 @@ function setPricingType(type) {
   updatePricingOptions();
 }
 
+let currentPassengerCount = 2;
+
+function changePassengerCount(delta) {
+  const mode = document.getElementById('resPricingType').value;
+  if (mode === 'voiture') return;
+
+  currentPassengerCount = Math.max(1, Math.min(12, currentPassengerCount + delta));
+  updatePricingOptions();
+}
+
 function updatePricingOptions() {
   const pricingType = document.getElementById('resPricingType');
-  const personsSelect = document.getElementById('resPersons');
-  if (!pricingType || !personsSelect) return;
+  const personsHidden = document.getElementById('resPersons');
+  const displayVal = document.getElementById('stepperDisplayVal');
+  const minusBtn = document.getElementById('stepperMinusBtn');
+  const plusBtn = document.getElementById('stepperPlusBtn');
+
+  if (!pricingType || !personsHidden) return;
 
   const mode = pricingType.value;
-  const currentVal = personsSelect.value;
-  personsSelect.innerHTML = '';
 
   if (mode === 'voiture') {
-    const opt = document.createElement('option');
-    opt.value = '2 à 6 personnes';
-    opt.textContent = '2 à 6 personnes (Voiture entière)';
-    opt.selected = true;
-    personsSelect.appendChild(opt);
+    personsHidden.value = '2 à 6 personnes';
+    if (displayVal) displayVal.textContent = '2 à 6';
+    if (minusBtn) minusBtn.style.opacity = '0.4';
+    if (plusBtn) plusBtn.style.opacity = '0.4';
   } else {
-    for (let i = 1; i <= 8; i++) {
-      const opt = document.createElement('option');
-      opt.value = i;
-      opt.textContent = i === 1 ? '1 personne' : i + ' personnes';
-      if (String(i) === currentVal || (currentVal === '2 à 6 personnes' && i === 2)) {
-        opt.selected = true;
-      }
-      personsSelect.appendChild(opt);
-    }
+    personsHidden.value = currentPassengerCount;
+    if (displayVal) displayVal.textContent = currentPassengerCount;
+    if (minusBtn) minusBtn.style.opacity = currentPassengerCount <= 1 ? '0.4' : '1';
+    if (plusBtn) plusBtn.style.opacity = currentPassengerCount >= 12 ? '0.4' : '1';
   }
 
   updateTotal();
