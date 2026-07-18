@@ -278,16 +278,12 @@ body{background:#f5f0eb;font-family:'DM Sans',sans-serif;color:#111;}
         <div class="form-group">
           <label class="form-label">Nombre de Personnes :</label>
           <div class="persons-row">
-            <div class="price-range" id="priceRangeLabel">€0 — €0</div>
-            <select class="form-select" id="resPersons">
-              <option value="1">1 personne</option>
-              <option value="2">2 personnes</option>
-              <option value="3">3 personnes</option>
-              <option value="4">4 personnes</option>
-              <option value="5">5 personnes</option>
-              <option value="6">6 personnes</option>
-              <option value="7">7 personnes</option>
-              <option value="8">8 personnes</option>
+            <select class="form-select" id="resPricingType" style="background:#fff;border:1px solid #e5e7eb;font-size:14px;font-weight:600;color:#1a1a1a;border-radius:10px;padding:12px 14px;">
+              <option value="voiture" selected>Par voiture</option>
+              <option value="personne">Par personne</option>
+            </select>
+            <select class="form-select" id="resPersons" style="background:#fff;border:1px solid #e5e7eb;font-size:14px;font-weight:500;color:#1a1a1a;border-radius:10px;padding:12px 14px;">
+              <option value="2 à 6 personnes" selected>2 à 6 personnes</option>
             </select>
           </div>
         </div>
@@ -317,9 +313,9 @@ body{background:#f5f0eb;font-family:'DM Sans',sans-serif;color:#111;}
           <span class="res-total-val" id="resTotalVal">€0</span>
         </div>
 
-        <button class="btn-reserver" onclick="submitReservation()">
+        <button class="btn-reserver" id="resSubmitBtn" onclick="submitReservation()">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.81"/><path d="M16 2a15.003 15.003 0 010 20"/></svg>
-          Réservez Maintenant
+          <span id="resSubmitBtnText">Réservez Maintenant</span>
         </button>
         <p class="res-note">✓ Confirmation sous 2h · ✓ Annulation gratuite 48h avant</p>
 
@@ -402,6 +398,61 @@ body{background:#f5f0eb;font-family:'DM Sans',sans-serif;color:#111;}
 let price = 0;
 let excursionName = 'Excursion';
 let suppTotal = 0;
+// ── EXCURSION TARIFF DATA MAP ──
+const excursionTariffs = {
+  "cascades d'ouzoud":                  { carPrice: 120, perPersonPrice: 25 },
+  "vallée de l'ourika & atlas":         { carPrice: 70,  perPersonPrice: 15 },
+  "excursion essaouira":                { carPrice: 120, perPersonPrice: 25 },
+  "ouarzazate & kasbah aït ben haddou": { carPrice: 130, perPersonPrice: 25 },
+  "excursion imlil & toubkal":          { carPrice: 90,  perPersonPrice: null },
+  "barrage lalla takerkoust":           { carPrice: 70,  perPersonPrice: null },
+  "désert d'agafay":                    { carPrice: 70,  perPersonPrice: null }
+};
+
+function getTariffInfo(name, defaultPrice) {
+  if (!name) return { carPrice: defaultPrice || 0, perPersonPrice: defaultPrice || null };
+  const cleanName = name.trim().toLowerCase()
+    .replace(/’/g, "'")
+    .replace(/\\'/g, "'")
+    .replace(/&amp;/g, "&");
+
+  for (const key in excursionTariffs) {
+    if (cleanName === key || cleanName.includes(key) || key.includes(cleanName)) {
+      return excursionTariffs[key];
+    }
+  }
+  return { carPrice: defaultPrice || 0, perPersonPrice: defaultPrice || null };
+}
+
+function updatePricingOptions() {
+  const pricingType = document.getElementById('resPricingType');
+  const personsSelect = document.getElementById('resPersons');
+  if (!pricingType || !personsSelect) return;
+
+  const mode = pricingType.value;
+  const currentVal = personsSelect.value;
+  personsSelect.innerHTML = '';
+
+  if (mode === 'voiture') {
+    const opt = document.createElement('option');
+    opt.value = '2 à 6 personnes';
+    opt.textContent = '2 à 6 personnes';
+    opt.selected = true;
+    personsSelect.appendChild(opt);
+  } else {
+    for (let i = 1; i <= 8; i++) {
+      const opt = document.createElement('option');
+      opt.value = i;
+      opt.textContent = i === 1 ? '1 personne' : i + ' personnes';
+      if (String(i) === currentVal || (currentVal === '2 à 6 personnes' && i === 2)) {
+        opt.selected = true;
+      }
+      personsSelect.appendChild(opt);
+    }
+  }
+
+  updateTotal();
+}
 
 function initPage() {
   const params = new URLSearchParams(window.location.search);
@@ -451,7 +502,6 @@ function initPage() {
   document.getElementById('resDuration').textContent = duration;
   document.getElementById('resDesc').textContent = desc;
   document.getElementById('resMeta1').textContent = category;
-  document.getElementById('resPriceDisplay').textContent = '€' + price;
   document.title = 'Réserver — ' + excursionName + ' — MoroccanTransfer';
 
   // ── INCLUS / EXCLUS ──
@@ -521,13 +571,10 @@ function initPage() {
     document.getElementById('resIncExc').style.display = 'block';
   })();
 
-  if (typeof updateTotal === 'function') {
-    updateTotal();
-  }
+  updatePricingOptions();
 }
 
 window.addEventListener('pageshow', initPage);
-initPage();
 
 // Set min date to today
 const today = new Date();
@@ -539,16 +586,47 @@ document.getElementById('resDate').value = yyyy+'-'+mm+'-'+dd;
 
 // ── PRICE CALCULATION ──
 function updateTotal() {
-  const persons = parseInt(document.getElementById('resPersons').value, 10);
-  const base = price * persons;
-  const suppCost = suppTotal * persons;
-  const total = base + suppCost;
-  document.getElementById('resTotalVal').textContent = '€' + total;
-  document.getElementById('priceRangeLabel').textContent = '€' + price + ' – €' + (price * 8);
+  const pricingType = document.getElementById('resPricingType');
+  const personsSelect = document.getElementById('resPersons');
+  if (!pricingType || !personsSelect) return;
+
+  const mode = pricingType.value;
+  const tariff = getTariffInfo(excursionName, price);
+  const submitBtnText = document.getElementById('resSubmitBtnText');
+  const priceDisplay = document.getElementById('resPriceDisplay');
+  const totalVal = document.getElementById('resTotalVal');
+
+  if (mode === 'voiture') {
+    const carP = tariff.carPrice || price || 0;
+    const total = carP + suppTotal;
+    if (totalVal) totalVal.textContent = '€' + total;
+    if (priceDisplay) priceDisplay.textContent = '€' + carP;
+    if (submitBtnText) submitBtnText.textContent = 'Réservez Maintenant';
+  } else {
+    // Mode = Par personne
+    if (tariff.perPersonPrice !== null && tariff.perPersonPrice !== undefined) {
+      const count = parseInt(personsSelect.value || 1, 10);
+      const perP = tariff.perPersonPrice;
+      const baseCost = count * perP;
+      const suppCost = suppTotal * count;
+      const total = baseCost + suppCost;
+
+      if (totalVal) totalVal.textContent = '€' + total;
+      if (priceDisplay) priceDisplay.textContent = '€' + perP + ' / pers.';
+      if (submitBtnText) submitBtnText.textContent = 'Réservez Maintenant';
+    } else {
+      // No per person price -> "Sur devis"
+      if (totalVal) totalVal.textContent = 'Sur devis';
+      if (priceDisplay) priceDisplay.textContent = 'Sur devis';
+      if (submitBtnText) submitBtnText.textContent = 'Demander un devis';
+    }
+  }
 }
 
+document.getElementById('resPricingType').addEventListener('change', updatePricingOptions);
 document.getElementById('resPersons').addEventListener('change', updateTotal);
-updateTotal();
+
+initPage();
 
 function toggleSupp(el) {
   const p = parseInt(el.dataset.price, 10);
@@ -568,6 +646,8 @@ function submitReservation() {
   const tel  = document.getElementById('resTel').value.trim();
   const date = document.getElementById('resDate').value;
   const heure = document.querySelector('input[name=heure]:checked').value;
+  const mode = document.getElementById('resPricingType').value;
+  const modeLabel = mode === 'voiture' ? 'Par voiture (2 à 6 personnes)' : 'Par personne';
   const persons = document.getElementById('resPersons').value;
   const total = document.getElementById('resTotalVal').textContent;
 
@@ -600,9 +680,10 @@ function submitReservation() {
   const msg = encodeURIComponent(
     `🌍 Nouvelle réservation — MoroccanTransfer\n\n` +
     `📌 Excursion : ${excursionName}\n` +
+    `🚘 Tarif : ${modeLabel}\n` +
+    `👥 Nombre : ${persons}\n` +
     `📅 Date : ${date}\n` +
     `🕐 Heure : ${heure}\n` +
-    `👥 Personnes : ${persons}\n` +
     `💰 Total : ${total}\n\n` +
     `👤 Nom : ${nom}\n` +
     `📞 Tél : ${fullTel}`
