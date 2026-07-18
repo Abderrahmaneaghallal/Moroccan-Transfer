@@ -265,7 +265,8 @@ body{background:#f5f0eb;font-family:'DM Sans',sans-serif;color:#111;}
 
         <div class="form-group">
           <label class="form-label">Date :</label>
-          <input type="date" class="form-input" id="resDate" min="">
+          <input type="date" class="form-input" id="resDate" min="" onchange="checkDateCapacity()">
+          <div id="dateStatusNotice" style="display:none;margin-top:8px;padding:9px 12px;border-radius:8px;font-size:13px;font-weight:600;align-items:center;gap:6px;transition:all 0.2s ease;"></div>
         </div>
 
         <div class="form-group">
@@ -663,15 +664,116 @@ function initPage() {
   updatePricingOptions();
 }
 
+// ── DAILY CAPACITY MANAGEMENT (12 personnes max) ──
+function getCapacityKey(name, dateStr) {
+  const clean = (name || 'excursion').toLowerCase().replace(/[^a-z0-9]/g, '_');
+  return 'mt_cap_' + clean + '_' + dateStr;
+}
+
+function getBookedCount(name, dateStr) {
+  if (!dateStr) return 0;
+  const key = getCapacityKey(name, dateStr);
+  const stored = localStorage.getItem(key);
+  return stored ? parseInt(stored, 10) : 0;
+}
+
+function addBookedCount(name, dateStr, count) {
+  if (!dateStr) return;
+  const key = getCapacityKey(name, dateStr);
+  const current = getBookedCount(name, dateStr);
+  localStorage.setItem(key, current + count);
+}
+
+function checkDateCapacity() {
+  const dateInput = document.getElementById('resDate');
+  const notice = document.getElementById('dateStatusNotice');
+  const submitBtn = document.getElementById('resSubmitBtn');
+  const submitBtnText = document.getElementById('resSubmitBtnText');
+  if (!dateInput) return;
+
+  const selectedDate = dateInput.value;
+  if (!selectedDate) return;
+
+  const booked = getBookedCount(excursionName, selectedDate);
+  const mode = document.getElementById('resPricingType')?.value;
+  const validCarExcursion = isCarExcursion(excursionName);
+  let requested = 1;
+
+  if (validCarExcursion && mode === 'voiture') {
+    requested = 6;
+  } else {
+    const personsVal = document.getElementById('resPersons')?.value;
+    requested = parseInt(personsVal || 1, 10);
+  }
+
+  const maxCap = 12;
+
+  if (booked >= maxCap) {
+    if (notice) {
+      notice.style.display = 'flex';
+      notice.style.background = '#fef2f2';
+      notice.style.borderColor = '#fecaca';
+      notice.style.color = '#991b1b';
+      notice.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Complet (12/12 places réservées pour cette date). Veuillez choisir une autre date.';
+    }
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.style.opacity = '0.5';
+      submitBtn.style.cursor = 'not-allowed';
+    }
+    if (submitBtnText) submitBtnText.textContent = 'Complet pour cette date';
+  } else if (booked + requested > maxCap) {
+    const available = maxCap - booked;
+    if (notice) {
+      notice.style.display = 'flex';
+      notice.style.background = '#fffbeb';
+      notice.style.borderColor = '#fde68a';
+      notice.style.color = '#92400e';
+      notice.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Places insuffisantes : ${available} place(s) restante(s) pour cette date (${booked}/12 réservées).`;
+    }
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.style.opacity = '0.5';
+      submitBtn.style.cursor = 'not-allowed';
+    }
+    if (submitBtnText) submitBtnText.textContent = 'Places insuffisantes';
+  } else {
+    if (notice) {
+      notice.style.display = 'flex';
+      notice.style.background = '#f0fdf4';
+      notice.style.borderColor = '#bbf7d0';
+      notice.style.color = '#166534';
+      const remaining = maxCap - booked;
+      notice.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Date disponible (${remaining} places restantes sur 12)`;
+    }
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.style.opacity = '1';
+      submitBtn.style.cursor = 'pointer';
+    }
+    updateTotal();
+  }
+}
+
 window.addEventListener('pageshow', initPage);
 
-// Set min date to today
-const today = new Date();
-const yyyy = today.getFullYear();
-const mm = String(today.getMonth()+1).padStart(2,'0');
-const dd = String(today.getDate()+2).padStart(2,'0');
-document.getElementById('resDate').min = yyyy+'-'+mm+'-'+dd;
-document.getElementById('resDate').value = yyyy+'-'+mm+'-'+dd;
+// Set min date to today (allowing Today 18/07, Tomorrow 19/07, etc.)
+function getFormattedDate(d) {
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth()+1).padStart(2,'0');
+  const dd = String(d.getDate()).padStart(2,'0');
+  return yyyy+'-'+mm+'-'+dd;
+}
+
+const todayDate = new Date();
+const todayStr = getFormattedDate(todayDate);
+const dateInput = document.getElementById('resDate');
+if (dateInput) {
+  dateInput.min = todayStr;
+  if (!dateInput.value || dateInput.value < todayStr) {
+    dateInput.value = todayStr;
+  }
+}
 
 // ── PRICE CALCULATION ──
 function updateTotal() {
@@ -777,6 +879,15 @@ function submitReservation() {
   }
 
   if (!date) { alert('Veuillez choisir une date.'); return; }
+
+  // Increment booked count for daily 12 personnes capacity tracking
+  let requestedCount = 1;
+  if (validCarExcursion && mode === 'voiture') {
+    requestedCount = 6;
+  } else {
+    requestedCount = parseInt(persons || 1, 10);
+  }
+  addBookedCount(excursionName, date, requestedCount);
 
   // Build WhatsApp message
   let msgLines = [
