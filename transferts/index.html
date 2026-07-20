@@ -681,8 +681,8 @@
                   <input type="date" name="travel_date">
                 </div>
                 <div class="fg">
-                  <label>Heure de vol</label>
-                  <input type="time" name="travel_time">
+                  <label>Heure de vol *</label>
+                  <input type="time" name="travel_time" required>
                 </div>
               </div>
 
@@ -999,6 +999,7 @@ document.getElementById('tfForm').addEventListener('submit', function(e) {
   var direction = this.querySelector('[name="direction"]').value;
   var address   = this.querySelector('[name="address"]').value;
   var date      = this.querySelector('[name="travel_date"]').value;
+  var time      = this.querySelector('[name="travel_time"]').value;
   var name      = this.querySelector('[name="name"]').value;
   var phoneInput = this.querySelector('[name="phone"]');
   var phone     = phoneInput.value.trim();
@@ -1008,8 +1009,8 @@ document.getElementById('tfForm').addEventListener('submit', function(e) {
   var vehicle = this.querySelector('#mtHiddenVehicle').value;
   var vehicleName = this.querySelector('#mtHiddenVehicleName').value;
 
-  if (!airport || !address || !date || !name || !phone) {
-    window.showToast('Veuillez remplir tous les champs obligatoires.', 'error');
+  if (!airport || !address || !date || !time || !name || !phone) {
+    window.showToast('Veuillez remplir tous les champs obligatoires (y compris l\'heure de vol).', 'error');
     return;
   }
 
@@ -1093,6 +1094,7 @@ document.getElementById('tfForm').addEventListener('submit', function(e) {
     + '• Direction : ' + (direction === 'arrival' ? 'Arrivée → Hôtel' : 'Hôtel → Aéroport') + '\n'
     + '• Adresse : ' + address + '\n'
     + '• Date : ' + date + '\n'
+    + '• Heure de vol : ' + time + '\n'
     + '• Vol : ' + (flight || 'N/A') + '\n'
     + '• Passagers : ' + passengers + '\n'
     + '• Prix estimé : ' + price + '\n\n'
